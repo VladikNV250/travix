@@ -1,0 +1,84 @@
+body {
+  font-family: "Helvetica Neue", system-ui, Avenir, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  margin: 0;
+
+  min-height: 100vh;
+  scroll-behavior: smooth;
+  text-rendering: optimizeSpeed;
+
+  overflow-x: hidden;
+}
+
+body,
+html,
+#root {
+  height: 100%;
+}
+
+._container {
+  max-width: 1230px;
+  margin-right: auto;
+  margin-left: auto;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+ol,
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+p,
+ul,
+ol,
+li,
+figure,
+figcaption,
+blockquote,
+dl,
+input,
+dd {
+  margin: 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+  font-weight: 400;
+}
+
+input,
+textarea,
+button {
+  outline: none;
+  border: none;
+  appearance: none;
+  cursor: pointer;
+  font-family: "Helvetica Neue", system-ui, Avenir, Arial, sans-serif;
+}
+
+button {
+  background: transparent;
+  padding: 0;
+}
+
+a {
+  text-decoration: none;
+}
