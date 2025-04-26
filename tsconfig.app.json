@@ -15,6 +15,7 @@
       "entities/*": ["entities/*"],
       "shared/*": ["shared/*"],
     },
+    "types": ["vite/client"],
     
     /* Bundler mode */
     "moduleResolution": "bundler",

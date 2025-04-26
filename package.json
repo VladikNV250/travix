@@ -7,16 +7,27 @@
     "dev": "vite --host",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "server": "node server.js"
   },
   "dependencies": {
+    "@tanstack/react-query": "^5.74.4",
+    "axios": "^1.8.4",
     "clsx": "^2.1.1",
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0",
+    "leaflet": "^1.9.4",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "react-router": "^7.5.1"
+    "react-leaflet": "^5.0.0-rc.2",
+    "react-router": "^7.5.1",
+    "use-debounce": "^10.0.4"
   },
   "devDependencies": {
     "@eslint/js": "^9.22.0",
+    "@tanstack/eslint-plugin-query": "^5.73.3",
+    "@types/leaflet": "^1.9.17",
+    "@types/node": "^22.15.2",
     "@types/react": "^19.0.10",
     "@types/react-dom": "^19.0.4",
     "@vitejs/plugin-react": "^4.3.4",
@@ -24,6 +35,7 @@
     "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-react-refresh": "^0.4.19",
     "globals": "^16.0.0",
+    "sass-embedded": "^1.87.0",
     "typescript": "~5.7.2",
     "typescript-eslint": "^8.26.1",
     "vite": "^6.3.1"
