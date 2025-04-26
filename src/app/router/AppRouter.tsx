@@ -5,7 +5,7 @@ import {
     Route, 
     Routes 
 } from "react-router";
-import { MainPage } from "pages/MainPage";
+import { HomePage } from "pages/home";
 import clsx from "clsx";
 
 export const AppRouter: FC = () => {
@@ -17,7 +17,7 @@ export const AppRouter: FC = () => {
                         path="/"
                         element={<Outlet />}
                     >
-                        <Route index element={<MainPage />} />
+                        <Route index element={<HomePage />} />
                     </Route>    
                 </Routes>   
             </BrowserRouter>
