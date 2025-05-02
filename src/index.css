@@ -70,11 +70,11 @@ button {
   outline: none;
   border: none;
   appearance: none;
-  cursor: pointer;
   font-family: "Helvetica Neue", system-ui, Avenir, Arial, sans-serif;
 }
 
 button {
+  cursor: pointer;
   background: transparent;
   padding: 0;
 }

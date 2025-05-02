@@ -1,23 +1,40 @@
-import { FC, useState,  } from "react";
-import { Header } from "widgets/header";
-import { Sidebar } from "widgets/sidebar";
+import { FC, useState } from "react";
 import "leaflet/dist/leaflet.css";
 import styles from "./style.module.scss";
-import { Map } from "leaflet";
-import { MapWidget } from "widgets/map";
+import { useAppSelector } from "shared/lib";
+import { selectStops, StopForm, StopItem } from "features/stops";
 
 const HomePage: FC = () => {
-    const [map, setMap] = useState<Map | null>(null);
+    const stops = useAppSelector(selectStops);
+    const [isVisible, setIsVisible] = useState(false);
 
+    const renderStopItems = () => {
+        return stops.map((stop) =>
+            <StopItem
+                key={stop.id}
+                stop={stop}
+            />
+        )
+    }
 
     return (
-        <main className={styles["home-page"]}>
-            <Header />
-            <Sidebar map={map} />
-            <div className={styles["map"]}>
-                <MapWidget ref={setMap} />
-            </div>
-        </main>
+        <nav className={styles.home}>
+            {!isVisible ? (
+                <div className={styles.homeContent}>
+                    <button
+                        className={styles.button}
+                        onClick={() => setIsVisible(true)}
+                    >
+                        Add New Stop
+                    </button>
+                    <div className={styles.stopList}>
+                        {renderStopItems()}
+                    </div>
+                </div>
+            ) : (
+                <StopForm onClose={() => setIsVisible(false)} />
+            )}            
+        </nav>
     )
 }
 
