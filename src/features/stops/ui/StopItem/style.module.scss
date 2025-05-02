@@ -1,0 +1,37 @@
+.stopItem {
+    padding: 6px 10px;
+    background: #cbc5bc;   
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    position: relative;
+}
+
+.button {
+    display: flex;
+    position: relative;
+}
+
+.menu {
+    width: 100px;
+    position: absolute;
+    top: 0;
+    left: 100%;
+    display: none;
+    background: #e6e5e5;
+    flex-direction: column;
+
+    &.opened {
+        display: flex;
+    }
+
+    &Button {
+        padding: 8px;
+        width: 100%;
+        display: flex;
+        &:hover {
+            background: #cccccc;
+        }
+    }
+}
