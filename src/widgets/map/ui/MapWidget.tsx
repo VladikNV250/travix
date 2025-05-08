@@ -5,17 +5,20 @@ import {
     Popup, 
     TileLayer 
 } from "react-leaflet";
-import { selectStops } from "features/stops";
 import { 
     useAppSelector 
 } from "shared/lib";
 import { useMap } from "features/map";
 import { Icon } from "leaflet";
 import { PointRed } from "shared/assets";
+import "leaflet/dist/leaflet.css";
+import "leaflet-routing-machine/dist/leaflet-routing-machine.css";
+import { selectTrips } from "features/trip";
+import { RoutingMachine } from "features/routing";
 
 
 export const MapWidget: FC = () => {
-    const stops = useAppSelector(selectStops);
+    const trips = useAppSelector(selectTrips);
     const { setMap } = useMap();
 
     const icon = new Icon({
@@ -24,22 +27,31 @@ export const MapWidget: FC = () => {
     }) 
 
     const renderStops = () => {
-        if (stops.length > 0) {
-            return stops.map((stop, index) => 
-                <Marker
-                    key={index}
-                    position={[
-                        stop.location.lat,
-                        stop.location.lng
-                    ]}
-                    icon={icon}
-                >
-                    <Popup>
-                        {stop.address}
-                    </Popup>
-                </Marker>
-            )
+        if (trips.length > 0) {
+            return trips.map((trip) => {
+                if (trip.stops.length > 0) {
+                    return trip.stops.map(stop => 
+                        <Marker
+                            key={stop.id}
+                            position={stop.location}
+                            icon={icon}
+                        >
+                            <Popup>
+                                {stop.address}
+                            </Popup>
+                        </Marker>
+                    )
+                }
+            })
         }
+    }
+
+    const renderRoutes = () => {
+        return trips.map(trip => {
+            const waypoints = trip.stops.map(stop => stop.location);
+
+            return <RoutingMachine key={trip.id} waypoints={waypoints} />
+        })
     }
 
     return (
@@ -56,6 +68,7 @@ export const MapWidget: FC = () => {
                 url="https://maps.geoapify.com/v1/tile/osm-bright/{z}/{x}/{y}.png?apiKey=4ef7271267c746e98ce4774b30eac8fd"
             />
             {renderStops()}
+            {renderRoutes()}
         </MapContainer>
     )
 } 

@@ -8,7 +8,9 @@ export const Layout: FC = () => {
     return (
         <main className={styles.layout}>
             <Header />
-            <Outlet />
+            <nav className={styles.sidebar}>
+                <Outlet />
+            </nav>
             <div className={styles.map}>
                 <MapWidget />
             </div>

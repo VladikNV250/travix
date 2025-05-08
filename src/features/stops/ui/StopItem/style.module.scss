@@ -6,6 +6,7 @@
     justify-content: space-between;
     gap: 8px;
     position: relative;
+    cursor: pointer;
 }
 
 .button {
@@ -21,15 +22,17 @@
     display: none;
     background: #e6e5e5;
     flex-direction: column;
-
+    
     &.opened {
         display: flex;
     }
-
+    
     &Button {
         padding: 8px;
         width: 100%;
         display: flex;
+        color: #000;
+        font-size: 14px;
         &:hover {
             background: #cccccc;
         }

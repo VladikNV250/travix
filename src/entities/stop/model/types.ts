@@ -1,9 +1,9 @@
-import { Location } from "shared/geo";
+import { LatLngExpression } from "leaflet";
 
 export interface Stop {
     readonly id: string;
     address: string;
-    location: Location;
+    location: LatLngExpression;
     arrivalDate: string;
     departureDate: string;
     notes?: string;

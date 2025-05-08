@@ -1,26 +1,39 @@
-import { Stop, StopAddress } from "entities/stop";
 import { FC } from "react";
-import styles from "./style.module.scss";
+import { Link } from "react-router";
+import { useMap } from "features/map";
+import { removeStop } from "features/trip";
+import { Trip } from "entities/trip";
+import { Stop, StopAddress } from "entities/stop";
 import { ThreeDots } from "shared/assets";
+import { 
+    useAppDispatch, 
+    useDropdown 
+} from "shared/lib";
 import clsx from "clsx";
-import { useAppDispatch, useDropdown } from "shared/lib";
-import { removeStop } from "features/stops/model/stopsSlice";
+import styles from "./style.module.scss";
 
 interface IStopItem {
-    stop: Stop
+    tripId: Trip["id"];
+    stop: Stop;
 }
 
-export const StopItem: FC<IStopItem> = ({ stop }) => {
+export const StopItem: FC<IStopItem> = ({tripId, stop }) => {
     const dispatch = useAppDispatch();
     const { openId, openMenu } = useDropdown(); 
+    const { map } = useMap();
+
 
     return (
         <div 
             className={styles.stopItem}
+            onClick={() => map?.flyTo(stop.location, 10, {animate: true})}
         >
             <StopAddress stop={stop} />
             <button 
-                onClick={() => openMenu(stop.id)} 
+                onClick={(e) => {
+                    e.stopPropagation();
+                    openMenu(stop.id)
+                }} 
                 className={styles.button}
             >  
                 <ThreeDots width={20} height={20} />
@@ -35,11 +48,14 @@ export const StopItem: FC<IStopItem> = ({ stop }) => {
                     openMenu(null);
                 }}
             >
-                <button className={styles.menuButton}>
+                <Link 
+                    to={`/trip/${tripId}/stop/${stop.id}`}
+                    className={styles.menuButton}
+                >
                     Edit
-                </button>
+                </Link>
                 <button
-                    onClick={() => dispatch(removeStop(stop))} 
+                    onClick={() => dispatch(removeStop({tripId, stop}))} 
                     className={styles.menuButton}
                 >
                     Delete

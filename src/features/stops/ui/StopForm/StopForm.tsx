@@ -2,27 +2,33 @@ import { ChangeEvent, FC, MouseEvent, useEffect, useState } from "react";
 import styles from "./style.module.scss";
 import { createStop } from "../../model/createStop";
 import { useAppDispatch } from "shared/lib";
-import { addStop } from "../../model/stopsSlice";
 import { useDebounce } from "use-debounce";
 import { autocompletePlace, Prediction } from "features/geo";
 import { useMap } from "features/map";
 import clsx from "clsx";
+import { addStop, editStop } from "features/trip";
+import { Trip } from "entities/trip";
+import { Stop, validateStop } from "entities/stop";
 
 interface IStopForm {
+    tripId: Trip["id"];
+    initialData?: Stop;
     onClose?: () => void;
 }
 
-export const StopForm: FC<IStopForm> = ({ onClose }) => {
+export const StopForm: FC<IStopForm> = ({ tripId, initialData, onClose }) => {
     const dispatch = useAppDispatch();
     const { map } = useMap();
     const [predictions, setPredictions] = useState<Prediction[]>([]);
     const [formData, setFormData] = useState({
-        address: "",
-        arrivalDate: "",
-        departureDate: "",
-        notes: "",
+        address: initialData?.address || "",
+        arrivalDate: initialData?.arrivalDate || "",
+        departureDate: initialData?.departureDate || "",
+        notes: initialData?.notes || "",
     })
     const [debouncedAddress] = useDebounce(formData.address, 400);
+
+    const editMode = !!initialData;
 
     useEffect(() => {
         (async () => {
@@ -47,22 +53,31 @@ export const StopForm: FC<IStopForm> = ({ onClose }) => {
         e.preventDefault();
 
         try {
-            const stop = await createStop(formData);
+            if (editMode) {
+                const updatedStop: Stop = {
+                    ...initialData,
+                    ...formData,
+                }
 
-            if (stop) {
-                dispatch(addStop(stop));
-                map?.flyTo([
-                    stop.location.lat,
-                    stop.location.lng,
-                ], 10, {animate: true})
+                if (validateStop(updatedStop)) {
+                    dispatch(editStop({ tripId, updatedStop }));
+                    onClose?.();
+                }
+            } else {
+                const stop = await createStop(formData);
 
-                setFormData({
-                    address: "",
-                    arrivalDate: "",
-                    departureDate: "",
-                    notes: "",
-                });
-                onClose?.();
+                if (stop) {
+                    dispatch(addStop({tripId, stop}));
+                    map?.flyTo(stop.location, 10, {animate: true})
+    
+                    setFormData({
+                        address: "",
+                        arrivalDate: "",
+                        departureDate: "",
+                        notes: "",
+                    });
+                    onClose?.();
+                }
             }
         } catch (e) {
             console.error(e);
@@ -98,17 +113,20 @@ export const StopForm: FC<IStopForm> = ({ onClose }) => {
             <input 
                 type="date"
                 name="arrivalDate"
+                value={formData.arrivalDate}
                 className={styles.input}
                 onChange={handleChange}
             />
             <input 
                 type="date"
                 name="departureDate"
+                value={formData.departureDate}
                 className={styles.input}
                 onChange={handleChange}
             />      
             <textarea 
                 name="notes"
+                value={formData.notes}
                 className={styles.input}
                 onChange={handleChange}
                 placeholder="Enter your notes"
@@ -119,7 +137,7 @@ export const StopForm: FC<IStopForm> = ({ onClose }) => {
                 onClick={async (e) => await handleSubmit(e)}
                 className={styles.button}
             >
-                Add Stop +
+                {editMode ? "Save Changes" : "Add Stop +"}
             </button>
             <button 
                 className={clsx(styles.button, styles.grey)}

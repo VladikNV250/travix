@@ -1,40 +1,41 @@
-import { FC, useState } from "react";
-import "leaflet/dist/leaflet.css";
+import { FC } from "react";
+import { Link, useNavigate } from "react-router";
+import { addTrip, createTrip, selectTrips } from "features/trip";
+import { useAppDispatch, useAppSelector } from "shared/lib";
 import styles from "./style.module.scss";
-import { useAppSelector } from "shared/lib";
-import { selectStops, StopForm, StopItem } from "features/stops";
 
 const HomePage: FC = () => {
-    const stops = useAppSelector(selectStops);
-    const [isVisible, setIsVisible] = useState(false);
+    const dispatch = useAppDispatch();
+    const navigate = useNavigate();
+    const trips = useAppSelector(selectTrips);
 
-    const renderStopItems = () => {
-        return stops.map((stop) =>
-            <StopItem
-                key={stop.id}
-                stop={stop}
-            />
-        )
+    const handleCreate = () => {
+        const trip = createTrip();
+
+        if (trip) {
+            dispatch(addTrip(trip));
+            navigate(`/trip/${trip.id}/edit`);
+        }
     }
 
     return (
-        <nav className={styles.home}>
-            {!isVisible ? (
-                <div className={styles.homeContent}>
-                    <button
-                        className={styles.button}
-                        onClick={() => setIsVisible(true)}
-                    >
-                        Add New Stop
-                    </button>
-                    <div className={styles.stopList}>
-                        {renderStopItems()}
+        <div className={styles.home}>
+            <button 
+                onClick={handleCreate} 
+                className={styles.button}
+            >
+                Add New Trip
+            </button>
+            <div className={styles.tripList}>
+                {trips.map(trip => 
+                    <div key={trip.id} className={styles.trip}>
+                        <Link to={`/trip/${trip.id}`}>
+                            {trip.name}
+                        </Link>
                     </div>
-                </div>
-            ) : (
-                <StopForm onClose={() => setIsVisible(false)} />
-            )}            
-        </nav>
+                )}
+            </div>
+        </div>
     )
 }
 
