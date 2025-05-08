@@ -82,3 +82,7 @@ button {
 a {
   text-decoration: none;
 }
+
+a:visited {
+  color: unset;
+}

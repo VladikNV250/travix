@@ -1,13 +1,13 @@
 import { createSelector } from "@reduxjs/toolkit";
 import { RootState } from "app/store";
-import { StopsState } from "./types";
+import { TripsState } from "./types";
 
 const selectBase = createSelector(
     (state: RootState) => state,
-    (state) => state.stops,
+    (state) => state.trips
 )
 
-export const selectStops = createSelector(
+export const selectTrips = createSelector(
     selectBase,
-    (state: StopsState) => state.stops
+    (state: TripsState) => state.trips,
 )
