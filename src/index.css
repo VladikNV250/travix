@@ -86,3 +86,7 @@ a {
 a:visited {
   color: unset;
 }
+
+.leaflet-control-container .leaflet-routing-container-hide {
+  display: none;
+}

@@ -4,8 +4,7 @@ import ChevronUp from "./icons/chevron-up.svg?react";
 import ChevronRight from "./icons/chevron-right.svg?react";
 import ChevronDown from "./icons/chevron-down.svg?react";
 import ChevronLeft from "./icons/chevron-left.svg?react";
-
-import PointRed from "./points/point-red.png";
+import Point from "./icons/point.svg?react";
 
 /** ICONS */
 export {
@@ -15,9 +14,5 @@ export {
     ChevronRight,
     ChevronDown,
     ChevronLeft,
-}
-
-/** IMAGES */
-export {
-    PointRed
+    Point,
 }

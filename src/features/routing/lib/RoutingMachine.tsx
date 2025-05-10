@@ -7,9 +7,10 @@ import "leaflet-routing-machine/dist/leaflet-routing-machine.css";
 
 interface IRoutingMachine {
     waypoints: LatLngExpression[];
+    color: string;
 }
 
-export const RoutingMachine = ({ waypoints }: IRoutingMachine) => {
+export const RoutingMachine = ({ waypoints, color }: IRoutingMachine) => {
     const { map } = useMap();
 
     useEffect(() => {
@@ -23,6 +24,13 @@ export const RoutingMachine = ({ waypoints }: IRoutingMachine) => {
             draggableWaypoints: false,
             fitSelectedRoutes: false,
             routeWhileDragging: false,
+            lineOptions: {
+                styles: [
+                    {color: 'black', opacity: 0.15, weight: 9}, 
+                    {color: 'white', opacity: 0.8,  weight: 6}, 
+                    {color: color,   opacity: 1,    weight: 2},
+                ]
+            },
             createMarker: () => null, 
         }).addTo(map);
 
