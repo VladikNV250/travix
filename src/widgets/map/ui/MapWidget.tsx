@@ -9,26 +9,31 @@ import {
     useAppSelector 
 } from "shared/lib";
 import { useMap } from "features/map";
-import { Icon } from "leaflet";
-import { PointRed } from "shared/assets";
+import { DivIcon } from "leaflet";
 import "leaflet/dist/leaflet.css";
 import "leaflet-routing-machine/dist/leaflet-routing-machine.css";
 import { selectTrips } from "features/trip";
 import { RoutingMachine } from "features/routing";
+import { Point } from "shared/assets";
+import { renderToString } from "react-dom/server";
+import styles from "./style.module.scss";
 
 
 export const MapWidget: FC = () => {
     const trips = useAppSelector(selectTrips);
     const { setMap } = useMap();
 
-    const icon = new Icon({
-        iconUrl: PointRed,
-        iconSize: [20, 20],
-    }) 
+    
 
     const renderStops = () => {
         if (trips.length > 0) {
             return trips.map((trip) => {
+                const icon = new DivIcon({
+                    html: renderToString(<Point width={20} height={20} style={{color: trip.color}} />),
+                    iconSize: [20, 20],
+                    className: styles.marker
+                })
+
                 if (trip.stops.length > 0) {
                     return trip.stops.map(stop => 
                         <Marker
@@ -50,7 +55,7 @@ export const MapWidget: FC = () => {
         return trips.map(trip => {
             const waypoints = trip.stops.map(stop => stop.location);
 
-            return <RoutingMachine key={trip.id} waypoints={waypoints} />
+            return <RoutingMachine key={trip.id} waypoints={waypoints} color={trip.color} />
         })
     }
 
