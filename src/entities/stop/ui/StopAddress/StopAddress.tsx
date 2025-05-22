@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { Stop } from "../model/types";
+import { Stop } from "entities/stop/model/types";
 import styles from "./style.module.scss";
 
 
