@@ -1,4 +1,4 @@
-import { ChangeEvent, FC, MouseEvent, useEffect, useState } from "react";
+import { ChangeEvent, FC, MouseEvent, useEffect, useMemo, useState } from "react";
 import styles from "./style.module.scss";
 import { createStop } from "../../model/createStop";
 import { useAppDispatch } from "shared/lib";
@@ -9,6 +9,9 @@ import clsx from "clsx";
 import { addStop, editStop } from "features/trip";
 import { Trip } from "entities/trip";
 import { Stop, validateStop } from "entities/stop";
+import { ImageUpload } from "features/image";
+import { StopGallery } from "../StopGallery/StopGallery";
+import { Image } from "entities/stop/image";
 
 interface IStopForm {
     tripId: Trip["id"];
@@ -25,10 +28,21 @@ export const StopForm: FC<IStopForm> = ({ tripId, initialData, onClose }) => {
         arrivalDate: initialData?.arrivalDate || "",
         departureDate: initialData?.departureDate || "",
         notes: initialData?.notes || "",
+        images: initialData?.images || [],
     })
     const [debouncedAddress] = useDebounce(formData.address, 400);
 
     const editMode = !!initialData;
+
+    const hasUnsavedChanges = useMemo(
+        () => formData.address !== initialData?.address ||
+              formData.arrivalDate !== initialData.arrivalDate ||
+              formData.departureDate !== initialData.departureDate ||
+              formData.notes !== initialData.notes ||
+              formData.images.length !== initialData.images.length ||
+              !formData.images.every((image, i) => image.id === initialData.images?.[i]?.id),
+        [formData, initialData]
+    );
 
     useEffect(() => {
         (async () => {
@@ -39,7 +53,7 @@ export const StopForm: FC<IStopForm> = ({ tripId, initialData, onClose }) => {
                 setPredictions([]);
             }
         })()
-    }, [debouncedAddress])
+    }, [debouncedAddress]);
 
     const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
@@ -75,6 +89,7 @@ export const StopForm: FC<IStopForm> = ({ tripId, initialData, onClose }) => {
                         arrivalDate: "",
                         departureDate: "",
                         notes: "",
+                        images: [],
                     });
                     onClose?.();
                 }
@@ -82,6 +97,21 @@ export const StopForm: FC<IStopForm> = ({ tripId, initialData, onClose }) => {
         } catch (e) {
             console.error(e);
         }
+    }
+
+    const addImage = (image: Image) => {
+        setFormData(prevState => ({
+            ...prevState,
+            images: [...prevState.images, image]
+        }))
+    }
+
+    const deleteImage = (id: string) => {
+        const newImages = formData.images.filter(image => image.id !== id);
+        setFormData(prevState => ({
+            ...prevState,
+            images: newImages,
+        }))
     }
 
     return (
@@ -132,12 +162,15 @@ export const StopForm: FC<IStopForm> = ({ tripId, initialData, onClose }) => {
                 placeholder="Enter your notes"
                 rows={4}
             />    
+            <ImageUpload onUpload={addImage} />
             <button 
                 type="submit" 
                 onClick={async (e) => await handleSubmit(e)}
                 className={styles.button}
             >
-                {editMode ? "Save Changes" : "Add Stop +"}
+                {editMode ?  
+                (hasUnsavedChanges ? "Save Changes" : "Save Changes (nothing unchanged)") : 
+                "Add Stop +"}
             </button>
             <button 
                 className={clsx(styles.button, styles.grey)}
@@ -145,6 +178,10 @@ export const StopForm: FC<IStopForm> = ({ tripId, initialData, onClose }) => {
             >
                 Back
             </button>
+            <StopGallery 
+                images={formData.images} 
+                onDelete={deleteImage}
+            />
         </form>
     )
 }

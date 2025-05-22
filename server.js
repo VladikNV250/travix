@@ -2,14 +2,14 @@ import axios from "axios";
 import express from "express";
 import dotenv from "dotenv";
 
-dotenv.config();
 
+dotenv.config();
 const app = express();
 const PORT = 3001;
 
 app.use((req, res, next) => {
     res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+    res.header("Access-Control-Allow-Methods", "GET, POST, OPTIONS, DELETE");
     res.header("Access-Control-Allow-Headers", "Content-Type");
     next();
   });

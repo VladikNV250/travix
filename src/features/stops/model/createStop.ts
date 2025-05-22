@@ -12,6 +12,7 @@ export const createStop = async (data: Partial<Stop>): Promise<Stop | null> => {
         arrivalDate: data.arrivalDate ?? "",
         departureDate: data.departureDate ?? "",
         notes: data.notes,
+        images: data.images ?? [],
     }
 
     if (!validateStop(stop)) return null;
