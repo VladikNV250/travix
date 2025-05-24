@@ -11,6 +11,9 @@ export const tripsSlice = createSlice({
     name: "trips",
     initialState,
     reducers: {
+        setTrips: (state, action: PayloadAction<Trip[]>) => {
+            state.trips = action.payload;
+        },
         addTrip: (state, action: PayloadAction<Trip>) => {
             state.trips.push(action.payload);
         },
@@ -26,6 +29,15 @@ export const tripsSlice = createSlice({
 
             if (trip) {
                 Object.assign(trip, action.payload);
+            }
+        },
+        setStops: (state, action: PayloadAction<{ tripId: Trip["id"], stops: Stop[] }>) => {
+            const { tripId, stops } = action.payload;
+
+            const trip = state.trips.find((trip) => trip.id === tripId);
+
+            if (trip) {
+                trip.stops = stops;
             }
         },
         addStop: (state, action: PayloadAction<{ tripId: Trip["id"], stop: Stop }>) => {
@@ -63,6 +75,8 @@ export const tripsSlice = createSlice({
 });
 
 export const { 
+    setTrips,
+    setStops,
     addStop, 
     addTrip, 
     removeStop, 

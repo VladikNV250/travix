@@ -1,8 +1,9 @@
 import { FC } from "react";
-import { Link, useNavigate } from "react-router";
-import { addTrip, createTrip, selectTrips } from "features/trip";
-import { useAppDispatch, useAppSelector } from "shared/lib";
+import { useNavigate } from "react-router";
+import { addTrip, createTrip, selectTrips, setTrips } from "features/trip";
+import { DndWrapper, useAppDispatch, useAppSelector } from "shared/lib";
 import styles from "./style.module.scss";
+import { TripItem } from "entities/trip";
 
 const HomePage: FC = () => {
     const dispatch = useAppDispatch();
@@ -25,18 +26,21 @@ const HomePage: FC = () => {
                 className={styles.button}
             >
                 Add New Trip
-            </button>
-            <div className={styles.tripList}>
-                {trips.map(trip => 
-                    <div key={trip.id} className={styles.trip}>
-                        <Link to={`/trip/${trip.id}`}>
-                            {trip.name}
-                        </Link>
-                    </div>
-                )}
-            </div>
+            </button>  
+            <DndWrapper
+                items={trips}
+                setItems={(newTrips) => dispatch(setTrips(newTrips))}
+            >
+                <div className={styles.tripList}>
+                    {trips.map(trip => 
+                        <TripItem key={trip.id} trip={trip} />
+                    )}
+                </div>
+            </DndWrapper>
         </div>
     )
 }
+
+
 
 export default HomePage;

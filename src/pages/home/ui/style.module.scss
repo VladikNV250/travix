@@ -1,17 +1,10 @@
-.trip {
-    padding: 8px 16px;
-    background: #285085;
-    color: #fff;
-    font-weight: 500;
-    letter-spacing: 0.03em;
-
-    &List {
-        display: flex;
-        flex-direction: column;
-        gap: 4px;
-        margin-top: 20px;
-    }
+.tripList {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-top: 20px;
 }
+
 
 .button {
     width: 100%;

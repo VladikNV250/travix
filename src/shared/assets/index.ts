@@ -6,6 +6,7 @@ import ChevronDown from "./icons/chevron-down.svg?react";
 import ChevronLeft from "./icons/chevron-left.svg?react";
 import Point from "./icons/point.svg?react";
 import Trash from "./icons/trash.svg?react";
+import GripVertical from "./icons/grip-vertical.svg?react";
 
 /** ICONS */
 export {
@@ -17,4 +18,5 @@ export {
     ChevronLeft,
     Point,
     Trash,
+    GripVertical,
 }

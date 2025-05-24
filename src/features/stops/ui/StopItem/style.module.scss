@@ -1,9 +1,9 @@
 .stopItem {
     padding: 6px 10px;
     background: #cbc5bc;   
-    display: flex;
+    display: grid;
     align-items: center;
-    justify-content: space-between;
+    grid-template-columns: 1fr auto auto;
     gap: 8px;
     position: relative;
     cursor: pointer;
@@ -37,4 +37,9 @@
             background: #cccccc;
         }
     }
+}
+
+.dragButton {
+    color: #000;
+    cursor: grab;
 }
