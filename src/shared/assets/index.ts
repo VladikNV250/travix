@@ -7,6 +7,7 @@ import ChevronLeft from "./icons/chevron-left.svg?react";
 import Point from "./icons/point.svg?react";
 import Trash from "./icons/trash.svg?react";
 import GripVertical from "./icons/grip-vertical.svg?react";
+import CalendarDate from "./icons/calendar-date.svg?react";
 
 /** ICONS */
 export {
@@ -19,4 +20,5 @@ export {
     Point,
     Trash,
     GripVertical,
+    CalendarDate,
 }

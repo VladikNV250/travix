@@ -17,9 +17,10 @@ import { CSS } from "@dnd-kit/utilities";
 interface IStopItem {
     tripId: Trip["id"];
     stop: Stop;
+    day?: string;
 }
 
-export const StopItem: FC<IStopItem> = ({tripId, stop }) => {
+export const StopItem: FC<IStopItem> = ({tripId, stop, day }) => {
     const dispatch = useAppDispatch();
     const { openId, openMenu } = useDropdown(); 
     const { map } = useMap();
@@ -28,13 +29,13 @@ export const StopItem: FC<IStopItem> = ({tripId, stop }) => {
         attributes,
         listeners,
         transform,
-        transition
+        transition,
     } = useSortable({ id: stop.id });
 
     const dragStyle = {
         transform: CSS.Transform.toString(transform),
         transition,
-    } 
+    }
 
     return (
         <div 
@@ -43,6 +44,11 @@ export const StopItem: FC<IStopItem> = ({tripId, stop }) => {
             onClick={() => map?.flyTo(stop.location, 10, {animate: true})}
             style={dragStyle}
         >
+            {day && (
+                <p className={styles.text}>
+                    {day}
+                </p>
+            )}
             <StopAddress stop={stop} />
             <button 
                 onClick={(e) => {
