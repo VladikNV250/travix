@@ -1,0 +1,20 @@
+.trip {
+    padding: 8px 16px;
+    background: #285085;
+    font-weight: 500;
+    letter-spacing: 0.03em;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 30px;
+    min-width: 200px;
+
+    .link {
+        color: #fff;
+    }
+
+    .dragButton {
+        color: #eee;
+        cursor: grab;
+    }
+}

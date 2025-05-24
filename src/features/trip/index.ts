@@ -6,6 +6,8 @@ export {
     editTrip,
     editStop,
     tripsSlice,
+    setTrips,
+    setStops,
     default as tripsReducer
 } from "./model/tripsSlice";
 export {

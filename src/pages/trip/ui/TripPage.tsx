@@ -1,7 +1,7 @@
 import { FC, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router";
-import { useAppDispatch, useAppSelector, useDropdown } from "shared/lib";
-import { removeTrip, selectTrips } from "features/trip";
+import { DndWrapper, useAppDispatch, useAppSelector, useDropdown } from "shared/lib";
+import { removeTrip, selectTrips, setStops } from "features/trip";
 import { StopForm, StopItem } from "features/stops";
 import styles from "./style.module.scss";
 import { ChevronLeft, ThreeDots } from "shared/assets";
@@ -32,7 +32,7 @@ const TripPage: FC = () => {
             />
         )
     }
-    
+
     return (
         <div className={styles.trip}>
             {!isOpen ? (
@@ -81,9 +81,15 @@ const TripPage: FC = () => {
                     >
                         Add New Stop
                     </button>
-                    <div className={styles.stopList}>
-                        {renderStops()}
-                    </div>
+                    <DndWrapper
+                        items={trip?.stops ?? []}
+                        setItems={(newStops) => dispatch(setStops({tripId: trip?.id ?? "", stops: newStops}))}
+                    >
+                        <div className={styles.stopList}>
+                            {renderStops()}
+                        </div>
+                    </DndWrapper>
+                    
                 </>
             ) : (
                 <StopForm 

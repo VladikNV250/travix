@@ -4,13 +4,15 @@ import { useMap } from "features/map";
 import { removeStop } from "features/trip";
 import { Trip } from "entities/trip";
 import { Stop, StopAddress } from "entities/stop";
-import { ThreeDots } from "shared/assets";
+import { GripVertical, ThreeDots } from "shared/assets";
 import { 
     useAppDispatch, 
     useDropdown 
 } from "shared/lib";
 import clsx from "clsx";
 import styles from "./style.module.scss";
+import { useSortable } from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
 
 interface IStopItem {
     tripId: Trip["id"];
@@ -21,12 +23,25 @@ export const StopItem: FC<IStopItem> = ({tripId, stop }) => {
     const dispatch = useAppDispatch();
     const { openId, openMenu } = useDropdown(); 
     const { map } = useMap();
+    const {
+        setNodeRef,
+        attributes,
+        listeners,
+        transform,
+        transition
+    } = useSortable({ id: stop.id });
 
+    const dragStyle = {
+        transform: CSS.Transform.toString(transform),
+        transition,
+    } 
 
     return (
         <div 
+            ref={setNodeRef}
             className={styles.stopItem}
             onClick={() => map?.flyTo(stop.location, 10, {animate: true})}
+            style={dragStyle}
         >
             <StopAddress stop={stop} />
             <button 
@@ -37,6 +52,9 @@ export const StopItem: FC<IStopItem> = ({tripId, stop }) => {
                 className={styles.button}
             >  
                 <ThreeDots width={20} height={20} />
+            </button>
+            <button className={styles.dragButton} {...attributes} {...listeners}>
+                <GripVertical width={20} height={20} />
             </button>
             <div 
                 className={clsx(
