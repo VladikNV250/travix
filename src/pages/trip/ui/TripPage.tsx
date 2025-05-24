@@ -1,10 +1,10 @@
-import { FC, useState } from "react";
+import { FC, useMemo, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router";
 import { DndWrapper, useAppDispatch, useAppSelector, useDropdown } from "shared/lib";
 import { removeTrip, selectTrips, setStops } from "features/trip";
-import { StopForm, StopItem } from "features/stops";
+import { calculateTripDays, StopForm, StopItem } from "features/stops";
 import styles from "./style.module.scss";
-import { ChevronLeft, ThreeDots } from "shared/assets";
+import { CalendarDate, ChevronLeft, ThreeDots } from "shared/assets";
 import clsx from "clsx";
 
 
@@ -16,6 +16,11 @@ const TripPage: FC = () => {
     const trip = trips.find(trip => trip.id === tripId);
     const [isOpen, setIsOpen] = useState<boolean>(false);
     const { openId, openMenu } = useDropdown();
+    const [dayView, setDayView] = useState<boolean>(false);
+    const tripDays = useMemo(
+        () => calculateTripDays(trip?.stops ?? []),
+        [trip?.stops]
+    )
     
 
     const handleDelete = () => {
@@ -24,13 +29,31 @@ const TripPage: FC = () => {
     }
 
     const renderStops = () => {
-        return trip?.stops.map(stop =>
-            <StopItem 
-                key={stop.id}
-                stop={stop}
-                tripId={tripId ?? ""}
-            />
-        )
+        if (dayView) {
+            const sortedStops = trip?.stops.sort((a, b) => {
+                const arrivalA = new Date(a.arrivalDate);
+                const arrivalB = new Date(b.arrivalDate);
+
+                return arrivalA.getTime() - arrivalB.getTime();
+            })
+
+            return sortedStops?.map((stop, index) =>
+                <StopItem 
+                    key={stop.id}
+                    stop={stop}
+                    tripId={tripId ?? ""}
+                    day={tripDays[index]}
+                />
+            )
+        } else {
+            return trip?.stops.map((stop) =>
+                <StopItem 
+                    key={stop.id}
+                    stop={stop}
+                    tripId={tripId ?? ""}
+                />
+            )
+        }
     }
 
     return (
@@ -44,6 +67,15 @@ const TripPage: FC = () => {
                         <h3 className={styles.tripTitle}>
                             {trip?.name ?? ""}
                         </h3>
+                        <button 
+                            title="Day View" 
+                            onClick={() => setDayView(!dayView)}
+                            className={clsx(
+                                dayView && styles.dayView,
+                            )}
+                        >
+                            <CalendarDate width={20} height={20} />
+                        </button>
                         <div 
                             role="button" 
                             className={styles.headerButton}
@@ -89,7 +121,6 @@ const TripPage: FC = () => {
                             {renderStops()}
                         </div>
                     </DndWrapper>
-                    
                 </>
             ) : (
                 <StopForm 

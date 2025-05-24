@@ -13,7 +13,7 @@
 
     &Header {
         display: grid;
-        grid-template-columns: auto 1fr auto;
+        grid-template-columns: auto 1fr auto auto;
         align-items: center;
         gap: 16px;
     
@@ -87,4 +87,8 @@
 
 .stopList {
     margin-top: 24px;    
+}
+
+.dayView {
+    color: #337ba1;
 }
