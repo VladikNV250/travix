@@ -1,7 +1,7 @@
 import { ChangeEvent, FC } from "react";
 import styles from "./style.module.scss";
 import { useUploadImage } from "../lib/useUploadImage";
-import { Image } from "entities/stop/image";
+import { Image } from "entities/image";
 
 interface IImageUpload {
     onUpload: (image: Image) => void,

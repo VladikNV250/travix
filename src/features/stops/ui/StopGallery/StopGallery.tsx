@@ -1,6 +1,6 @@
 import { FC } from "react";
 import styles from "./style.module.scss";
-import { Image } from "entities/stop/image";
+import { Image } from "entities/image";
 import { Trash } from "shared/assets";
 
 interface IStopGallery {

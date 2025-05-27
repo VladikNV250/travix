@@ -1,13 +1,9 @@
 import { FC } from "react";
 import { 
     MapContainer, 
-    Marker, 
-    Popup, 
     TileLayer 
 } from "react-leaflet";
-import { 
-    useAppSelector 
-} from "shared/lib";
+import { useAppSelector } from "shared/lib";
 import { useMap } from "features/map";
 import { DivIcon } from "leaflet";
 import "leaflet/dist/leaflet.css";
@@ -17,13 +13,12 @@ import { RoutingMachine } from "features/routing";
 import { Point } from "shared/assets";
 import { renderToString } from "react-dom/server";
 import styles from "./style.module.scss";
+import { StopMarker } from "features/stops";
 
 
 export const MapWidget: FC = () => {
     const trips = useAppSelector(selectTrips);
     const { setMap } = useMap();
-
-    
 
     const renderStops = () => {
         if (trips.length > 0) {
@@ -36,15 +31,11 @@ export const MapWidget: FC = () => {
 
                 if (trip.stops.length > 0) {
                     return trip.stops.map(stop => 
-                        <Marker
+                        <StopMarker 
                             key={stop.id}
-                            position={stop.location}
+                            stop={stop}  
                             icon={icon}
-                        >
-                            <Popup>
-                                {stop.address}
-                            </Popup>
-                        </Marker>
+                        />
                     )
                 }
             })
