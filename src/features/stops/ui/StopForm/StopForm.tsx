@@ -11,7 +11,7 @@ import { Trip } from "entities/trip";
 import { Stop, validateStop } from "entities/stop";
 import { ImageUpload } from "features/image";
 import { StopGallery } from "../StopGallery/StopGallery";
-import { Image } from "entities/stop/image";
+import { Image } from "entities/image";
 
 interface IStopForm {
     tripId: Trip["id"];

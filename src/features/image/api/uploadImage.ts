@@ -1,6 +1,6 @@
 import { apiClient } from "shared/api"
 import { UploadApiResponse } from "./type";
-import { Image } from "entities/stop/image";
+import { Image } from "entities/image";
 
 export const uploadImage = async (
     data: FormData, 

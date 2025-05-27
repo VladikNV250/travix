@@ -9,6 +9,7 @@ export const createStop = async (data: Partial<Stop>): Promise<Stop | null> => {
             lat: 0,
             lng: 0,
         },
+        countryCode: null,
         arrivalDate: data.arrivalDate ?? "",
         departureDate: data.departureDate ?? "",
         notes: data.notes,
@@ -17,7 +18,10 @@ export const createStop = async (data: Partial<Stop>): Promise<Stop | null> => {
 
     if (!validateStop(stop)) return null;
     
-    stop.location = await geocodePlace(stop.address);
+    const geocode = await geocodePlace(stop.address);
+
+    stop.location = geocode.location;
+    stop.countryCode = geocode.countryCode;
 
     return stop;
 }

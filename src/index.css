@@ -87,6 +87,12 @@ a:visited {
   color: unset;
 }
 
+
+/** Leaflet style settings */
 .leaflet-control-container .leaflet-routing-container-hide {
   display: none;
+}
+
+.leaflet-popup-content-wrapper {
+  overflow: hidden;
 }

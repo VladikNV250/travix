@@ -29,8 +29,9 @@ const TripPage: FC = () => {
     }
 
     const renderStops = () => {
-        if (dayView) {
-            const sortedStops = trip?.stops.sort((a, b) => {
+        if (dayView && trip) {
+            const sortedStops = [...trip.stops];
+            sortedStops.sort((a, b) => {
                 const arrivalA = new Date(a.arrivalDate);
                 const arrivalB = new Date(b.arrivalDate);
 

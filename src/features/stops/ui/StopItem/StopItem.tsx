@@ -44,11 +44,9 @@ export const StopItem: FC<IStopItem> = ({tripId, stop, day }) => {
             onClick={() => map?.flyTo(stop.location, 10, {animate: true})}
             style={dragStyle}
         >
-            {day && (
-                <p className={styles.text}>
-                    {day}
-                </p>
-            )}
+            <p className={styles.text}>
+                {day ?? ""}
+            </p>
             <StopAddress stop={stop} />
             <button 
                 onClick={(e) => {
