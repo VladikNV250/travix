@@ -8,7 +8,6 @@ import { TripContinueButton, useTripAnimator } from "features/trip-animation";
 
 export const StopInfoPanel: FC = () => {
     const stop = useAppSelector(selectCurrentStop);
-    const tripAnimator = useTripAnimator();
 
     return (
         <div 
@@ -23,9 +22,6 @@ export const StopInfoPanel: FC = () => {
                         {stop.address}
                     </h3>
                     <StopSliderGallery gallery={stop.images} />
-                    <button onClick={() => tripAnimator?.continueAnimation()}>
-                        continue
-                    </button>
                     <TripContinueButton />
                 </>
             )}

@@ -9,19 +9,16 @@ import { useTripAnimator } from "./useTripAnimator";
 
 
 export const useInitTripAnimator = (map: Map | null, route: Route, tripStops?: Stop[]) => {
-    const animatorRef = useTripAnimator(true);
+    const { tripAnimator, setTripAnimator } = useTripAnimator();
     const dispatch = useAppDispatch();
     
     useEffect(() => {
-        const tripAnimator = animatorRef?.current;
         return () => {
             tripAnimator?.stopAnimation();
         }
-    }, [animatorRef])
+    }, [setTripAnimator, tripAnimator])
 
     useEffect(() => {
-        const tripAnimator = animatorRef?.current;
-
         if (!tripAnimator || !tripStops) return;
 
         dispatch(setCurrentMarkerStop(null));
@@ -40,29 +37,13 @@ export const useInitTripAnimator = (map: Map | null, route: Route, tripStops?: S
             tripAnimator.onAnimationContinue = undefined;
             dispatch(setCurrentMarkerStop(null));
         }
-    }, [dispatch, tripStops, animatorRef]);
+    }, [dispatch, tripStops, tripAnimator]);
 
     useEffect(() => {
-        if (map && route && !animatorRef.current) {
-            animatorRef.current = new TripAnimator(map, route);
+        if (map && route) {
+            setTripAnimator(new TripAnimator(map, route));
         }
-    }, [map, route, animatorRef])
+    }, [map, route, setTripAnimator])
 
-    // useEffect(() => {
-    //     if (!map || !route) return;
-
-    //     animatorRef.current?.stopAnimation();
-    //     animatorRef.current = new TripAnimator(map, route);
-
-    //     return () => {
-    //         animatorRef.current?.stopAnimation();
-    //         animatorRef.current = null;
-    //     };
-    // }, [map, route]); 
-
-    if (map && route && !animatorRef.current) {
-        animatorRef.current = new TripAnimator(map, route);
-    }
-
-    return animatorRef.current;
+    return tripAnimator;
 }

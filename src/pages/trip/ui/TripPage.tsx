@@ -6,15 +6,19 @@ import { calculateTripDays, StopForm, StopItem } from "features/stops";
 import styles from "./style.module.scss";
 import { CalendarDate, ChevronLeft, ThreeDots } from "shared/assets";
 import clsx from "clsx";
-import { selectRoute } from "features/routing";
+import { selectRoute, setCurrentMarkerStop } from "features/routing";
 import { useMap } from "features/map";
 import { 
+    TripAnimator,
     TripStopButton, 
     useInitTripAnimator, 
     useTripAnimator, 
     useTripAnimatorState 
 } from "features/trip-animation";
 import { TripPlayButton } from "features/trip-animation/ui/TripPlayButton/TripPlayButton";
+import { selectTripAnimator } from "features/trip/model/selectors";
+import { LatLngExpression } from "leaflet";
+import { setTripAnimator } from "features/trip/model/tripsSlice";
 
 
 const TripPage: FC = () => {

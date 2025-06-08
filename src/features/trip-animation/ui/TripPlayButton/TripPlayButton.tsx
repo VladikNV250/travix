@@ -1,16 +1,18 @@
 import { FC } from "react";
 import { useTripAnimator, useTripAnimatorPlayer } from "features/trip-animation/lib";
-import styles from "./style.module.scss";
 import { LatLngExpression } from "leaflet";
 import { Pause, Play } from "shared/assets";
+import styles from "./style.module.scss";
 
 interface ITripPlayButton {
     stops: LatLngExpression[];
 }
 
 export const TripPlayButton: FC<ITripPlayButton> = ({ stops }) => {
-    const tripAnimator = useTripAnimator();    
+    const { tripAnimator } = useTripAnimator();    
     const [playState, handlePlayClick] = useTripAnimatorPlayer(tripAnimator);
+
+    console.log("rerender");
 
     return (
         <button 
