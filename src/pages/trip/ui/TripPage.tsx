@@ -1,4 +1,4 @@
-import { FC, useMemo, useState } from "react";
+import { FC, useEffect, useMemo, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router";
 import { DndWrapper, useAppDispatch, useAppSelector, useDropdown } from "shared/lib";
 import { removeTrip, selectTrips, setStops } from "features/trip";
@@ -6,6 +6,15 @@ import { calculateTripDays, StopForm, StopItem } from "features/stops";
 import styles from "./style.module.scss";
 import { CalendarDate, ChevronLeft, ThreeDots } from "shared/assets";
 import clsx from "clsx";
+import { selectRoute } from "features/routing";
+import { useMap } from "features/map";
+import { 
+    TripStopButton, 
+    useInitTripAnimator, 
+    useTripAnimator, 
+    useTripAnimatorState 
+} from "features/trip-animation";
+import { TripPlayButton } from "features/trip-animation/ui/TripPlayButton/TripPlayButton";
 
 
 const TripPage: FC = () => {
@@ -14,15 +23,23 @@ const TripPage: FC = () => {
     const { tripId } = useParams();
     const trips = useAppSelector(selectTrips);
     const trip = trips.find(trip => trip.id === tripId);
+    const route = useAppSelector(selectRoute(tripId ?? ""));
+    const { map } = useMap();
     const [isOpen, setIsOpen] = useState<boolean>(false);
     const { openId, openMenu } = useDropdown();
     const [dayView, setDayView] = useState<boolean>(false);
+    const tripAnimator = useInitTripAnimator(map, route, trip?.stops);
+    const [autocontinue, setAutocontinue] = useTripAnimatorState(tripAnimator, "autocontinue", false);
+    const [isCameraMounted, setIsCameraMounted] = useTripAnimatorState(tripAnimator, "isCameraMounted", true);
+
     const tripDays = useMemo(
-        () => calculateTripDays(trip?.stops ?? []),
-        [trip?.stops]
+        () => calculateTripDays(trip?.stops ?? []), [trip?.stops]
+    )    
+
+    const stops = useMemo(
+        () => trip?.stops.map(stop => stop.location) ?? [], [trip]
     )
     
-
     const handleDelete = () => {
         dispatch(removeTrip(trip ?? null));
         navigate("/");
@@ -68,6 +85,8 @@ const TripPage: FC = () => {
                         <h3 className={styles.tripTitle}>
                             {trip?.name ?? ""}
                         </h3>
+                        <TripPlayButton stops={stops} />
+                        <TripStopButton />
                         <button 
                             title="Day View" 
                             onClick={() => setDayView(!dayView)}
@@ -129,7 +148,7 @@ const TripPage: FC = () => {
                     onClose={() => setIsOpen(false)}  
                 />
             )}
-        </div>
+        </div>        
     )
 }
 

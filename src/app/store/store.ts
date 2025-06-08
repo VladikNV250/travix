@@ -1,5 +1,6 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { tripsReducer } from "features/trip";
+import { routesReducer } from "features/routing";
 import { 
     FLUSH,
     PAUSE,
@@ -14,6 +15,7 @@ import storage from 'redux-persist/lib/storage'
 
 const rootReducer = combineReducers({
     trips: tripsReducer,
+    routes: routesReducer,
 })
 
 const persistConfig = {

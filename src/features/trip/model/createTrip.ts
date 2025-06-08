@@ -6,6 +6,7 @@ export const createTrip = () => {
         name: "New Trip",
         color: "#ff0000",
         stops: [],
+        route: [],
     }
 
     if (validateTrip(trip)) {

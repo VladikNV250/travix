@@ -24,7 +24,7 @@ export const MapWidget: FC = () => {
         if (trips.length > 0) {
             return trips.map((trip) => {
                 const icon = new DivIcon({
-                    html: renderToString(<Point width={20} height={20} style={{color: trip.color}} />),
+                    html: renderToString(<Point width={20} height={20} style={{color: trip.color, zIndex: -1}} />),
                     iconSize: [20, 20],
                     className: styles.marker
                 })
@@ -43,11 +43,9 @@ export const MapWidget: FC = () => {
     }
 
     const renderRoutes = () => {
-        return trips.map(trip => {
-            const waypoints = trip.stops.map(stop => stop.location);
-
-            return <RoutingMachine key={trip.id} waypoints={waypoints} color={trip.color} />
-        })
+        return trips.map(trip => 
+            <RoutingMachine key={trip.id} trip={trip} />
+        )
     }
 
     return (
@@ -55,7 +53,7 @@ export const MapWidget: FC = () => {
             center={[51.505, 0]} 
             zoom={3} 
             scrollWheelZoom={true}
-            style={{ height: "100%", width: "100%" }}
+            style={{ height: "100%", width: "100%", zIndex: "8" }}
             ref={setMap}
         >
             <TileLayer

@@ -5,6 +5,7 @@ import {
 import { Provider } from "react-redux";
 import { store } from "app/store";
 import { MapProvider } from "features/map";
+import { TripAnimatorProvider } from "features/trip-animation";
 import { DropdownProvider } from "shared/lib";
 import { PersistGate } from "redux-persist/integration/react";
 import { persistor } from "app/store/store";
@@ -18,9 +19,11 @@ export const Providers: FC<IProviders> = ({ children }) => {
         <Provider store={store}>
             <PersistGate persistor={persistor}>
                 <MapProvider>
-                    <DropdownProvider>
-                        {children}
-                    </DropdownProvider>
+                    <TripAnimatorProvider>
+                        <DropdownProvider>
+                            {children}
+                        </DropdownProvider>
+                    </TripAnimatorProvider>
                 </MapProvider>
             </PersistGate>
         </Provider>

@@ -8,6 +8,9 @@ import Point from "./icons/point.svg?react";
 import Trash from "./icons/trash.svg?react";
 import GripVertical from "./icons/grip-vertical.svg?react";
 import CalendarDate from "./icons/calendar-date.svg?react";
+import Play from "./icons/play.svg?react";
+import Pause from "./icons/pause.svg?react";
+import Stop from "./icons/stop.svg?react";
 
 /** ICONS */
 export {
@@ -21,4 +24,7 @@ export {
     Trash,
     GripVertical,
     CalendarDate,
+    Play,
+    Pause,
+    Stop,
 }
