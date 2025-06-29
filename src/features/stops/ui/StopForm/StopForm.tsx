@@ -1,17 +1,11 @@
-import { ChangeEvent, FC, MouseEvent, useEffect, useMemo, useState } from "react";
-import styles from "./style.module.scss";
-import { createStop } from "../../model/createStop";
-import { useAppDispatch } from "shared/lib";
-import { useDebounce } from "use-debounce";
-import { autocompletePlace, Prediction } from "features/geo";
-import { useMap } from "features/map";
-import clsx from "clsx";
-import { addStop, editStop } from "features/trip";
-import { Trip } from "entities/trip";
-import { Stop, validateStop } from "entities/stop";
+import { FC } from "react";
 import { ImageUpload } from "features/image";
+import { Trip } from "entities/trip";
+import { Stop } from "entities/stop";
+import { useStopFormViewModel } from "features/stops/model";
 import { StopGallery } from "../StopGallery/StopGallery";
-import { Image } from "entities/image";
+import clsx from "clsx";
+import styles from "./style.module.scss";
 
 interface IStopForm {
     tripId: Trip["id"];
@@ -20,102 +14,31 @@ interface IStopForm {
 }
 
 export const StopForm: FC<IStopForm> = ({ tripId, initialData, onClose }) => {
-    const dispatch = useAppDispatch();
-    const { map } = useMap();
-    const [predictions, setPredictions] = useState<Prediction[]>([]);
-    const [formData, setFormData] = useState({
-        address: initialData?.address || "",
-        arrivalDate: initialData?.arrivalDate || "",
-        departureDate: initialData?.departureDate || "",
-        notes: initialData?.notes || "",
-        images: initialData?.images || [],
+    const {
+        formData,
+        predictions,
+        onDataChange,
+        onPredictionSelect,
+        onSaveStop,
+        onAddImage,
+        onDeleteImage,
+        editMode,
+        hasUnsavedChanges,
+        isFormValid,
+        isSubmitting,
+        onCancel,
+        submitError,
+    } = useStopFormViewModel({
+        tripId,
+        initialData,
+        onClose
     })
-    const [debouncedAddress] = useDebounce(formData.address, 400);
-
-    const editMode = !!initialData;
-
-    const hasUnsavedChanges = useMemo(
-        () => formData.address !== initialData?.address ||
-              formData.arrivalDate !== initialData.arrivalDate ||
-              formData.departureDate !== initialData.departureDate ||
-              formData.notes !== initialData.notes ||
-              formData.images.length !== initialData.images.length ||
-              !formData.images.every((image, i) => image.id === initialData.images?.[i]?.id),
-        [formData, initialData]
-    );
-
-    useEffect(() => {
-        (async () => {
-            if (debouncedAddress !== '') {
-                const predictions = await autocompletePlace(debouncedAddress);
-                setPredictions(predictions);
-            } else {
-                setPredictions([]);
-            }
-        })()
-    }, [debouncedAddress]);
-
-    const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-        const { name, value } = e.target;
-        setFormData(prevState => ({
-            ...prevState,
-            [name]: value
-        }))
-    }
-
-    const handleSubmit = async (e: MouseEvent<HTMLButtonElement>) => {
-        e.preventDefault();
-
-        try {
-            if (editMode) {
-                const updatedStop: Stop = {
-                    ...initialData,
-                    ...formData,
-                }
-
-                if (validateStop(updatedStop)) {
-                    dispatch(editStop({ tripId, updatedStop }));
-                    onClose?.();
-                }
-            } else {
-                const stop = await createStop(formData);
-
-                if (stop) {
-                    dispatch(addStop({tripId, stop}));
-                    map?.flyTo(stop.location, 10, {animate: true})
-    
-                    setFormData({
-                        address: "",
-                        arrivalDate: "",
-                        departureDate: "",
-                        notes: "",
-                        images: [],
-                    });
-                    onClose?.();
-                }
-            }
-        } catch (e) {
-            console.error(e);
-        }
-    }
-
-    const addImage = (image: Image) => {
-        setFormData(prevState => ({
-            ...prevState,
-            images: [...prevState.images, image]
-        }))
-    }
-
-    const deleteImage = (id: string) => {
-        const newImages = formData.images.filter(image => image.id !== id);
-        setFormData(prevState => ({
-            ...prevState,
-            images: newImages,
-        }))
-    }
 
     return (
-        <form className={styles.form}>
+        <form 
+            className={styles.form}
+            onSubmit={async (e) => await onSaveStop(e)}
+        >
             <div className={styles.inputContainer}>
                 <input
                     type="text"
@@ -123,17 +46,14 @@ export const StopForm: FC<IStopForm> = ({ tripId, initialData, onClose }) => {
                     placeholder="Enter address"
                     className={styles.input}
                     value={formData.address}
-                    onChange={handleChange}
+                    onChange={onDataChange}
                 />
                 <div className={styles.predictions}>
                     {predictions.map(prediction => 
                         <p 
                             key={prediction.place_id} 
                             className={styles.prediction}
-                            onClick={() => setFormData(prevState => ({
-                                ...prevState,
-                                address: prediction.description
-                            }))}
+                            onClick={() => onPredictionSelect(prediction.description)}
                         >
                             {prediction.description}
                         </p>
@@ -145,42 +65,44 @@ export const StopForm: FC<IStopForm> = ({ tripId, initialData, onClose }) => {
                 name="arrivalDate"
                 value={formData.arrivalDate}
                 className={styles.input}
-                onChange={handleChange}
+                onChange={onDataChange}
             />
             <input 
                 type="date"
                 name="departureDate"
                 value={formData.departureDate}
                 className={styles.input}
-                onChange={handleChange}
+                onChange={onDataChange}
             />      
             <textarea 
                 name="notes"
                 value={formData.notes}
                 className={styles.input}
-                onChange={handleChange}
+                onChange={onDataChange}
                 placeholder="Enter your notes"
                 rows={4}
             />    
-            <ImageUpload onUpload={addImage} />
+            <ImageUpload onUpload={onAddImage} />
+            {submitError && (<p className={styles.errorMessage}>{submitError}</p>)}
             <button 
                 type="submit" 
-                onClick={async (e) => await handleSubmit(e)}
                 className={styles.button}
+                disabled={!isFormValid || isSubmitting}
             >
                 {editMode ?  
                 (hasUnsavedChanges ? "Save Changes" : "Save Changes (nothing unchanged)") : 
                 "Add Stop +"}
             </button>
             <button 
+                type="button"
                 className={clsx(styles.button, styles.grey)}
-                onClick={onClose}
+                onClick={onCancel}
             >
                 Back
             </button>
             <StopGallery 
                 images={formData.images} 
-                onDelete={deleteImage}
+                onDelete={onDeleteImage}
             />
         </form>
     )

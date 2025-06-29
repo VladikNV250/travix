@@ -11,8 +11,6 @@ const StopPage: FC = () => {
     const trip = trips.find(trip => trip.id === tripId);
     const stop = useMemo(() => trip?.stops.find(stop => stop.id === stopId), [trip, stopId]);
 
-
-
     return (
         <div>
             <StopForm  

@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useCallback, useState } from "react"
 import { 
     getWeatherForecast, 
     getWeatherFuture, 
@@ -11,7 +11,7 @@ export const useWeather = () => {
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<unknown | null>(null);
 
-    const getWeather = async (latlng: string, date: Date) => {
+    const getWeather = useCallback(async (latlng: string, date: Date) => {
         const day = 1000 * 60 * 60 * 24;
         const today = new Date();
         today.setHours(0, 0, 0, 0);
@@ -34,7 +34,7 @@ export const useWeather = () => {
         } finally {
             setLoading(false);
         }
-    }
+    }, [])
 
     return { 
         weather, 

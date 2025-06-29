@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useCallback, useState } from "react"
 import { Holiday } from "../model/types";
 import { fetchHoliday } from "../api/holidaysApi";
 
@@ -7,7 +7,7 @@ export const useHoliday = () => {
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<unknown | null>(null);
 
-    const getHoliday = async (countryCode: string, date: Date) => {
+    const getHoliday = useCallback(async (countryCode: string, date: Date) => {
         try {
             setLoading(true);
 
@@ -20,7 +20,7 @@ export const useHoliday = () => {
         } finally {
             setLoading(false);
         }
-    }
+    }, [])
 
     return { holiday, loading, error, getHoliday };
 }

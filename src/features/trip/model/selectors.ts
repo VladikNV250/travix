@@ -8,6 +8,11 @@ const selectBase = createSelector(
 )
 
 export const selectTrips = createSelector(
-    selectBase,
+    [selectBase],
     (state: TripsState) => state.trips,
+)
+
+export const selectTrip = (tripId: string) => createSelector(
+    [selectTrips],
+    (trips) => trips.find(trip => trip.id === tripId),
 )

@@ -11,9 +11,11 @@ import CalendarDate from "./icons/calendar-date.svg?react";
 import Play from "./icons/play.svg?react";
 import Pause from "./icons/pause.svg?react";
 import Stop from "./icons/stop.svg?react";
+import DirectionMarker from "./icons/direction-marker.png";
 
 /** ICONS */
 export {
+    DirectionMarker,
     CaretRightFill,
     ThreeDots,
     ChevronUp,

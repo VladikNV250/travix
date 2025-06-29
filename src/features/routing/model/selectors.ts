@@ -6,9 +6,11 @@ const selectBase = createSelector(
     (state) => state.routes
 )
 
-export const selectRoute = (id: string) => {
-    return createSelector([selectBase], (state) => state.routes[id])
-}
+export const selectRoute = (id: string) => createSelector(
+    [selectBase], 
+    (state) => state.routes[id]
+)
+
 
 export const selectActiveRoute = createSelector(
     selectBase,

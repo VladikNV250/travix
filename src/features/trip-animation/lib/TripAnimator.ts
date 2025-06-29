@@ -1,22 +1,23 @@
 import { 
-    Icon, 
+    DivIcon,
     latLng, 
     LatLng, 
+    latLngBounds, 
     LatLngExpression, 
     Map, 
     marker, 
     Marker, 
-    Point 
+    Point,
 } from "leaflet";
 import simplify from "simplify-js";
 import { 
     Route, 
     RouteSegment 
 } from "entities/route";
-import car from "shared/assets/icons/Group 20.png";
-
+import { DirectionMarker } from "shared/assets";
 
 export class TripAnimator {
+    private readonly ANIMATION_SPEED: number = 12.5 * 4
     private map                  : Map | null;
     private route                : LatLng[];
     private notVisitedStops      : LatLngExpression[];
@@ -29,10 +30,11 @@ export class TripAnimator {
     private marker               : Marker | null;
     private currentProgress      : number;
     private totalDuration        : number;
+    private lastAngle            : number;
     
     public isCameraMounted       : boolean;
     public autocontinue          : boolean;
-     
+    
     public onArriveStop?         : (stop: LatLngExpression | null) => void 
     public onAnimationStart?     : () => void
     public onAnimationPause?     : () => void
@@ -46,12 +48,12 @@ export class TripAnimator {
         duration?: number,
     ) {
         this.map                 = map;
-        this.route               = this.optimizeRoute(route);
+        this.route               = this.optimizeRoute(route, 0.0075);
         this.notVisitedStops     = [];
         this.currentProgress     = 0;
         this.animationFrameId    = null;
         this.isAnimating         = false;
-        this.duration            = duration || 30000; // 30s
+        this.duration            = duration || 100000; // 100s
         this.startTime           = null;
         this.marker              = null;
         this.segments            = this.createSegments(this.route);
@@ -59,27 +61,31 @@ export class TripAnimator {
         this.autocontinue        = true;
         this.isCameraMounted     = true;
         this.isPaused            = false;
+        this.lastAngle           = 0;
     }
 
     public startAnimation(stops: LatLngExpression[]): void {
         if (!this.isAnimating && this.map) {
-            const icon = new Icon({
-                iconUrl: car,
-                iconSize: [100, 34],
+            const icon = new DivIcon({
+                html: `<img src="${DirectionMarker}" alt="Direction Marker" width="25" height="28" />`,
+                className: '',
+                iconSize: [25, 28]
             })
 
             this.notVisitedStops = [...stops];
 
             if (this.isCameraMounted) {
-                this.map.setZoom(11);
-                this.map.panTo(this.route[0]);
+                this.map?.fitBounds(latLngBounds(this.route), {
+                    paddingBottomRight: [300, 50], // add +250 right padding, because fitBounds doesn't center route correctly 
+                    paddingTopLeft: [50, 200], // add +150 top padding, for StopInfoPanel
+                });
             }
             this.isAnimating = true;
             if (!this.marker) {
                 this.marker = marker(
                     this.route[0],
                     {
-                        icon
+                        icon,
                     }
                 ).addTo(this.map)
             }
@@ -135,6 +141,27 @@ export class TripAnimator {
         return simplified.map(({ x, y }) => new LatLng(x, y));
     }
 
+    private getAngle(from: LatLng, to: LatLng): number {
+        const φ1 = from.lat * Math.PI / 180;
+        const φ2 = to.lat * Math.PI / 180;
+        const Δλ = (to.lng - from.lng) * Math.PI / 180;
+
+        const y = Math.sin(Δλ) * Math.cos(φ2);
+        const x = Math.cos(φ1) * Math.sin(φ2) -
+                Math.sin(φ1) * Math.cos(φ2) * Math.cos(Δλ);
+        const θ = Math.atan2(y, x);
+
+        return (θ * 180 / Math.PI + 360) % 360;
+    }
+
+    private rotateMarker(angle: number): void {
+        const iconElement = this.marker?.getElement()?.children[0] as HTMLElement;
+
+        if (iconElement) {
+            iconElement.style.transform = `rotate(${angle}deg)`;
+        }
+    }
+
     private createSegments(route: LatLng[]): RouteSegment[] {
         const segments: RouteSegment[] = route.slice(0, -1).map((point, index) => {
             const nextPoint = route[index + 1];
@@ -147,17 +174,10 @@ export class TripAnimator {
             }
         });
 
-        const totalDistance = this.getTotalDistance(segments);
-        const animationSpeed = totalDistance / this.duration;
-
         return segments.map(segment => ({
             ...segment,
-            duration: segment.distance / animationSpeed
+            duration: segment.distance / this.ANIMATION_SPEED
         }));
-    }
-
-    private getTotalDistance(segments: RouteSegment[]): number {
-        return segments.reduce((total, segment) => total + segment.distance, 0);
     }
 
     private getTotalDuration(segments: RouteSegment[]): number {
@@ -174,6 +194,11 @@ export class TripAnimator {
             from.lng + (to.lng - from.lng) * progress
         ]
     };
+
+    private interpolateAngle(angleStart: number, angleEnd: number, progress: number): number {
+        const delta = ((((angleEnd - angleStart) + 540) % 360) - 180); 
+        return angleStart + delta * progress;
+    }
 
     private animate = async (timestamp: number): Promise<void> => {
         if (!this.startTime) {
@@ -206,15 +231,20 @@ export class TripAnimator {
             currentSegment.end,
             segmentProgress
         )
-        
+
+        const newAngle = this.getAngle(
+            currentSegment.start,
+            currentSegment.end,
+        )
+
+        const angle = this.interpolateAngle(this.lastAngle, newAngle, segmentProgress);
+        this.rotateMarker(angle);
         this.marker?.setLatLng(newPosition);
-        if (this.isCameraMounted) {
-            this.map?.panTo(newPosition);
-        }
         this.currentProgress = totalProgress;
+        this.lastAngle = angle;
 
         if (totalProgress < 1 && this.isAnimating && this.notVisitedStops.length > 0) {
-            if (this.isNearToStop(latLng(newPosition), this.notVisitedStops)) {
+            if (this.isNearToStop(latLng(newPosition), this.notVisitedStops, 1000)) {
                 const currentStop = this.notVisitedStops.shift();  
                 this.onArriveStop?.(currentStop ?? null);
                 this.pauseAnimation();

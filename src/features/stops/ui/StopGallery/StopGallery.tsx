@@ -9,7 +9,6 @@ interface IStopGallery {
 }
 
 export const StopGallery: FC<IStopGallery> = ({ images, onDelete }) => {
-
     return (
         images.length > 0 &&
         <div className={styles.gallery}>

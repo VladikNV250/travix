@@ -1,86 +1,45 @@
-import { FC, useEffect, useMemo, useState } from "react";
-import { Link, useNavigate, useParams } from "react-router";
-import { DndWrapper, useAppDispatch, useAppSelector, useDropdown } from "shared/lib";
-import { removeTrip, selectTrips, setStops } from "features/trip";
-import { calculateTripDays, StopForm, StopItem } from "features/stops";
-import styles from "./style.module.scss";
-import { CalendarDate, ChevronLeft, ThreeDots } from "shared/assets";
-import clsx from "clsx";
-import { selectRoute, setCurrentMarkerStop } from "features/routing";
-import { useMap } from "features/map";
+import { FC } from "react";
+import { Link } from "react-router";
 import { 
-    TripAnimator,
-    TripStopButton, 
-    useInitTripAnimator, 
-    useTripAnimator, 
-    useTripAnimatorState 
+    TripPlayButton, 
+    TripStopButton 
 } from "features/trip-animation";
-import { TripPlayButton } from "features/trip-animation/ui/TripPlayButton/TripPlayButton";
-import { selectTripAnimator } from "features/trip/model/selectors";
-import { LatLngExpression } from "leaflet";
-import { setTripAnimator } from "features/trip/model/tripsSlice";
+import { 
+    StopForm, 
+    StopItem 
+} from "features/stops";
+import { DndWrapper } from "shared/lib";
+import { 
+    CalendarDate, 
+    ChevronLeft, 
+    ThreeDots 
+} from "shared/assets";
+import { useTripPageViewModel } from "../model";
+import clsx from "clsx";
+import styles from "./style.module.scss";
 
 
 const TripPage: FC = () => {
-    const navigate = useNavigate();
-    const dispatch = useAppDispatch();
-    const { tripId } = useParams();
-    const trips = useAppSelector(selectTrips);
-    const trip = trips.find(trip => trip.id === tripId);
-    const route = useAppSelector(selectRoute(tripId ?? ""));
-    const { map } = useMap();
-    const [isOpen, setIsOpen] = useState<boolean>(false);
-    const { openId, openMenu } = useDropdown();
-    const [dayView, setDayView] = useState<boolean>(false);
-    const tripAnimator = useInitTripAnimator(map, route, trip?.stops);
-    const [autocontinue, setAutocontinue] = useTripAnimatorState(tripAnimator, "autocontinue", false);
-    const [isCameraMounted, setIsCameraMounted] = useTripAnimatorState(tripAnimator, "isCameraMounted", true);
-
-    const tripDays = useMemo(
-        () => calculateTripDays(trip?.stops ?? []), [trip?.stops]
-    )    
-
-    const stops = useMemo(
-        () => trip?.stops.map(stop => stop.location) ?? [], [trip]
-    )
-    
-    const handleDelete = () => {
-        dispatch(removeTrip(trip ?? null));
-        navigate("/");
-    }
-
-    const renderStops = () => {
-        if (dayView && trip) {
-            const sortedStops = [...trip.stops];
-            sortedStops.sort((a, b) => {
-                const arrivalA = new Date(a.arrivalDate);
-                const arrivalB = new Date(b.arrivalDate);
-
-                return arrivalA.getTime() - arrivalB.getTime();
-            })
-
-            return sortedStops?.map((stop, index) =>
-                <StopItem 
-                    key={stop.id}
-                    stop={stop}
-                    tripId={tripId ?? ""}
-                    day={tripDays[index]}
-                />
-            )
-        } else {
-            return trip?.stops.map((stop) =>
-                <StopItem 
-                    key={stop.id}
-                    stop={stop}
-                    tripId={tripId ?? ""}
-                />
-            )
-        }
-    }
+    const {
+        trip,
+        displayStops,
+        isOpenStopForm,
+        dayView,
+        animationControls,
+        isTripMenuOpened,
+        onToggleTripMenu,
+        onCloseTripMenu,
+        onCloseStopForm,
+        onOpenStopForm,
+        onToggleDayView,
+        onEditClick,
+        onDeleteClick,
+        onSetStopsOrder,
+    } = useTripPageViewModel();
 
     return (
         <div className={styles.trip}>
-            {!isOpen ? (
+            {!isOpenStopForm ? (
                 <>
                     <header className={styles.tripHeader}>
                         <Link to="/" className={styles.headerButton}>
@@ -89,11 +48,11 @@ const TripPage: FC = () => {
                         <h3 className={styles.tripTitle}>
                             {trip?.name ?? ""}
                         </h3>
-                        <TripPlayButton stops={stops} />
+                        <TripPlayButton stops={animationControls.stops} />
                         <TripStopButton />
                         <button 
                             title="Day View" 
-                            onClick={() => setDayView(!dayView)}
+                            onClick={onToggleDayView}
                             className={clsx(
                                 dayView && styles.dayView,
                             )}
@@ -103,27 +62,24 @@ const TripPage: FC = () => {
                         <div 
                             role="button" 
                             className={styles.headerButton}
-                            onClick={() => openMenu(trip?.id ?? null)}
+                            onClick={onToggleTripMenu}
                         >
                             <ThreeDots width={20} height={20} />
                             <div 
                                 className={clsx(
                                     styles.menu,
-                                    openId === trip?.id && styles.opened
+                                    isTripMenuOpened && styles.opened
                                 )}
-                                onClick={(e) => {
-                                    e.stopPropagation();
-                                    openMenu(null);
-                                }}
+                                onClick={onCloseTripMenu}
                             >
-                                <Link 
-                                    to={`/trip/${tripId}/edit`}
+                                <button 
+                                    onClick={onEditClick}
                                     className={styles.menuButton}
                                 >
                                     Edit
-                                </Link>
+                                </button>
                                 <button
-                                    onClick={handleDelete} 
+                                    onClick={onDeleteClick} 
                                     className={styles.menuButton}
                                 >
                                     Delete
@@ -131,25 +87,53 @@ const TripPage: FC = () => {
                             </div>
                         </div>
                     </header>
+                    <p>
+                        {trip?.totalDistance 
+                        ? `Distance is: ${trip.totalDistance}km`
+                        : "Distance is unavailable."} 
+                    </p>
                     <button
-                        onClick={() => setIsOpen(true)}
+                        onClick={onOpenStopForm}
                         className={styles.button}
                     >
                         Add New Stop
                     </button>
                     <DndWrapper
-                        items={trip?.stops ?? []}
-                        setItems={(newStops) => dispatch(setStops({tripId: trip?.id ?? "", stops: newStops}))}
+                        items={displayStops}
+                        setItems={onSetStopsOrder}
                     >
                         <div className={styles.stopList}>
-                            {renderStops()}
+                            {displayStops.map((stop, index) => 
+                                <StopItem
+                                    key={stop.id}
+                                    stop={stop}
+                                    tripId={trip?.id ?? ""}
+                                    day={dayView ? trip?.days[index] : undefined} // Передаємо день тільки якщо dayView
+                                />
+                            )}
                         </div>
                     </DndWrapper>
+                    <div
+                        style={{ display: "flex", justifyContent: "space-between", padding: "10px" }}
+                    >
+                        <button 
+                            onClick={animationControls.onToggleAutocontinue}
+                            style={{background: "#00a", padding: "10px", color: "#fff", borderRadius: "5px"}}
+                        >
+                            Autoplay Trip? {animationControls.autocontinue ? "Yes" : "No"}
+                        </button>
+                        <button 
+                            onClick={animationControls.onToggleCameraMounted}
+                            style={{background: "#00a", padding: "10px", color: "#fff", borderRadius: "5px"}}
+                        >
+                            Mount camera? {animationControls.isCameraMounted ? "Yes" : "No"}
+                        </button>
+                    </div>
                 </>
             ) : (
                 <StopForm 
                     tripId={trip?.id ?? ""} 
-                    onClose={() => setIsOpen(false)}  
+                    onClose={onCloseStopForm}  
                 />
             )}
         </div>        

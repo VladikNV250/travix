@@ -4,7 +4,7 @@ import { useEffect } from "react"
 import { TripAnimator } from "../TripAnimator";
 import { Stop } from "entities/stop";
 import { useAppDispatch } from "shared/lib";
-import { setCurrentMarkerStop } from "features/routing";
+import { setActiveRouteId, setCurrentMarkerStop } from "features/routing";
 import { useTripAnimator } from "./useTripAnimator";
 
 
@@ -41,9 +41,10 @@ export const useInitTripAnimator = (map: Map | null, route: Route, tripStops?: S
 
     useEffect(() => {
         if (map && route) {
+            dispatch(setActiveRouteId(route.id));
             setTripAnimator(new TripAnimator(map, route));
         }
-    }, [map, route, setTripAnimator])
+    }, [map, route, setTripAnimator, dispatch])
 
     return tripAnimator;
 }

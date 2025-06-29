@@ -22,6 +22,7 @@ export const ImageUpload: FC<IImageUpload> = ({ onUpload }) => {
             }
         }
     }
+    
     return (
         <div className={styles.fileUploadContainer}>
             <label 
