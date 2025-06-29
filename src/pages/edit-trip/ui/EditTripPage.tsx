@@ -1,90 +1,62 @@
-import { editTrip, selectTrips } from "features/trip";
-import { useNavigate, useParams } from "react-router";
-import { useAppDispatch, useAppSelector } from "shared/lib";
-import styles from "./style.module.scss";
-import { ChangeEvent, useEffect, useState } from "react";
-import clsx from "clsx";
-import { Trip, validateTrip } from "entities/trip";
 import { HexColorPicker } from "react-colorful";
+import { useEditTripViewModel } from "../model";
+import clsx from "clsx";
+import styles from "./style.module.scss";
 
 const EditTripPage = () => {
-    const dispatch = useAppDispatch();
-    const navigate = useNavigate();
-    const { tripId } = useParams();
-    const trips = useAppSelector(selectTrips);
-    const trip = trips.find(trip => trip.id === tripId); 
-    const [tripData, setTripData] = useState({
-        name: trip?.name ?? "",
-        color: trip?.color ?? "",
-    })
-    const [pickerIsOpen, setPickerIsOpen] = useState(false);
+    const {
+        tripId,
+        formData,
+        isColorPickerOpen,
+        onNameChange,
+        onColorChange,
+        onToggleColorPicker,
+        onSaveTrip,
+        onGoBack,
+        isFormValid,
+        tripExists
+    } = useEditTripViewModel(); 
 
-    useEffect(() => {
-        setTripData({
-            name: trip?.name ?? "New Trip",
-            color: trip?.color ?? "#ff0000",
-        })
-    }, [trip])
-
-    const handleEdit = () => {
-        if (!trip) return;
-
-        const updatedTrip: Trip = {
-            ...trip,
-            name: tripData.name,
-            color: tripData.color,
-        }
-
-        if (validateTrip(updatedTrip)) {
-            dispatch(editTrip(updatedTrip));
-            navigate(`/trip/${tripId}`);
-        }
-    }
-
-    const changeName = (e: ChangeEvent<HTMLInputElement>) => {
-        const { value } = e.target;
-
-        setTripData(prevState => ({
-            ...prevState,
-            name: value,
-        }));
-    }
-
-    const changeColor = (newColor: string) => {
-        setTripData(prevState => ({
-            ...prevState,
-            color: newColor,
-        }))
+    if (!tripExists) {
+        return (
+            <div className={styles.errorMessage}>
+                Trip with ID "{tripId}" not found.
+            </div>
+        )
     }
 
     return (
-        <form className={styles.trip}>
+        <form 
+            className={styles.trip}
+            onSubmit={(e) => { e.preventDefault(); onSaveTrip(); }}
+        >
             <div className={styles.formContainer}>
                 <div>
                     <label htmlFor="tripName">Trip Name</label>
                     <input 
+                        id="tripName"
                         name="name"
                         className={styles.input}
-                        value={tripData.name}
-                        onChange={changeName}
+                        value={formData.name}
+                        onChange={onNameChange}
                     />
                 </div>
                 <button 
-                    onClick={() => setPickerIsOpen(!pickerIsOpen)}
+                    onClick={onToggleColorPicker}
                     className={styles.colorButton} 
-                    style={{background: tripData.color}}
+                    style={{background: formData.color}}
                     type="button"
                 >
                     <div 
                         className={clsx(
                             styles.colorPicker, 
-                            pickerIsOpen && styles.opened
+                            isColorPickerOpen && styles.opened
                         )}
                         onClick={e => e.stopPropagation()}
                     >
                         <HexColorPicker 
-                            color={tripData.color}
-                            onChange={changeColor}
+                            color={formData.color}
+                            onChange={onColorChange}
                         />
                     </div>
                 </button>
@@ -92,13 +64,15 @@ const EditTripPage = () => {
             <div className={styles.buttonContainer}>
                 <button 
                     className={styles.button}
-                    onClick={handleEdit}
+                    type="submit"
+                    disabled={!isFormValid}
                 >
                     Save
                 </button>
                 <button 
-                    onClick={() => navigate(`/trip/${tripId}`)}
+                    onClick={onGoBack}
                     className={clsx(styles.button, styles.grey)}
+                    type="button"
                 >
                     Back
                 </button>

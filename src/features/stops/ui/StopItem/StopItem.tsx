@@ -1,18 +1,16 @@
 import { FC } from "react";
-import { Link } from "react-router";
-import { useMap } from "features/map";
-import { removeStop } from "features/trip";
 import { Trip } from "entities/trip";
-import { Stop, StopAddress } from "entities/stop";
-import { GripVertical, ThreeDots } from "shared/assets";
 import { 
-    useAppDispatch, 
-    useDropdown 
-} from "shared/lib";
+    Stop, 
+    StopAddress 
+} from "entities/stop";
+import { 
+    GripVertical, 
+    ThreeDots 
+} from "shared/assets";
+import { useStopItemViewModel } from "features/stops/model";
 import clsx from "clsx";
 import styles from "./style.module.scss";
-import { useSortable } from "@dnd-kit/sortable";
-import { CSS } from "@dnd-kit/utilities";
 
 interface IStopItem {
     tripId: Trip["id"];
@@ -21,64 +19,65 @@ interface IStopItem {
 }
 
 export const StopItem: FC<IStopItem> = ({tripId, stop, day }) => {
-    const dispatch = useAppDispatch();
-    const { openId, openMenu } = useDropdown(); 
-    const { map } = useMap();
     const {
+        stopData,
+        displayDay,
+        dragStyle,
+        draggbleAttributes,
+        draggbleListeners,
         setNodeRef,
-        attributes,
-        listeners,
-        transform,
-        transition,
-    } = useSortable({ id: stop.id });
-
-    const dragStyle = {
-        transform: CSS.Transform.toString(transform),
-        transition,
-    }
+        isMenuOpened,
+        onItemClick,
+        onToggleMenu,
+        onCloseMenu,
+        onEditClick,
+        onDeleteClick,
+    } = useStopItemViewModel({
+        tripId,
+        stop,
+        day
+    });
 
     return (
         <div 
             ref={setNodeRef}
             className={styles.stopItem}
-            onClick={() => map?.flyTo(stop.location, 10, {animate: true})}
+            onClick={onItemClick}
             style={dragStyle}
         >
             <p className={styles.text}>
-                {day ?? ""}
+                {displayDay}
             </p>
-            <StopAddress stop={stop} />
+            <StopAddress stop={stopData} />
             <button 
-                onClick={(e) => {
-                    e.stopPropagation();
-                    openMenu(stop.id)
-                }} 
+                onClick={onToggleMenu} 
                 className={styles.button}
             >  
                 <ThreeDots width={20} height={20} />
             </button>
-            <button className={styles.dragButton} {...attributes} {...listeners}>
+            <button 
+                className={styles.dragButton} 
+                {...draggbleAttributes} 
+                {...draggbleListeners}
+            >
                 <GripVertical width={20} height={20} />
             </button>
             <div 
                 className={clsx(
                     styles.menu,
-                    openId === stop.id && styles.opened
+                    isMenuOpened && styles.opened
                 )}
-                onClick={(e) => {
-                    e.stopPropagation();
-                    openMenu(null);
-                }}
+                onClick={onCloseMenu}
             >
-                <Link 
-                    to={`/trip/${tripId}/stop/${stop.id}`}
+                <button 
                     className={styles.menuButton}
+                    onClick={onEditClick}
                 >
                     Edit
-                </Link>
+                </button>
                 <button
-                    onClick={() => dispatch(removeStop({tripId, stop}))} 
                     className={styles.menuButton}
+                    onClick={onDeleteClick} 
                 >
                     Delete
                 </button>

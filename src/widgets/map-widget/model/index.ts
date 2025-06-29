@@ -1,0 +1,1 @@
+export { useMapViewModel } from "./useMapViewModel";

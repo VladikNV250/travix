@@ -11,6 +11,7 @@ export {
     default as tripsReducer
 } from "./model/tripsSlice";
 export {
-    selectTrips
+    selectTrips,
+    selectTrip,
 } from "./model/selectors";
 export { createTrip } from "./model/createTrip";
