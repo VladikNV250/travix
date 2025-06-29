@@ -1,7 +1,7 @@
-export interface IStopMarkerViewModelProps {
+// export interface IStopMarkerViewModelProps {
     
-}
+// }
 
-export interface IStopMarkerViewModel {
+// export interface IStopMarkerViewModel {
 
-}
+// }

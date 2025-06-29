@@ -1,7 +1,7 @@
-import { IStopMarkerViewModel, IStopMarkerViewModelProps } from "./types";
+// import { IStopMarkerViewModel, IStopMarkerViewModelProps } from "./types";
 
-export const useStopMarkerViewModel = ({
+// export const useStopMarkerViewModel = ({
     
-}: IStopMarkerViewModelProps): IStopMarkerViewModel => {
+// }: IStopMarkerViewModelProps): IStopMarkerViewModel => {
     
-}
+// }

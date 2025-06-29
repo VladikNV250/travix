@@ -1,7 +1,6 @@
 import { FC } from "react";
 import { useTripAnimator } from "features/trip-animation/lib";
 import { Stop } from "shared/assets";
-import styles from "./style.module.scss";
 
 export const TripStopButton: FC = () => {
     const { tripAnimator } = useTripAnimator();

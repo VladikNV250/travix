@@ -44,6 +44,8 @@ export const RoutingMachine = ({ trip }: IRoutingMachine) => {
         })
         .addTo(map)
         .off("routesfound")
+        // TODO: make types for this.
+        // @ts-expect-error because event doesn't have type
         .on("routesfound", async (e) => {
             const route = e.routes[0];
             const coordinates: L.LatLng[] = route.coordinates;
