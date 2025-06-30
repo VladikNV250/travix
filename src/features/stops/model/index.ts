@@ -3,3 +3,4 @@ export { createStop } from "./createStop";
 
 export { useStopFormViewModel } from "./stop-form/useStopFormViewModel";
 export { useStopItemViewModel } from "./stop-item/useStopItemViewModel";
+export { useStopMarkerViewModel } from "./stop-marker/useStopMarkerViewModel";

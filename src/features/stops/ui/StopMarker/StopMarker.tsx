@@ -3,18 +3,16 @@ import {
     DivIcon, 
     Icon, 
     IconOptions, 
-    latLng 
 } from "leaflet"
 import { 
     Marker, 
     Popup 
 } from "react-leaflet"
-import { useWeather } from "entities/weather"
 import { Stop } from "entities/stop"
 import { formatDate } from "shared/lib"
 import styles from "./style.module.scss";
 import { SimpleLoader } from "shared/ui"
-import { useHoliday } from "entities/holidays"
+import { useStopMarkerViewModel } from "features/stops/model"
 
 interface IStopMarker {
     stop: Stop,
@@ -22,20 +20,7 @@ interface IStopMarker {
 }
 
 export const StopMarker: FC<IStopMarker> = ({ stop, icon }) => {
-    const { weather, loading: weatherLoading, getWeather } = useWeather();
-    const { holiday, loading: holidayLoading, getHoliday } = useHoliday();
-
-    const updateStopInfo = async (stop: Stop) => {
-        const stopDate = new Date(stop.arrivalDate || Date.now());
-
-        const latlng = latLng(stop.location);
-        const latlngStr = `${latlng.lat},${latlng.lng}`;
-        await getWeather(latlngStr, stopDate);
-
-        if (stop.countryCode) {
-            await getHoliday(stop.countryCode, stopDate);
-        }
-    }
+    const { weather, holiday, isLoading, updateStopInfo } = useStopMarkerViewModel();
 
     return (
         <Marker
@@ -57,8 +42,8 @@ export const StopMarker: FC<IStopMarker> = ({ stop, icon }) => {
                     <h4 className={styles.address}>
                         {stop.address}
                     </h4>
-                    {holidayLoading || weatherLoading ? (
-                        <SimpleLoader loading={holidayLoading || weatherLoading} />
+                    {isLoading ? (
+                        <SimpleLoader loading={isLoading} />
                     ) : (
                         <>
                             <div className={styles.horizontalLine} />
