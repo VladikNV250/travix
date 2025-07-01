@@ -20,7 +20,9 @@ export const StopItem: FC<IStopItem> = ({ tripId, stop, day }) => {
 	const { stopData, displayDay, onItemClick, onEditClick, onDeleteClick } =
 		useStopItem({ tripId, stop, day });
 
-	const { setNodeRef, dragStyle, attributes, listeners } = useDragAndDrop(stop);
+	const { setNodeRef, dragStyle, attributes, listeners } = useDragAndDrop({
+		stop,
+	});
 
 	const {
 		isOpened: isMenuOpened,

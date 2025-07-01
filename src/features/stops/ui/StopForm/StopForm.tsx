@@ -5,33 +5,39 @@ import clsx from 'clsx';
 import { Stop } from 'entities/stop';
 import { Trip } from 'entities/trip';
 import { ImageUpload } from 'features/image';
-import { useStopFormViewModel } from 'features/stops/model';
+import { useStopForm } from 'features/stops/model/stop-form/useStopForm';
 
 import { StopGallery } from '../StopGallery/StopGallery';
 import styles from './style.module.scss';
 
-interface IStopForm {
+interface StopFormProps {
 	tripId: Trip['id'];
 	initialData?: Stop;
 	onClose?: () => void;
 }
 
-export const StopForm: FC<IStopForm> = ({ tripId, initialData, onClose }) => {
+export const StopForm: FC<StopFormProps> = ({
+	tripId,
+	initialData,
+	onClose,
+}) => {
 	const {
 		formData,
 		predictions,
+		submitError,
+
 		onDataChange,
 		onPredictionSelect,
 		onSaveStop,
 		onAddImage,
 		onDeleteImage,
-		editMode,
+		onCancel,
+
 		hasUnsavedChanges,
+		isEditMode,
 		isFormValid,
 		isSubmitting,
-		onCancel,
-		submitError,
-	} = useStopFormViewModel({
+	} = useStopForm({
 		tripId,
 		initialData,
 		onClose,
@@ -53,13 +59,13 @@ export const StopForm: FC<IStopForm> = ({ tripId, initialData, onClose }) => {
 				/>
 				<div className={styles.predictions}>
 					{predictions.map(prediction => (
-						<p
+						<button
 							key={prediction.place_id}
 							className={styles.prediction}
 							onClick={() => onPredictionSelect(prediction.description)}
 						>
 							{prediction.description}
-						</p>
+						</button>
 					))}
 				</div>
 			</div>
@@ -92,7 +98,7 @@ export const StopForm: FC<IStopForm> = ({ tripId, initialData, onClose }) => {
 				className={styles.button}
 				disabled={!isFormValid || isSubmitting}
 			>
-				{editMode
+				{isEditMode
 					? hasUnsavedChanges
 						? 'Save Changes'
 						: 'Save Changes (nothing unchanged)'

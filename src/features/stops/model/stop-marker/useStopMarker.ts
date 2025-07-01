@@ -2,13 +2,18 @@ import { useCallback, useMemo } from 'react';
 
 import { latLng } from 'leaflet';
 
-import { useHoliday } from 'entities/holidays';
+import { Holiday, useHoliday } from 'entities/holidays';
 import { Stop } from 'entities/stop';
-import { useWeather } from 'entities/weather';
+import { Weather, useWeather } from 'entities/weather';
 
-import { UseStopMarkerHookResult } from './types';
+export interface UseStopMarkerResult {
+	weather: Weather | null;
+	holiday: Holiday | null;
+	isLoading: boolean;
+	updateStopInfo: (stop: Stop) => Promise<void>;
+}
 
-export const useStopMarker = (): UseStopMarkerHookResult => {
+export const useStopMarker = (): UseStopMarkerResult => {
 	const { weather, loading: weatherLoading, getWeather } = useWeather();
 	const { holiday, loading: holidayLoading, getHoliday } = useHoliday();
 
