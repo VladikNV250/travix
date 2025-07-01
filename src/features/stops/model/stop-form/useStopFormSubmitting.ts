@@ -32,6 +32,10 @@ interface UseStopFormSubmittingResult {
 	onSaveStop: (e: FormEvent<HTMLFormElement>) => Promise<void>;
 }
 
+/**
+ * Handles the stop form submission process.
+ * Manages adding/editing stops, loading states, and error handling.
+ */
 export const useStopFormSubmitting = ({
 	tripId,
 	initialData,

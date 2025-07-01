@@ -28,6 +28,10 @@ interface UseStopFormStateResult {
 	isFormValid: boolean;
 }
 
+/**
+ * Manages the internal state of the stop form.
+ * Handles form data, updates, and computes form validity/changes.
+ */
 export const useStopFormState = ({
 	initialData,
 }: UseStopFormStateProps): UseStopFormStateResult => {

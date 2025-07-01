@@ -12,6 +12,10 @@ interface UseStopFormPredictionsResult {
 	predictions: Prediction[];
 }
 
+/**
+ * Implements address autocomplete functionality.
+ * Handles debounced API calls and manages prediction results.
+ */
 export const useStopFormPredictions = ({
 	address,
 }: UseStopFormPredictionsProps): UseStopFormPredictionsResult => {

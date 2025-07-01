@@ -38,6 +38,10 @@ interface UseStopFormResult {
 	isSubmitting: boolean;
 }
 
+/**
+ * Composing hook for managing the entire stop form lifecycle.
+ * Integrates form state, address autocomplete, image handling, and submission logic.
+ */
 export const useStopForm = ({
 	tripId,
 	initialData,

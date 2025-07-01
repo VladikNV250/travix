@@ -13,6 +13,10 @@ interface UseStopFormImageResult {
 	onDeleteImage: (id: string) => void;
 }
 
+/**
+ * Manages the list of images associated with a stop.
+ * Provides functions to add and delete images from the form state.
+ */
 export const useStopFormImage = ({
 	setFormData,
 }: UseStopFormImageProps): UseStopFormImageResult => {
