@@ -1,36 +1,36 @@
 .carousel {
-    margin: 0 auto;
-    padding: 20px 0;
-    overflow: hidden;
-    display: flex;
-    max-width: 100%;
- 
-    > * {
-        flex: 0 0 100%;
-    }
+	margin: 0 auto;
+	padding: 20px 0;
+	overflow: hidden;
+	display: flex;
+	max-width: 100%;
+
+	> * {
+		flex: 0 0 100%;
+	}
 }
 
 .card {
-    width: 250px;
-    height: 150px;
+	width: 250px;
+	height: 150px;
 }
 
 .group {
-    display: flex;
-    gap: 20px;
-    padding-right: 20px;
-    will-change: transform;
-    animation: scrolling 20s linear infinite;
+	display: flex;
+	gap: 20px;
+	padding-right: 20px;
+	will-change: transform;
+	animation: scrolling 20s linear infinite;
 }
 
 @keyframes scrolling {
-    0% {
-      transform: translateX(0);
-    }
-    100% {
-      transform: translateX(-100%);
-    }
-  }
+	0% {
+		transform: translateX(0);
+	}
+	100% {
+		transform: translateX(-100%);
+	}
+}
 
 // .carousel {
 //   overflow: hidden;

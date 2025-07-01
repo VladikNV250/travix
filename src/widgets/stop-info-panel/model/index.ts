@@ -1,1 +1,1 @@
-export { useStopInfoViewModel } from "./useStopInfoViewModel";
+export { useStopInfoViewModel } from './useStopInfoViewModel';

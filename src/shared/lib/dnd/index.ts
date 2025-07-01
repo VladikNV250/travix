@@ -1,1 +1,1 @@
-export { DndWrapper } from "./DndWrapper";
+export { DndWrapper } from './DndWrapper';

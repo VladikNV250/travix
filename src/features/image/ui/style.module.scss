@@ -1,15 +1,15 @@
 .fileUpload {
-    display: none;
-    &Container {
-        width: 100%;
-    }
+	display: none;
+	&Container {
+		width: 100%;
+	}
 }
 
 .fileButton {
-    display: block;
-    width: 100%;
-    padding: 8px 20px;
-    background: #dfe74e;
-    text-align: center;
-    cursor: pointer;
+	display: block;
+	width: 100%;
+	padding: 8px 20px;
+	background: #dfe74e;
+	text-align: center;
+	cursor: pointer;
 }

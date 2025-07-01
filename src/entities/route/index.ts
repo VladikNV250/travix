@@ -1,4 +1,1 @@
-export type { 
-    Route,
-    RouteSegment, 
-} from "./model/types";
+export type { Route, RouteSegment } from './model/types';

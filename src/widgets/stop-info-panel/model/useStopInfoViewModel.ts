@@ -1,96 +1,96 @@
-import { 
-    useEffect, 
-    useMemo 
-} from "react";
-import { latLng } from "leaflet";
-import { selectCurrentStop } from "features/routing";
-import { useHoliday } from "entities/holidays";
-import { useWeather } from "entities/weather";
-import { formatDate, useAppSelector } from "shared/lib";
-import { extractCityAndRegion } from "../lib";
-import { 
-    HolidayDisplayData, 
-    IStopInfoViewModel, 
-    StopInfoData, 
-    WeatherDisplayData 
-} from "./types";
+import { useEffect, useMemo } from 'react';
+
+import { latLng } from 'leaflet';
+
+import { useHoliday } from 'entities/holidays';
+import { useWeather } from 'entities/weather';
+import { selectCurrentStop } from 'features/routing';
+import { formatDate, useAppSelector } from 'shared/lib';
+
+import { extractCityAndRegion } from '../lib';
+import {
+	HolidayDisplayData,
+	IStopInfoViewModel,
+	StopInfoData,
+	WeatherDisplayData,
+} from './types';
 
 export const useStopInfoViewModel = (): IStopInfoViewModel => {
-    const stop = useAppSelector(selectCurrentStop);
-    const { weather, loading: weatherLoading, getWeather } = useWeather();
-    const { holiday, loading: holidayLoading, getHoliday } = useHoliday();
-    
-    const [city, region] = useMemo(
-        () => extractCityAndRegion(stop?.address ?? null),
-        [stop?.address]
-    )
-        
+	const stop = useAppSelector(selectCurrentStop);
+	const { weather, loading: weatherLoading, getWeather } = useWeather();
+	const { holiday, loading: holidayLoading, getHoliday } = useHoliday();
 
-    useEffect(() => {
-        (async () => {
-            if (stop) {
-                const stopDate = new Date(stop.arrivalDate || Date.now());
-                const latlng = latLng(stop.location);
-                const latlngStr = `${latlng.lat},${latlng.lng}`;
-                await getWeather(latlngStr, stopDate);
+	const [city, region] = useMemo(
+		() => extractCityAndRegion(stop?.address ?? null),
+		[stop?.address],
+	);
 
-                if (stop.countryCode) {
-                    await getHoliday(stop.countryCode, stopDate);
-                }
-            }
-            
-        })()
-    }, [stop, getWeather, getHoliday]);
+	useEffect(() => {
+		(async () => {
+			if (stop) {
+				const stopDate = new Date(stop.arrivalDate || Date.now());
+				const latlng = latLng(stop.location);
+				const latlngStr = `${latlng.lat},${latlng.lng}`;
+				await getWeather(latlngStr, stopDate);
 
-    const weatherDisplayData: WeatherDisplayData = useMemo(() => {
-        const formattedDate = stop?.arrivalDate ? formatDate(new Date(stop.arrivalDate)) : formatDate(new Date());
+				if (stop.countryCode) {
+					await getHoliday(stop.countryCode, stopDate);
+				}
+			}
+		})();
+	}, [stop, getWeather, getHoliday]);
 
-        if (weatherLoading) return { type: "loading", date: formattedDate };
-        if (weather) {
-            return {
-                type: "data",
-                date: formattedDate,
-                data: {
-                    ...weather,
-                    temperature: Math.floor(weather.temperature) 
-                }
-            }
-        }
-        return {
-            type: "unavailable",
-            date: formattedDate,
-            message: "Weather is temporarily unavailable."
-        }
-    }, [weather, weatherLoading, stop?.arrivalDate]);
+	const weatherDisplayData: WeatherDisplayData = useMemo(() => {
+		const formattedDate = stop?.arrivalDate
+			? formatDate(new Date(stop.arrivalDate))
+			: formatDate(new Date());
 
-    const holidayDispayData: HolidayDisplayData = useMemo(() => {
-        if (holidayLoading) return { type: "loading" };
-        if (holiday) {
-            return {
-                type: "data",
-                data: holiday
-            }
-        }
-        return {
-            type: "unavailable",
-            message: "No holidays on this date"
-        }
-    }, [holiday, holidayLoading]);
+		if (weatherLoading) return { type: 'loading', date: formattedDate };
+		if (weather) {
+			return {
+				type: 'data',
+				date: formattedDate,
+				data: {
+					...weather,
+					temperature: Math.floor(weather.temperature),
+				},
+			};
+		}
+		return {
+			type: 'unavailable',
+			date: formattedDate,
+			message: 'Weather is temporarily unavailable.',
+		};
+	}, [weather, weatherLoading, stop?.arrivalDate]);
 
-    const stopInfoData: StopInfoData | null = useMemo(() => {
-        if (!stop) return null;
-        return {
-            title: city,
-            subtitle: region,
-            notes: stop.notes || "No notes about this place.",
-            images: stop.images || [],
-        };
-    }, [city, region, stop]);
+	const holidayDispayData: HolidayDisplayData = useMemo(() => {
+		if (holidayLoading) return { type: 'loading' };
+		if (holiday) {
+			return {
+				type: 'data',
+				data: holiday,
+			};
+		}
+		return {
+			type: 'unavailable',
+			message: 'No holidays on this date',
+		};
+	}, [holiday, holidayLoading]);
 
-    return {
-        hasStop: !!stop,
-        stopInfo: stopInfoData,
-        weather: weatherDisplayData,
-        holiday: holidayDispayData,
-    }
-}
+	const stopInfoData: StopInfoData | null = useMemo(() => {
+		if (!stop) return null;
+		return {
+			title: city,
+			subtitle: region,
+			notes: stop.notes || 'No notes about this place.',
+			images: stop.images || [],
+		};
+	}, [city, region, stop]);
+
+	return {
+		hasStop: Boolean(stop),
+		stopInfo: stopInfoData,
+		weather: weatherDisplayData,
+		holiday: holidayDispayData,
+	};
+};

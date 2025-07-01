@@ -1,18 +1,19 @@
-import { useEffect, useState } from "react";
-import { TripAnimator } from "../TripAnimator";
+import { useEffect, useState } from 'react';
+
+import { TripAnimator } from '../TripAnimator';
 
 export const useTripAnimatorState = <T extends keyof TripAnimator>(
-    tripAnimator: TripAnimator | null,
-    key: T,
-    defaultValue: TripAnimator[T]
+	tripAnimator: TripAnimator | null,
+	key: T,
+	defaultValue: TripAnimator[T],
 ) => {
-    const [state, setState] = useState<TripAnimator[T]>(defaultValue);
+	const [state, setState] = useState<TripAnimator[T]>(defaultValue);
 
-    useEffect(() => {
-        if (tripAnimator) {
-            tripAnimator[key] = state;
-        }
-    }, [state, tripAnimator, key]);
+	useEffect(() => {
+		if (tripAnimator) {
+			tripAnimator[key] = state;
+		}
+	}, [state, tripAnimator, key]);
 
-    return [state, setState] as const;
-}
+	return [state, setState] as const;
+};

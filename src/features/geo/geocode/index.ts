@@ -1,1 +1,1 @@
-export { geocodePlace } from "./api/geocodeApi";
+export { geocodePlace } from './api/geocodeApi';

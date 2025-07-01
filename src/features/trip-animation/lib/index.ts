@@ -1,5 +1,5 @@
-export { TripAnimator } from "./TripAnimator";
+export { TripAnimator } from './TripAnimator';
 
-export * from "./hooks";
+export * from './hooks';
 
-export { TripAnimatorProvider } from "./context";
+export { TripAnimatorProvider } from './context';

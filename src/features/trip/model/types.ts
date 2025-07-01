@@ -1,5 +1,5 @@
-import { Trip } from "entities/trip";
+import { Trip } from 'entities/trip';
 
 export interface TripsState {
-    trips: Trip[],
+	trips: Trip[];
 }

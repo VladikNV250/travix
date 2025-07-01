@@ -1,3 +1,3 @@
-import { lazy } from "react";
+import { lazy } from 'react';
 
-export const StopPageLazy = lazy(() => import("./StopPage"));
+export const StopPageLazy = lazy(() => import('./StopPage'));

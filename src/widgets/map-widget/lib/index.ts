@@ -1,1 +1,1 @@
-export { createMarkerIcon } from "./createMarkerIcon";
+export { createMarkerIcon } from './createMarkerIcon';

@@ -3,32 +3,32 @@
  * More info in https://developers.google.com/maps/documentation/places/web-service/autocomplete#place_autocomplete_responses
  */
 export interface APIAutocomplete {
-    readonly predictions: Prediction[];
-    readonly status:      string;
+	readonly predictions: Prediction[];
+	readonly status: string;
 }
 
 export interface Prediction {
-    readonly description:           string;
-    readonly matched_substrings:    MatchedSubstring[];
-    readonly place_id:              string;
-    readonly reference:             string;
-    readonly structured_formatting: StructuredFormatting;
-    readonly terms:                 Term[];
-    readonly types:                 string[];
+	readonly description: string;
+	readonly matched_substrings: MatchedSubstring[];
+	readonly place_id: string;
+	readonly reference: string;
+	readonly structured_formatting: StructuredFormatting;
+	readonly terms: Term[];
+	readonly types: string[];
 }
 
 export interface MatchedSubstring {
-    readonly length: number;
-    readonly offset: number;
+	readonly length: number;
+	readonly offset: number;
 }
 
 export interface StructuredFormatting {
-    readonly main_text:                    string;
-    readonly main_text_matched_substrings: MatchedSubstring[];
-    readonly secondary_text:               string;
+	readonly main_text: string;
+	readonly main_text_matched_substrings: MatchedSubstring[];
+	readonly secondary_text: string;
 }
 
 export interface Term {
-    readonly offset: number;
-    readonly value:  string;
+	readonly offset: number;
+	readonly value: string;
 }

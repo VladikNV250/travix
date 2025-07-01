@@ -1,1 +1,1 @@
-export { extractCityAndRegion } from "./extractCityAndRegion";
+export { extractCityAndRegion } from './extractCityAndRegion';

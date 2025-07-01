@@ -1,24 +1,29 @@
-import { apiClient } from "shared/api"
-import { APIGeocode, GeocodePlaceReturn } from "./types";
+import { apiClient } from 'shared/api';
 
-export const geocodePlace = async (place: string): Promise<GeocodePlaceReturn> => {
-    const response = await apiClient.get<APIGeocode>("/api/geocode", {
-        params: {
-            address: place
-        }
-    })
+import { APIGeocode, GeocodePlaceReturn } from './types';
 
-    let countryCode: string | null = null;
-    response.results[0]?.address_components.forEach(address => {
-        const isCountryAddress = !!address.types.find(type => type === "country");
+export const geocodePlace = async (
+	place: string,
+): Promise<GeocodePlaceReturn> => {
+	const response = await apiClient.get<APIGeocode>('/api/geocode', {
+		params: {
+			address: place,
+		},
+	});
 
-        if (isCountryAddress) {
-            countryCode = address.short_name;        
-        }
-    });
+	let countryCode: string | null = null;
+	response.results[0]?.address_components.forEach(address => {
+		const isCountryAddress = Boolean(
+			address.types.find(type => type === 'country'),
+		);
 
-    return {
-        location: response.results[0]?.geometry.location,
-        countryCode,
-    }
-}
+		if (isCountryAddress) {
+			countryCode = address.short_name;
+		}
+	});
+
+	return {
+		location: response.results[0]?.geometry.location,
+		countryCode,
+	};
+};

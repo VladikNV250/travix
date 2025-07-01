@@ -1,3 +1,3 @@
-export { FallbackLoader } from "./FallbackLoader/FallbackLoader";
+export { FallbackLoader } from './FallbackLoader/FallbackLoader';
 
-export { SimpleLoader } from "./SimpleLoader/SimpleLoader";
+export { SimpleLoader } from './SimpleLoader/SimpleLoader';

@@ -1,1 +1,1 @@
-export type { Image } from "./model/types";
+export type { Image } from './model/types';

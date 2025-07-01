@@ -1,27 +1,30 @@
-import { DraggableAttributes } from "@dnd-kit/core";
-import { SyntheticListenerMap } from "@dnd-kit/core/dist/hooks/utilities";
-import { Stop } from "entities/stop";
-import { Trip } from "entities/trip";
-import { CSSProperties, MouseEvent } from "react";
+import { DraggableAttributes } from '@dnd-kit/core';
+import { SyntheticListenerMap } from '@dnd-kit/core/dist/hooks/utilities';
 
-export interface IStopItemViewModelProps {
-    tripId: Trip["id"];
-    stop: Stop;
-    day?: string;
+import { Stop } from 'entities/stop';
+import { Trip } from 'entities/trip';
+
+export interface UseStopItemProps {
+	tripId: Trip['id'];
+	stop: Stop;
+	day?: string;
 }
 
-export interface IStopItemViewModel {
-    displayDay?: string; 
-    stopData: Stop;
-    dragStyle: CSSProperties;
-    draggbleAttributes: DraggableAttributes;
-    draggbleListeners: SyntheticListenerMap | undefined;
-    setNodeRef: (node: HTMLElement | null) => void;
-    isMenuOpened: boolean;
+export interface UseStopItemHookResult {
+	stopData: Stop;
+	displayDay?: string;
 
-    onItemClick: () => void;
-    onToggleMenu: (e: MouseEvent) => void;
-    onCloseMenu: (e: MouseEvent) => void;
-    onDeleteClick: () => void;
-    onEditClick: () => void;
+	onDeleteClick: () => void;
+	onEditClick: () => void;
+	onItemClick: () => void;
+}
+
+export interface UseDragAndDropHookResult {
+	setNodeRef: (node: HTMLElement | null) => void;
+	attributes: DraggableAttributes;
+	listeners?: SyntheticListenerMap;
+	dragStyle: {
+		transform?: string;
+		transition?: string;
+	};
 }

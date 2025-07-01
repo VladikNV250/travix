@@ -1,1 +1,1 @@
-export { useEditTripViewModel } from "./useEditTripViewModel";
+export { useEditTripViewModel } from './useEditTripViewModel';

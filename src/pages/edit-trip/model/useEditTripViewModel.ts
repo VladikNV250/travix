@@ -1,95 +1,97 @@
-import { editTrip, selectTrip } from "features/trip";
-import { ChangeEvent, useCallback, useEffect, useMemo, useState } from "react";
-import { useNavigate, useParams } from "react-router";
-import { useAppDispatch, useAppSelector,  } from "shared/lib";
-import { EditTripFormData, IEditTripViewModel } from "./types";
-import { Trip, validateTrip } from "entities/trip";
+import { ChangeEvent, useCallback, useEffect, useMemo, useState } from 'react';
+import { useNavigate, useParams } from 'react-router';
+
+import { Trip, validateTrip } from 'entities/trip';
+import { editTrip, selectTrip } from 'features/trip';
+import { useAppDispatch, useAppSelector } from 'shared/lib';
+
+import { EditTripFormData, IEditTripViewModel } from './types';
 
 export const useEditTripViewModel = (): IEditTripViewModel => {
-    const navigate = useNavigate();
-    const dispatch = useAppDispatch();
-    const { tripId } = useParams<{ tripId: string }>();
-    
-    const trip = useAppSelector(selectTrip(tripId ?? "")); 
-    
-    const [formData, setFormData] = useState<EditTripFormData>({
-        name: "",
-        color: "",
-    })
-    const [pickerIsOpen, setPickerIsOpen] = useState(false);
-    
-    useEffect(() => {
-        if (trip) {
-            setFormData({
-                name: trip.name ?? "New Trip",
-                color: trip.color ?? "#ff0000",
-            });
-        } else {
-            setFormData({
-                name: "New Trip",
-                color: "#ff0000",
-            });
-        }
-    }, [trip])
+	const navigate = useNavigate();
+	const dispatch = useAppDispatch();
+	const { tripId } = useParams<{ tripId: string }>();
 
-    const onSaveTrip = useCallback(() => {
-        if (!trip) {
-            console.error("Trip not found, cannot save.");
-            return;
-        };
+	const trip = useAppSelector(selectTrip(tripId ?? ''));
 
-        const updatedTrip: Trip = {
-            ...trip,
-            name: formData.name,
-            color: formData.color,
-        };
+	const [formData, setFormData] = useState<EditTripFormData>({
+		name: '',
+		color: '',
+	});
+	const [pickerIsOpen, setPickerIsOpen] = useState(false);
 
-        if (validateTrip(updatedTrip)) {
-            dispatch(editTrip(updatedTrip));
-            navigate(`/trip/${tripId}`);
-        } else {
-            console.warn("Validation failed for trip: ", updatedTrip);
-        }
-    }, [dispatch, formData, navigate, trip, tripId])
+	useEffect(() => {
+		if (trip) {
+			setFormData({
+				name: trip.name ?? 'New Trip',
+				color: trip.color ?? '#ff0000',
+			});
+		} else {
+			setFormData({
+				name: 'New Trip',
+				color: '#ff0000',
+			});
+		}
+	}, [trip]);
 
-    const onNameChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
-        const { value } = e.target;
-        setFormData(prevState => ({
-            ...prevState,
-            name: value,
-        }));
-    }, []);
+	const onSaveTrip = useCallback(() => {
+		if (!trip) {
+			console.error('Trip not found, cannot save.');
+			return;
+		}
 
-    const onColorChange = useCallback((newColor: string) => {
-        setFormData(prevState => ({
-            ...prevState,
-            color: newColor,
-        }))
-    }, []);
+		const updatedTrip: Trip = {
+			...trip,
+			name: formData.name,
+			color: formData.color,
+		};
 
-    const onToggleColorPicker = useCallback(() => {
-        setPickerIsOpen(prev => !prev);
-    }, [])
+		if (validateTrip(updatedTrip)) {
+			dispatch(editTrip(updatedTrip));
+			navigate(`/trip/${tripId}`);
+		} else {
+			console.warn('Validation failed for trip: ', updatedTrip);
+		}
+	}, [dispatch, formData, navigate, trip, tripId]);
 
-    const onGoBack = useCallback(() => {
-        navigate(`/trip/${tripId}`);
-    }, [navigate, tripId]);
+	const onNameChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+		const { value } = e.target;
+		setFormData(prevState => ({
+			...prevState,
+			name: value,
+		}));
+	}, []);
 
-    const isFormValid = useMemo(
-        () => formData.name.trim().length > 0,
-        [formData.name] 
-    );
+	const onColorChange = useCallback((newColor: string) => {
+		setFormData(prevState => ({
+			...prevState,
+			color: newColor,
+		}));
+	}, []);
 
-    return {
-        tripId,
-        formData,
-        isColorPickerOpen: pickerIsOpen,
-        onNameChange,
-        onColorChange,
-        onToggleColorPicker,
-        onSaveTrip,
-        onGoBack,
-        isFormValid,
-        tripExists: !!trip
-    }
-}
+	const onToggleColorPicker = useCallback(() => {
+		setPickerIsOpen(prev => !prev);
+	}, []);
+
+	const onGoBack = useCallback(() => {
+		navigate(`/trip/${tripId}`);
+	}, [navigate, tripId]);
+
+	const isFormValid = useMemo(
+		() => formData.name.trim().length > 0,
+		[formData.name],
+	);
+
+	return {
+		tripId,
+		formData,
+		isColorPickerOpen: pickerIsOpen,
+		onNameChange,
+		onColorChange,
+		onToggleColorPicker,
+		onSaveTrip,
+		onGoBack,
+		isFormValid,
+		tripExists: Boolean(trip),
+	};
+};

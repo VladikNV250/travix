@@ -1,1 +1,1 @@
-export { EditTripPageLazy as EditTripPage } from "./lazy"
+export { EditTripPageLazy as EditTripPage } from './lazy';

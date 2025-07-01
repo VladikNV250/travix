@@ -1,1 +1,1 @@
-export { useTripPageViewModel } from "./useTripPageViewModel";
+export { useTripPageViewModel } from './useTripPageViewModel';

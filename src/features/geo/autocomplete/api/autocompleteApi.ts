@@ -1,12 +1,18 @@
-import { apiClient } from "shared/api"
-import { APIAutocomplete, Prediction } from "./types";
+import { apiClient } from 'shared/api';
 
-export const autocompletePlace = async (input: string): Promise<Prediction[]> => {
-    const response = await apiClient.get<APIAutocomplete>("/api/autocomplete-place", {
-        params: {
-            input
-        },
-    })
+import { APIAutocomplete, Prediction } from './types';
 
-    return response.predictions;
-}
+export const autocompletePlace = async (
+	input: string,
+): Promise<Prediction[]> => {
+	const response = await apiClient.get<APIAutocomplete>(
+		'/api/autocomplete-place',
+		{
+			params: {
+				input,
+			},
+		},
+	);
+
+	return response.predictions;
+};

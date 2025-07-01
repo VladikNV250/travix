@@ -1,22 +1,25 @@
-import { FC, ReactNode, useState } from "react";
-import { TripAnimator } from "../TripAnimator";
-import { TripAnimatorContext } from "./contextTripAnimator";
+import { FC, ReactNode, useState } from 'react';
+
+import { TripAnimator } from '../TripAnimator';
+import { TripAnimatorContext } from './contextTripAnimator';
 
 interface ITripAnimatorProvider {
-    children: ReactNode
+	children: ReactNode;
 }
 
-export const TripAnimatorProvider: FC<ITripAnimatorProvider> = ({ children }) => {
-    const [tripAnimator, setTripAnimator] = useState<TripAnimator | null>(null);
+export const TripAnimatorProvider: FC<ITripAnimatorProvider> = ({
+	children,
+}) => {
+	const [tripAnimator, setTripAnimator] = useState<TripAnimator | null>(null);
 
-    const value = {
-        tripAnimator,
-        setTripAnimator
-    }
+	const value = {
+		tripAnimator,
+		setTripAnimator,
+	};
 
-    return (
-        <TripAnimatorContext.Provider value={value}>
-            {children}
-        </TripAnimatorContext.Provider>
-    )
-}
+	return (
+		<TripAnimatorContext.Provider value={value}>
+			{children}
+		</TripAnimatorContext.Provider>
+	);
+};

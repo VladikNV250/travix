@@ -1,7 +1,3 @@
-export {
-    autocompletePlace
-} from "./api/autocompleteApi";
+export { autocompletePlace } from './api/autocompleteApi';
 
-export type {
-    Prediction
-} from "./api/types"
+export type { Prediction } from './api/types';

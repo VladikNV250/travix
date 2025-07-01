@@ -1,1 +1,1 @@
-export { StopInfoPanel } from "./StopInfoPanel/StopInfoPanel";
+export { StopInfoPanel } from './StopInfoPanel/StopInfoPanel';
