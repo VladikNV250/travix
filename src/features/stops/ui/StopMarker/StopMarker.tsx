@@ -4,7 +4,7 @@ import { Marker, Popup } from 'react-leaflet';
 import { DivIcon, Icon, IconOptions } from 'leaflet';
 
 import { Stop } from 'entities/stop';
-import { useStopMarkerViewModel } from 'features/stops/model';
+import { useStopMarker } from 'features/stops/model';
 import { formatDate } from 'shared/lib';
 import { SimpleLoader } from 'shared/ui';
 
@@ -16,8 +16,7 @@ interface IStopMarker {
 }
 
 export const StopMarker: FC<IStopMarker> = ({ stop, icon }) => {
-	const { weather, holiday, isLoading, updateStopInfo } =
-		useStopMarkerViewModel();
+	const { weather, holiday, isLoading, updateStopInfo } = useStopMarker();
 
 	return (
 		<Marker

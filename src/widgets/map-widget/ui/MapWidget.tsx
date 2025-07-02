@@ -7,16 +7,16 @@ import 'leaflet/dist/leaflet.css';
 import { RoutingMachine } from 'features/routing';
 import { StopMarker } from 'features/stops';
 
-import { useMapViewModel } from '../model';
+import { MAP_INITIAL_CENTER, MAP_INITIAL_ZOOM } from '../config';
+import { useMapWidget } from '../model';
 
 export const MapWidget: FC = () => {
-	const { initialCenter, initialZoom, markers, routes, onMapLoad } =
-		useMapViewModel();
+	const { markers, routes, onMapLoad } = useMapWidget();
 
 	return (
 		<MapContainer
-			center={initialCenter}
-			zoom={initialZoom}
+			center={MAP_INITIAL_CENTER}
+			zoom={MAP_INITIAL_ZOOM}
 			scrollWheelZoom={true}
 			style={{ height: '100%', width: '100%', zIndex: '8' }}
 			ref={onMapLoad}
