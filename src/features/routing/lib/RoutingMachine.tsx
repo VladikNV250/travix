@@ -1,6 +1,6 @@
 import { useEffect, useMemo } from 'react';
 
-import * as L from 'leaflet';
+import * as Lf from 'leaflet';
 import 'leaflet-routing-machine';
 import 'leaflet-routing-machine/dist/leaflet-routing-machine.css';
 
@@ -19,15 +19,16 @@ export const RoutingMachine = ({ trip }: IRoutingMachine) => {
 	const { map } = useMap();
 
 	const waypoints = useMemo(
-		() => trip.stops.map(stop => L.latLng(stop.location)),
+		() => trip.stops.map(stop => Lf.latLng(stop.location)),
 		[trip.stops],
 	);
 
 	useEffect(() => {
 		if (!map) return;
 
-		// @ts-expect-error Because Leaflet Routing Machine doesn't have own types. And Routing is not in L, but it exists.
-		const control: L.Control<L.ControlOptions> = L.Routing.control({
+		// TODO: resolve this problem with types.
+		// @ts-expect-error Because Leaflet Routing Machine doesn't have own types. And Routing is not in Lf, but it exists.
+		const control: Lf.Control<Lf.ControlOptions> = Lf.Routing.control({
 			waypoints: waypoints,
 			show: false,
 			addWaypoints: false,
@@ -52,7 +53,7 @@ export const RoutingMachine = ({ trip }: IRoutingMachine) => {
 			// @ts-expect-error because event doesn't have type
 			.on('routesfound', async e => {
 				const route = e.routes[0];
-				const coordinates: L.LatLng[] = route.coordinates;
+				const coordinates: Lf.LatLng[] = route.coordinates;
 
 				dispatch(
 					addRoute({

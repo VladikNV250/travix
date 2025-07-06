@@ -12,6 +12,7 @@ export const useStopFormPredictions = (address: string) => {
 	const [debouncedAddress] = useDebounce(address, 400);
 	const [predictions, setPredictions] = useState<Prediction[]>([]);
 
+	// TODO: rewrite it using react-query
 	useEffect(() => {
 		(async () => {
 			if (debouncedAddress !== '') {

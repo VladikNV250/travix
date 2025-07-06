@@ -1,0 +1,1 @@
+export { fetchHoliday } from './holidaysApi';

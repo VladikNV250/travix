@@ -17,7 +17,6 @@ export const useTripAnimatorPlayer = (tripAnimator: TripAnimator | null) => {
 		if (!tripAnimator) return;
 
 		tripAnimator.onAnimationEnd = () => {
-			console.log('useEffect3');
 			dispatch(setCurrentMarkerStop(null));
 			setPlayState('finished');
 		};

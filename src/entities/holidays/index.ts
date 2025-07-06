@@ -1,5 +1,3 @@
-export { fetchHoliday } from './api/holidaysApi';
-
-export type { Holiday } from './model/types';
-
-export { useHoliday } from './lib/useHoliday';
+export * from './api';
+export * from './lib';
+export * from './model';

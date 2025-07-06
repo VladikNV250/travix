@@ -54,3 +54,5 @@ export const Button: FC = forwardRef<HTMLButtonElement, IButton>(
 		);
 	},
 );
+
+Button.displayName = 'Button';

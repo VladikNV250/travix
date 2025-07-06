@@ -1,4 +1,3 @@
-import { useCallback } from 'react';
 import { useNavigate } from 'react-router';
 
 import { Stop } from 'entities/stop';
@@ -12,17 +11,17 @@ export const useStopItem = (tripId: Trip['id'], stop: Stop, day?: string) => {
 	const navigate = useNavigate();
 	const { map } = useMap();
 
-	const onItemClick = useCallback(() => {
+	const onItemClick = () => {
 		map?.flyTo(stop.location, 10, { animate: true });
-	}, [map, stop.location]);
+	};
 
-	const onDeleteClick = useCallback(() => {
+	const onDeleteClick = () => {
 		dispatch(removeStop({ tripId, stop }));
-	}, [dispatch, stop, tripId]);
+	};
 
-	const onEditClick = useCallback(() => {
+	const onEditClick = () => {
 		navigate(`/trip/${tripId}/stop/${stop.id}`);
-	}, [tripId, stop.id, navigate]);
+	};
 
 	return {
 		stopData: stop,

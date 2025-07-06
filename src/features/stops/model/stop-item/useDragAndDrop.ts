@@ -1,5 +1,3 @@
-import { useMemo } from 'react';
-
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 
@@ -10,13 +8,10 @@ export const useDragAndDrop = (stop: Stop) => {
 	const { setNodeRef, attributes, listeners, transform, transition } =
 		useSortable({ id: stop.id });
 
-	const dragStyle = useMemo(
-		() => ({
-			transform: CSS.Transform.toString(transform),
-			transition,
-		}),
-		[transform, transition],
-	);
+	const dragStyle = {
+		transform: CSS.Transform.toString(transform),
+		transition,
+	};
 
 	return {
 		setNodeRef,

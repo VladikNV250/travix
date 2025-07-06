@@ -1,5 +1,3 @@
-import { useCallback } from 'react';
-
 import { Map } from 'leaflet';
 
 import { useMap } from 'features/map';
@@ -10,12 +8,9 @@ import { useMapRoutes } from './useMapRoutes';
 export const useMapWidget = () => {
 	const { setMap } = useMap();
 
-	const onMapLoad = useCallback(
-		(mapInstance: Map) => {
-			setMap(mapInstance);
-		},
-		[setMap],
-	);
+	const onMapLoad = (mapInstance: Map) => {
+		setMap(mapInstance);
+	};
 
 	const markers = useMapMarkers();
 	const routes = useMapRoutes();

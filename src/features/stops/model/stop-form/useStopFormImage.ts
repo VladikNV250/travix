@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useCallback } from 'react';
+import { Dispatch, SetStateAction } from 'react';
 
 import { Image } from 'entities/image';
 
@@ -11,25 +11,19 @@ import { StopFormData } from './types';
 export const useStopFormImage = (
 	setFormData: Dispatch<SetStateAction<StopFormData>>,
 ) => {
-	const onAddImage = useCallback(
-		(image: Image) => {
-			setFormData(prevState => ({
-				...prevState,
-				images: [...prevState.images, image],
-			}));
-		},
-		[setFormData],
-	);
+	const onAddImage = (image: Image) => {
+		setFormData(prevState => ({
+			...prevState,
+			images: [...prevState.images, image],
+		}));
+	};
 
-	const onDeleteImage = useCallback(
-		(id: string) => {
-			setFormData(prevState => ({
-				...prevState,
-				images: prevState.images.filter(image => image.id !== id),
-			}));
-		},
-		[setFormData],
-	);
+	const onDeleteImage = (id: string) => {
+		setFormData(prevState => ({
+			...prevState,
+			images: prevState.images.filter(image => image.id !== id),
+		}));
+	};
 
 	return {
 		onAddImage,

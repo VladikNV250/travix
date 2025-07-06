@@ -1,5 +1,3 @@
-import { useCallback } from 'react';
-
 import { Stop } from 'entities/stop';
 import { Trip } from 'entities/trip';
 
@@ -36,21 +34,14 @@ export const useStopForm = (
 		onClose,
 	);
 
-	const onCancel = useCallback(() => {
-		onClose?.();
-	}, [onClose]);
-
 	const { predictions } = useStopFormPredictions(formData.address);
 
-	const onPredictionSelect = useCallback(
-		(description: string) => {
-			setFormData(prevState => ({
-				...prevState,
-				address: description,
-			}));
-		},
-		[setFormData],
-	);
+	const onPredictionSelect = (description: string) => {
+		setFormData(prevState => ({
+			...prevState,
+			address: description,
+		}));
+	};
 
 	const { onAddImage, onDeleteImage } = useStopFormImage(setFormData);
 
@@ -64,7 +55,7 @@ export const useStopForm = (
 		onDataChange,
 		onDeleteImage,
 		onSaveStop,
-		onCancel,
+		onCancel: onClose,
 
 		hasUnsavedChanges,
 		isEditMode,

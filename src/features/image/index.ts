@@ -1,3 +1,3 @@
-export { ImageUpload } from './ui/ImageUpload';
-export { uploadImage } from './api/uploadImage';
-export { useUploadImage } from './lib/useUploadImage';
+export * from './api';
+export * from './lib';
+export * from './ui';

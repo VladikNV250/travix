@@ -5,11 +5,11 @@ import { Image } from 'entities/image';
 import { useUploadImage } from '../lib/useUploadImage';
 import styles from './style.module.scss';
 
-interface IImageUpload {
+interface ImageUploadProps {
 	onUpload: (image: Image) => void;
 }
 
-export const ImageUpload: FC<IImageUpload> = ({ onUpload }) => {
+export const ImageUpload: FC<ImageUploadProps> = ({ onUpload }) => {
 	const { upload, loading } = useUploadImage();
 
 	const handleFile = async (e: ChangeEvent<HTMLInputElement>) => {

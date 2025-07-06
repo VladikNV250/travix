@@ -1,0 +1,1 @@
+export { geocodePlace } from './geocodeApi';

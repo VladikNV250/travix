@@ -2,7 +2,7 @@ import { useContext } from 'react';
 
 import { TripAnimatorContext } from '../context';
 
-export function useTripAnimator() {
+export const useTripAnimator = () => {
 	const context = useContext(TripAnimatorContext);
 	if (!context) {
 		throw new Error(
@@ -10,4 +10,4 @@ export function useTripAnimator() {
 		);
 	}
 	return context;
-}
+};
