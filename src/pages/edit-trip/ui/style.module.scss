@@ -1,0 +1,53 @@
+.formContainer {
+	display: flex;
+	align-items: flex-end;
+	justify-content: space-between;
+	gap: 24px;
+}
+
+.input {
+	background: #e9e9e9;
+	padding: 6px 8px;
+	border-radius: 4px;
+	width: 100%;
+	resize: none;
+	font-size: 18px;
+}
+
+.button {
+	background: #216a41;
+	color: #fff;
+	padding: 8px;
+	border-radius: 8px;
+	width: 100%;
+
+	&.grey {
+		background: #535151;
+	}
+
+	&Container {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 16px;
+		margin-top: 12px;
+	}
+}
+
+.colorButton {
+	width: 32px;
+	height: 32px;
+	border-radius: 50%;
+	position: relative;
+
+	.colorPicker {
+		position: absolute;
+		top: 0;
+		left: calc(100% + 16px);
+		display: none;
+
+		&.opened {
+			display: block;
+		}
+	}
+}

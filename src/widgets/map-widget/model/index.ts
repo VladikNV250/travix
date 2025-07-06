@@ -1,0 +1,1 @@
+export { useMapWidget } from './useMapWidget';

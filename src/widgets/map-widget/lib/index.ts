@@ -1,0 +1,1 @@
+export { createMarkerIcon } from './createMarkerIcon';
