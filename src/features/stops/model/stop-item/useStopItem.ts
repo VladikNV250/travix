@@ -7,26 +7,7 @@ import { useMap } from 'features/map';
 import { removeStop } from 'features/trip';
 import { useAppDispatch } from 'shared/lib';
 
-export interface UseStopItemProps {
-	tripId: Trip['id'];
-	stop: Stop;
-	day?: string;
-}
-
-export interface UseStopItemResult {
-	stopData: Stop;
-	displayDay?: string;
-
-	onDeleteClick: () => void;
-	onEditClick: () => void;
-	onItemClick: () => void;
-}
-
-export const useStopItem = ({
-	stop,
-	tripId,
-	day,
-}: UseStopItemProps): UseStopItemResult => {
+export const useStopItem = (tripId: Trip['id'], stop: Stop, day?: string) => {
 	const dispatch = useAppDispatch();
 	const navigate = useNavigate();
 	const { map } = useMap();

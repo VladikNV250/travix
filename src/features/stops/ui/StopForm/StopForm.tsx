@@ -12,13 +12,13 @@ import styles from './style.module.scss';
 
 interface StopFormProps {
 	tripId: Trip['id'];
-	initialData?: Stop;
+	initialData?: Partial<Stop>;
 	onClose?: () => void;
 }
 
 export const StopForm: FC<StopFormProps> = ({
 	tripId,
-	initialData,
+	initialData = {},
 	onClose,
 }) => {
 	const {
@@ -37,11 +37,7 @@ export const StopForm: FC<StopFormProps> = ({
 		isEditMode,
 		isFormValid,
 		isSubmitting,
-	} = useStopForm({
-		tripId,
-		initialData,
-		onClose,
-	});
+	} = useStopForm(tripId, initialData, onClose);
 
 	return (
 		<form

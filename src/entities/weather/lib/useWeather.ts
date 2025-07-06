@@ -1,4 +1,8 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
+
+import { latLng } from 'leaflet';
+
+import { Stop } from 'entities/stop';
 
 import {
 	getWeatherForecast,
@@ -7,34 +11,40 @@ import {
 } from '../api/weatherApi';
 import { Weather } from '../model/types';
 
-export const useWeather = () => {
+// TODO: maybe rewrite it using react-query
+export const useWeather = (defaultStop: Stop | null = null) => {
 	const [weather, setWeather] = useState<Weather | null>(null);
 	const [loading, setLoading] = useState<boolean>(false);
 	const [error, setError] = useState<unknown | null>(null);
 
-	const getWeather = useCallback(async (latlng: string, date: Date) => {
-		const day = 1000 * 60 * 60 * 24;
+	const refetch = useCallback(async (stop: Stop) => {
+		const day = 1 * 24 * 60 * 60 * 1000;
 		const today = new Date();
 		today.setHours(0, 0, 0, 0);
 
+		const date = new Date(stop.arrivalDate || Date.now());
+		const coords = latLng(stop.location);
+		const coordsStr = `${coords.lat},${coords.lng}`;
+
 		try {
 			setLoading(true);
+			setError(null);
 
 			if (
 				date.getTime() - today.getTime() >= 0 &&
 				date.getTime() - today.getTime() <= day
 			) {
-				setWeather(await getWeatherToday(latlng));
+				setWeather(await getWeatherToday(coordsStr));
 			} else if (
 				date.getTime() - today.getTime() >= 0 &&
 				date.getTime() - today.getTime() <= 14 * day
 			) {
-				setWeather(await getWeatherForecast(latlng, date));
+				setWeather(await getWeatherForecast(coordsStr, date));
 			} else if (
 				date.getTime() - today.getTime() > 14 * day &&
 				date.getTime() - today.getTime() <= 300 * day
 			) {
-				setWeather(await getWeatherFuture(latlng, date));
+				setWeather(await getWeatherFuture(coordsStr, date));
 			} else {
 				setWeather(null);
 			}
@@ -46,10 +56,16 @@ export const useWeather = () => {
 		}
 	}, []);
 
+	useEffect(() => {
+		if (defaultStop) {
+			refetch(defaultStop);
+		}
+	}, [defaultStop, refetch]);
+
 	return {
 		weather,
 		loading,
 		error,
-		getWeather,
+		refetch,
 	};
 };

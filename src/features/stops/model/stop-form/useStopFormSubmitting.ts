@@ -14,37 +14,19 @@ import { useAppDispatch } from 'shared/lib';
 import { createStop } from '../createStop';
 import { StopFormData } from './types';
 
-interface UseStopFormSubmittingProps {
-	tripId: string;
-	initialData?: Stop;
-	formData: StopFormData;
-
-	setFormData: Dispatch<SetStateAction<StopFormData>>;
-	onClose?: () => void;
-
-	isFormValid: boolean;
-	isEditMode: boolean;
-}
-
-interface UseStopFormSubmittingResult {
-	isSubmitting: boolean;
-	submitError: string | null;
-	onSaveStop: (e: FormEvent<HTMLFormElement>) => Promise<void>;
-}
-
 /**
  * Handles the stop form submission process.
  * Manages adding/editing stops, loading states, and error handling.
  */
-export const useStopFormSubmitting = ({
-	tripId,
-	initialData,
-	formData,
-	setFormData,
-	onClose,
-	isEditMode,
-	isFormValid,
-}: UseStopFormSubmittingProps): UseStopFormSubmittingResult => {
+export const useStopFormSubmitting = (
+	tripId: string,
+	initialData: Partial<Stop>,
+	formData: StopFormData,
+	setFormData: Dispatch<SetStateAction<StopFormData>>,
+	isFormValid: boolean,
+	isEditMode: boolean,
+	onClose?: () => void,
+) => {
 	const dispatch = useAppDispatch();
 	const { map } = useMap();
 	const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
