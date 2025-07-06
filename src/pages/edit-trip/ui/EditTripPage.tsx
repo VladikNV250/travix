@@ -1,39 +1,22 @@
+import { useState } from 'react';
 import { HexColorPicker } from 'react-colorful';
+import { Link, useParams } from 'react-router';
 
 import clsx from 'clsx';
 
-import { useEditTripViewModel } from '../model';
+import { useEditTripForm } from '../model';
 import styles from './style.module.scss';
 
 const EditTripPage = () => {
-	const {
-		tripId,
-		formData,
-		isColorPickerOpen,
-		onNameChange,
-		onColorChange,
-		onToggleColorPicker,
-		onSaveTrip,
-		onGoBack,
-		isFormValid,
-		tripExists,
-	} = useEditTripViewModel();
-
-	if (!tripExists) {
-		return (
-			<div className={styles.errorMessage}>
-				Trip with ID "{tripId}" not found.
-			</div>
-		);
-	}
+	const { tripId } = useParams<{ tripId: string }>();
+	const [pickerIsOpen, setPickerIsOpen] = useState(false);
+	const { formData, isSubmitting, onSubmit, onColorChange } =
+		useEditTripForm(tripId);
 
 	return (
 		<form
 			className={styles.trip}
-			onSubmit={e => {
-				e.preventDefault();
-				onSaveTrip();
-			}}
+			onSubmit={onSubmit}
 		>
 			<div className={styles.formContainer}>
 				<div>
@@ -42,21 +25,20 @@ const EditTripPage = () => {
 						id="tripName"
 						name="name"
 						className={styles.input}
-						value={formData.name}
-						onChange={onNameChange}
+						defaultValue={formData.name}
 					/>
 				</div>
 				<button
-					onClick={onToggleColorPicker}
+					onClick={() => setPickerIsOpen(p => !p)}
 					className={styles.colorButton}
 					style={{ background: formData.color }}
 					type="button"
 				>
 					<div
-						className={clsx(
-							styles.colorPicker,
-							isColorPickerOpen && styles.opened,
-						)}
+						role="button"
+						tabIndex={0}
+						className={clsx(styles.colorPicker, pickerIsOpen && styles.opened)}
+						onKeyDown={e => e.stopPropagation()}
 						onClick={e => e.stopPropagation()}
 					>
 						<HexColorPicker
@@ -70,17 +52,16 @@ const EditTripPage = () => {
 				<button
 					className={styles.button}
 					type="submit"
-					disabled={!isFormValid}
+					disabled={isSubmitting}
 				>
 					Save
 				</button>
-				<button
-					onClick={onGoBack}
+				<Link
+					to={`/trip/${tripId}`}
 					className={clsx(styles.button, styles.grey)}
-					type="button"
 				>
 					Back
-				</button>
+				</Link>
 			</div>
 		</form>
 	);
