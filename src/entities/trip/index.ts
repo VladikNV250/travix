@@ -1,4 +1,2 @@
-export type { Trip } from "./model/types"
-export { validateTrip } from "./model/validation";
-
-export { TripItem } from "./ui/TripItem";
+export * from './model';
+export * from './ui';

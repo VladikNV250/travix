@@ -1,5 +1,3 @@
-export { formatDate } from "./formatDate";
+export { formatDate } from './formatDate';
 
-export type {
-    DateFormat
-} from "./types";
+export type { DateFormat } from './types';

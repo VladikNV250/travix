@@ -1,4 +1,4 @@
 export interface Holiday {
-    name: string,
-    date: string,
+	name: string;
+	date: string;
 }

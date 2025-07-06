@@ -1,1 +1,1 @@
-export { withSuspense } from "./withSuspense";
+export { withSuspense } from './withSuspense';

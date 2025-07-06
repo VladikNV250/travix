@@ -1,22 +1,15 @@
-import { Stop } from "entities/stop";
-import { Trip } from "entities/trip";
-import { DivIcon, LatLngExpression, Map } from "leaflet";
+import { DivIcon } from 'leaflet';
 
-export interface IMapViewModel {
-    initialCenter: LatLngExpression;
-    initialZoom: number;
-    markers: MapMarkerData[];
-    routes: MapRouteData[];
-    onMapLoad: (mapInstance: Map) => void;
-}
+import { Stop } from 'entities/stop';
+import { Trip } from 'entities/trip';
 
 export interface MapRouteData {
-    readonly key: string;
-    trip: Trip
+	readonly key: string;
+	trip: Trip;
 }
 
 export interface MapMarkerData {
-    readonly key: string;
-    stop: Stop;
-    icon: DivIcon;
+	readonly key: string;
+	stop: Stop;
+	icon: DivIcon;
 }

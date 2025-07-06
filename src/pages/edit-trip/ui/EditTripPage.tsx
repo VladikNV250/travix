@@ -1,84 +1,70 @@
-import { HexColorPicker } from "react-colorful";
-import { useEditTripViewModel } from "../model";
-import clsx from "clsx";
-import styles from "./style.module.scss";
+import { useState } from 'react';
+import { HexColorPicker } from 'react-colorful';
+import { Link, useParams } from 'react-router';
+
+import clsx from 'clsx';
+
+import { useEditTripForm } from '../model';
+import styles from './style.module.scss';
 
 const EditTripPage = () => {
-    const {
-        tripId,
-        formData,
-        isColorPickerOpen,
-        onNameChange,
-        onColorChange,
-        onToggleColorPicker,
-        onSaveTrip,
-        onGoBack,
-        isFormValid,
-        tripExists
-    } = useEditTripViewModel(); 
+	const { tripId } = useParams<{ tripId: string }>();
+	const [pickerIsOpen, setPickerIsOpen] = useState(false);
+	const { formData, isSubmitting, onSubmit, onColorChange } =
+		useEditTripForm(tripId);
 
-    if (!tripExists) {
-        return (
-            <div className={styles.errorMessage}>
-                Trip with ID "{tripId}" not found.
-            </div>
-        )
-    }
-
-    return (
-        <form 
-            className={styles.trip}
-            onSubmit={(e) => { e.preventDefault(); onSaveTrip(); }}
-        >
-            <div className={styles.formContainer}>
-                <div>
-                    <label htmlFor="tripName">Trip Name</label>
-                    <input 
-                        id="tripName"
-                        name="name"
-                        className={styles.input}
-                        value={formData.name}
-                        onChange={onNameChange}
-                    />
-                </div>
-                <button 
-                    onClick={onToggleColorPicker}
-                    className={styles.colorButton} 
-                    style={{background: formData.color}}
-                    type="button"
-                >
-                    <div 
-                        className={clsx(
-                            styles.colorPicker, 
-                            isColorPickerOpen && styles.opened
-                        )}
-                        onClick={e => e.stopPropagation()}
-                    >
-                        <HexColorPicker 
-                            color={formData.color}
-                            onChange={onColorChange}
-                        />
-                    </div>
-                </button>
-            </div>
-            <div className={styles.buttonContainer}>
-                <button 
-                    className={styles.button}
-                    type="submit"
-                    disabled={!isFormValid}
-                >
-                    Save
-                </button>
-                <button 
-                    onClick={onGoBack}
-                    className={clsx(styles.button, styles.grey)}
-                    type="button"
-                >
-                    Back
-                </button>
-            </div>
-        </form>
-    )
-}
+	return (
+		<form
+			className={styles.trip}
+			onSubmit={onSubmit}
+		>
+			<div className={styles.formContainer}>
+				<div>
+					<label htmlFor="tripName">Trip Name</label>
+					<input
+						id="tripName"
+						name="name"
+						className={styles.input}
+						defaultValue={formData.name}
+					/>
+				</div>
+				<button
+					onClick={() => setPickerIsOpen(p => !p)}
+					className={styles.colorButton}
+					style={{ background: formData.color }}
+					type="button"
+				>
+					<div
+						role="button"
+						tabIndex={0}
+						className={clsx(styles.colorPicker, pickerIsOpen && styles.opened)}
+						onKeyDown={e => e.stopPropagation()}
+						onClick={e => e.stopPropagation()}
+					>
+						<HexColorPicker
+							color={formData.color}
+							onChange={onColorChange}
+						/>
+					</div>
+				</button>
+			</div>
+			<div className={styles.buttonContainer}>
+				<button
+					className={styles.button}
+					type="submit"
+					disabled={isSubmitting}
+				>
+					Save
+				</button>
+				<Link
+					to={`/trip/${tripId}`}
+					className={clsx(styles.button, styles.grey)}
+				>
+					Back
+				</Link>
+			</div>
+		</form>
+	);
+};
 
 export default EditTripPage;

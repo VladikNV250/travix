@@ -1,34 +1,36 @@
 .loader {
-    width: 50px;
-    aspect-ratio: 1;
-    border-radius: 50%;
-    border: 8px solid #0000;
-    border-right-color: #ffa50097;
-    position: relative;
-    animation: spin 1s infinite linear;
+	width: 50px;
+	aspect-ratio: 1;
+	border-radius: 50%;
+	border: 8px solid #0000;
+	border-right-color: #ffa50097;
+	position: relative;
+	animation: spin 1s infinite linear;
 
-    &::after,
-    &::before {
-        content: "";
-        position: absolute;
-        inset: -8px;
-        border-radius: 50%;
-        border: inherit;
-        animation: inherit;
-        animation-duration: 2s;
-    }
+	&::after,
+	&::before {
+		content: '';
+		position: absolute;
+		inset: -8px;
+		border-radius: 50%;
+		border: inherit;
+		animation: inherit;
+		animation-duration: 2s;
+	}
 
-    &::after {
-        animation-duration: 4s;
-    }
+	&::after {
+		animation-duration: 4s;
+	}
 
-    &Container {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
+	&Container {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
 }
 
 @keyframes spin {
-  100% {transform: rotate(1turn)}
+	100% {
+		transform: rotate(1turn);
+	}
 }

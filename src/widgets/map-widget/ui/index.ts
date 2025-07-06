@@ -1,1 +1,1 @@
-export { MapWidget } from "./MapWidget";
+export { MapWidget } from './MapWidget';

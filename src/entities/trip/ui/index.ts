@@ -1,0 +1,1 @@
+export { TripItem } from './TripItem';

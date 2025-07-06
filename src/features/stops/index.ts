@@ -1,3 +1,3 @@
-export * from "./ui";
+export * from './ui';
 
-export { calculateTripDays } from "./model/calculateTripDays";
+export { calculateTripDays } from './model/calculateTripDays';

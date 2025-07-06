@@ -1,123 +1,124 @@
 .stopInfoPanel {
-    width: 100%;
-    position: absolute;
-    background: linear-gradient(-90deg, #1CB5E0 0%, #000851 100%);
-    top: 0;
-    left: 0;
-    z-index: 10;
-    opacity: 0;
-    animation: slideFadeOut 0.4s ease-out forwards;
-    padding: 16px 20px;
+	width: 100%;
+	position: absolute;
+	background: linear-gradient(-90deg, #1cb5e0 0%, #000851 100%);
+	top: 0;
+	left: 0;
+	z-index: 10;
+	opacity: 0;
+	animation: slideFadeOut 0.4s ease-out forwards;
+	padding: 16px 20px;
 
-    &.active {
-        animation: slideFadeIn 0.4s ease-out forwards;
-    }
+	&.active {
+		animation: slideFadeIn 0.4s ease-out forwards;
+	}
 
-    .header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 12px;
-    }
+	.header {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		margin-bottom: 12px;
+	}
 
-    .titleContainer {
-        display: flex;
-        flex-direction: column;
-        color: #f1f1f1;
-    }
-    
-    .title {
-        font-size: 24px;
-        font-weight: 500;
-    }
+	.titleContainer {
+		display: flex;
+		flex-direction: column;
+		color: #f1f1f1;
+	}
 
-    .widgetContainer {
-        display: grid;
-        grid-auto-flow: column;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 16px;
-    }   
+	.title {
+		font-size: 24px;
+		font-weight: 500;
+	}
 
-    .infoWidget {
-        width: 100%;
-        min-height: 60px;
-        max-height: 110px;
-        background: #ffffff6d;
-        border-radius: 12px;
-        padding: 12px;
-        overflow-y: hidden;
-    }
+	.widgetContainer {
+		display: grid;
+		grid-auto-flow: column;
+		grid-template-columns: repeat(3, 1fr);
+		gap: 16px;
+	}
 
-    .infoHeader {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-    }
+	.infoWidget {
+		width: 100%;
+		min-height: 60px;
+		max-height: 110px;
+		background: #ffffff6d;
+		border-radius: 12px;
+		padding: 12px;
+		overflow-y: hidden;
+	}
 
-    .infoTitle {
-        font-size: 20px;
-        color: #f1f1f1;
-        font-weight: 500;
-    }
+	.infoHeader {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+	}
 
-    .infoSubtitle {
-        font-size: 16px;
-        color: #f1f1f1;
-        font-style: italic;
-    }
+	.infoTitle {
+		font-size: 20px;
+		color: #f1f1f1;
+		font-weight: 500;
+	}
 
-    .weatherContainer {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-    }
+	.infoSubtitle {
+		font-size: 16px;
+		color: #f1f1f1;
+		font-style: italic;
+	}
 
-    .temperature {
-        font-size: 18px;
-        color: #f1f1f1;
-        font-weight: 500;
-    }
+	.weatherContainer {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+	}
 
-    .condition {
-        font-size: 14px;
-        color: #e5e5e5;
+	.temperature {
+		font-size: 18px;
+		color: #f1f1f1;
+		font-weight: 500;
+	}
 
-        &Icon {
-            width: 48px;
-            height: 48px;
-        }
-    }
+	.condition {
+		font-size: 14px;
+		color: #e5e5e5;
 
-    .notes {
-        font-size: 14px;
-        color: #f1f1f1;
-        overflow-y: auto;
-        height: 100%;
-        -ms-overflow-style: none;
-        scrollbar-width: none;
-        &::-webkit-scrollbar { display: none; }
-    }
+		&Icon {
+			width: 48px;
+			height: 48px;
+		}
+	}
+
+	.notes {
+		font-size: 14px;
+		color: #f1f1f1;
+		overflow-y: auto;
+		height: 100%;
+		-ms-overflow-style: none;
+		scrollbar-width: none;
+		&::-webkit-scrollbar {
+			display: none;
+		}
+	}
 }
 
-
 @keyframes slideFadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(-100%);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+	from {
+		opacity: 0;
+		transform: translateY(-100%);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
 }
 
 @keyframes slideFadeOut {
-    from {
-        opacity: 1;
-        transform: translateY(0);
-    }
-    to {
-        opacity: 0;
-        transform: translateY(-100%);
-    }
+	from {
+		opacity: 1;
+		transform: translateY(0);
+	}
+	to {
+		opacity: 0;
+		transform: translateY(-100%);
+	}
 }

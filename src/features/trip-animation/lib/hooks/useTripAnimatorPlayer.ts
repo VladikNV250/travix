@@ -1,41 +1,45 @@
-import { useEffect, useState } from "react";
-import { TripAnimator } from "../TripAnimator";
-import { LatLngExpression } from "leaflet";
-import { useAppDispatch } from "shared/lib";
-import { setCurrentMarkerStop } from "features/routing";
+import { useEffect, useState } from 'react';
+
+import { LatLngExpression } from 'leaflet';
+
+import { setCurrentMarkerStop } from 'features/routing';
+import { useAppDispatch } from 'shared/lib';
+
+import { TripAnimator } from '../TripAnimator';
 
 export const useTripAnimatorPlayer = (tripAnimator: TripAnimator | null) => {
-    const dispatch = useAppDispatch();
-    const [playState, setPlayState] = useState<'idle' | 'playing' | 'paused' | 'finished' >('idle');
+	const dispatch = useAppDispatch();
+	const [playState, setPlayState] = useState<
+		'idle' | 'playing' | 'paused' | 'finished'
+	>('idle');
 
-    useEffect(() => {
-        if (!tripAnimator) return;
+	useEffect(() => {
+		if (!tripAnimator) return;
 
-        tripAnimator.onAnimationEnd = () => {
-            console.log("useEffect3");            
-            dispatch(setCurrentMarkerStop(null));
-            setPlayState('finished');
-        }
+		tripAnimator.onAnimationEnd = () => {
+			dispatch(setCurrentMarkerStop(null));
+			setPlayState('finished');
+		};
 
-        return () => {
-            tripAnimator.onAnimationEnd = undefined;
-        }
-    }, [dispatch, tripAnimator])
-    
-    const handlePlayClick = (stops: LatLngExpression[]) => {
-        if (!tripAnimator) return;
+		return () => {
+			tripAnimator.onAnimationEnd = undefined;
+		};
+	}, [dispatch, tripAnimator]);
 
-        if (playState === 'idle' || playState === 'finished') {
-            tripAnimator.startAnimation(stops);
-            setPlayState('playing');
-        } else if (playState === 'playing') {
-            tripAnimator.pauseAnimation();
-            setPlayState('paused');
-        } else if (playState === 'paused') {
-            tripAnimator.continueAnimation();
-            setPlayState('playing');
-        }
-    }
+	const handlePlayClick = (stops: LatLngExpression[]) => {
+		if (!tripAnimator) return;
 
-    return [playState, handlePlayClick] as const;
-}
+		if (playState === 'idle' || playState === 'finished') {
+			tripAnimator.startAnimation(stops);
+			setPlayState('playing');
+		} else if (playState === 'playing') {
+			tripAnimator.pauseAnimation();
+			setPlayState('paused');
+		} else if (playState === 'paused') {
+			tripAnimator.continueAnimation();
+			setPlayState('playing');
+		}
+	};
+
+	return [playState, handlePlayClick] as const;
+};

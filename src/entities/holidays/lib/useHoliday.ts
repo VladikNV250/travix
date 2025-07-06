@@ -1,26 +1,39 @@
-import { useCallback, useState } from "react"
-import { Holiday } from "../model/types";
-import { fetchHoliday } from "../api/holidaysApi";
+import { useCallback, useEffect, useState } from 'react';
 
-export const useHoliday = () => {
-    const [holiday, setHoliday] = useState<Holiday | null>(null);
-    const [loading, setLoading] = useState<boolean>(false);
-    const [error, setError] = useState<unknown | null>(null);
+import { Stop } from 'entities/stop';
 
-    const getHoliday = useCallback(async (countryCode: string, date: Date) => {
-        try {
-            setLoading(true);
+import { fetchHoliday } from '../api/holidaysApi';
+import { Holiday } from '../model/types';
 
-            const response = await fetchHoliday(countryCode, date);
+// TODO: maybe rewrite it using react-query
+export const useHoliday = (defaultStop: Stop | null = null) => {
+	const [holiday, setHoliday] = useState<Holiday | null>(null);
+	const [loading, setLoading] = useState<boolean>(false);
+	const [error, setError] = useState<unknown | null>(null);
 
-            setHoliday(response);
-        } catch (e) {
-            setError(e);
-            console.log("Holiday-API-error", e);
-        } finally {
-            setLoading(false);
-        }
-    }, [])
+	const refetch = useCallback(async (stop: Stop) => {
+		if (!stop.countryCode) return;
 
-    return { holiday, loading, error, getHoliday };
-}
+		const date = new Date(stop.arrivalDate || Date.now());
+		try {
+			setLoading(true);
+
+			const response = await fetchHoliday(stop.countryCode, date);
+
+			setHoliday(response);
+		} catch (e) {
+			setError(e);
+			console.error('Holiday-API-error', e);
+		} finally {
+			setLoading(false);
+		}
+	}, []);
+
+	useEffect(() => {
+		if (defaultStop) {
+			refetch(defaultStop);
+		}
+	}, [defaultStop, refetch]);
+
+	return { holiday, loading, error, refetch };
+};

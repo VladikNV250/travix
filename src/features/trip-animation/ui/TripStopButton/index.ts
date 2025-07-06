@@ -1,1 +1,1 @@
-export { TripStopButton } from "./TripStopButton";
+export { TripStopButton } from './TripStopButton';

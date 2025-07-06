@@ -1,50 +1,58 @@
-import { Route } from "entities/route";
-import { LatLngExpression, Map } from "leaflet";
-import { useEffect } from "react"
-import { TripAnimator } from "../TripAnimator";
-import { Stop } from "entities/stop";
-import { useAppDispatch } from "shared/lib";
-import { setActiveRouteId, setCurrentMarkerStop } from "features/routing";
-import { useTripAnimator } from "./useTripAnimator";
+import { useEffect } from 'react';
 
+import { LatLngExpression, Map } from 'leaflet';
 
-export const useInitTripAnimator = (map: Map | null, route: Route, tripStops?: Stop[]) => {
-    const { tripAnimator, setTripAnimator } = useTripAnimator();
-    const dispatch = useAppDispatch();
-    
-    useEffect(() => {
-        return () => {
-            tripAnimator?.stopAnimation();
-        }
-    }, [setTripAnimator, tripAnimator])
+import { Route } from 'entities/route';
+import { Stop } from 'entities/stop';
+import { setActiveRouteId, setCurrentMarkerStop } from 'features/routing';
+import { useAppDispatch } from 'shared/lib';
 
-    useEffect(() => {
-        if (!tripAnimator || !tripStops) return;
+import { TripAnimator } from '../TripAnimator';
+import { useTripAnimator } from './useTripAnimator';
 
-        dispatch(setCurrentMarkerStop(null));
+export const useInitTripAnimator = (
+	map: Map | null,
+	route: Route,
+	tripStops?: Stop[],
+) => {
+	const { tripAnimator, setTripAnimator } = useTripAnimator();
+	const dispatch = useAppDispatch();
 
-        tripAnimator.onArriveStop = (stopLocation: LatLngExpression | null) => {
-            const currentStop = tripStops.find(item => item.location === stopLocation);
-            dispatch(setCurrentMarkerStop(currentStop ?? null));
-        }
+	useEffect(() => {
+		return () => {
+			tripAnimator?.stopAnimation();
+		};
+	}, [setTripAnimator, tripAnimator]);
 
-        tripAnimator.onAnimationContinue = () => {
-            dispatch(setCurrentMarkerStop(null));
-        }        
+	useEffect(() => {
+		if (!tripAnimator || !tripStops) return;
 
-        return () => {
-            tripAnimator.onArriveStop        = undefined;
-            tripAnimator.onAnimationContinue = undefined;
-            dispatch(setCurrentMarkerStop(null));
-        }
-    }, [dispatch, tripStops, tripAnimator]);
+		dispatch(setCurrentMarkerStop(null));
 
-    useEffect(() => {
-        if (map && route) {
-            dispatch(setActiveRouteId(route.id));
-            setTripAnimator(new TripAnimator(map, route));
-        }
-    }, [map, route, setTripAnimator, dispatch])
+		tripAnimator.onArriveStop = (stopLocation: LatLngExpression | null) => {
+			const currentStop = tripStops.find(
+				item => item.location === stopLocation,
+			);
+			dispatch(setCurrentMarkerStop(currentStop ?? null));
+		};
 
-    return tripAnimator;
-}
+		tripAnimator.onAnimationContinue = () => {
+			dispatch(setCurrentMarkerStop(null));
+		};
+
+		return () => {
+			tripAnimator.onArriveStop = undefined;
+			tripAnimator.onAnimationContinue = undefined;
+			dispatch(setCurrentMarkerStop(null));
+		};
+	}, [dispatch, tripStops, tripAnimator]);
+
+	useEffect(() => {
+		if (map && route) {
+			dispatch(setActiveRouteId(route.id));
+			setTripAnimator(new TripAnimator(map, route));
+		}
+	}, [map, route, setTripAnimator, dispatch]);
+
+	return tripAnimator;
+};
