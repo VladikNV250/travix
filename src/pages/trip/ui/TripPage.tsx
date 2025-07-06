@@ -8,30 +8,16 @@ import { TripPlayButton, TripStopButton } from 'features/trip-animation';
 import { CalendarDate, ChevronLeft, ThreeDots } from 'shared/assets';
 import { DndWrapper } from 'shared/lib';
 
-import { useTripPageViewModel } from '../model';
+import { useTripPage } from '../model';
 import styles from './style.module.scss';
 
 const TripPage: FC = () => {
-	const {
-		trip,
-		displayStops,
-		isOpenStopForm,
-		dayView,
-		animationControls,
-		isTripMenuOpened,
-		onToggleTripMenu,
-		onCloseTripMenu,
-		onCloseStopForm,
-		onOpenStopForm,
-		onToggleDayView,
-		onEditClick,
-		onDeleteClick,
-		onSetStopsOrder,
-	} = useTripPageViewModel();
+	const { tripData, tripMenu, stopDisplay, stopForm, animation } =
+		useTripPage();
 
 	return (
 		<div className={styles.trip}>
-			{!isOpenStopForm ? (
+			{!stopForm.isOpen ? (
 				<>
 					<header className={styles.tripHeader}>
 						<Link
@@ -43,13 +29,13 @@ const TripPage: FC = () => {
 								height={20}
 							/>
 						</Link>
-						<h3 className={styles.tripTitle}>{trip?.name ?? ''}</h3>
-						<TripPlayButton stops={animationControls.stops} />
+						<h3 className={styles.tripTitle}>{tripData?.name ?? ''}</h3>
+						<TripPlayButton stops={animation.stops} />
 						<TripStopButton />
 						<button
 							title="Day View"
-							onClick={onToggleDayView}
-							className={clsx(dayView && styles.dayView)}
+							onClick={stopDisplay.toggleDayView}
+							className={clsx(stopDisplay.dayView && styles.dayView)}
 						>
 							<CalendarDate
 								width={20}
@@ -58,25 +44,30 @@ const TripPage: FC = () => {
 						</button>
 						<div
 							role="button"
+							tabIndex={0}
 							className={styles.headerButton}
-							onClick={onToggleTripMenu}
+							onClick={tripMenu.toggle}
+							onKeyDown={tripMenu.toggle}
 						>
 							<ThreeDots
 								width={20}
 								height={20}
 							/>
 							<div
-								className={clsx(styles.menu, isTripMenuOpened && styles.opened)}
-								onClick={onCloseTripMenu}
+								role="menu"
+								tabIndex={0}
+								className={clsx(styles.menu, tripMenu.isOpen && styles.opened)}
+								onClick={tripMenu.close}
+								onKeyDown={tripMenu.close}
 							>
 								<button
-									onClick={onEditClick}
+									onClick={tripMenu.edit}
 									className={styles.menuButton}
 								>
 									Edit
 								</button>
 								<button
-									onClick={onDeleteClick}
+									onClick={tripMenu.delete}
 									className={styles.menuButton}
 								>
 									Delete
@@ -85,27 +76,27 @@ const TripPage: FC = () => {
 						</div>
 					</header>
 					<p>
-						{trip?.totalDistance
-							? `Distance is: ${trip.totalDistance}km`
+						{tripData?.totalDistance
+							? `Distance is: ${tripData.totalDistance}km`
 							: 'Distance is unavailable.'}
 					</p>
 					<button
-						onClick={onOpenStopForm}
+						onClick={stopForm.open}
 						className={styles.button}
 					>
 						Add New Stop
 					</button>
 					<DndWrapper
-						items={displayStops}
-						setItems={onSetStopsOrder}
+						items={stopDisplay.stops}
+						setItems={stopDisplay.setStopsOrder}
 					>
 						<div className={styles.stopList}>
-							{displayStops.map((stop, index) => (
+							{stopDisplay.stops.map((stop, index) => (
 								<StopItem
 									key={stop.id}
 									stop={stop}
-									tripId={trip?.id ?? ''}
-									day={dayView ? trip?.days[index] : undefined} // Передаємо день тільки якщо dayView
+									tripId={tripData?.id ?? ''}
+									day={stopDisplay.dayView ? tripData?.days[index] : undefined} // Передаємо день тільки якщо dayView
 								/>
 							))}
 						</div>
@@ -118,7 +109,7 @@ const TripPage: FC = () => {
 						}}
 					>
 						<button
-							onClick={animationControls.onToggleAutocontinue}
+							onClick={animation.toggleAutocontinue}
 							style={{
 								background: '#00a',
 								padding: '10px',
@@ -126,10 +117,10 @@ const TripPage: FC = () => {
 								borderRadius: '5px',
 							}}
 						>
-							Autoplay Trip? {animationControls.autocontinue ? 'Yes' : 'No'}
+							Autoplay Trip? {animation.autocontinue ? 'Yes' : 'No'}
 						</button>
 						<button
-							onClick={animationControls.onToggleCameraMounted}
+							onClick={animation.toggleCameraMounted}
 							style={{
 								background: '#00a',
 								padding: '10px',
@@ -137,14 +128,14 @@ const TripPage: FC = () => {
 								borderRadius: '5px',
 							}}
 						>
-							Mount camera? {animationControls.isCameraMounted ? 'Yes' : 'No'}
+							Mount camera? {animation.isCameraMounted ? 'Yes' : 'No'}
 						</button>
 					</div>
 				</>
 			) : (
 				<StopForm
-					tripId={trip?.id ?? ''}
-					onClose={onCloseStopForm}
+					tripId={tripData?.id ?? ''}
+					onClose={stopForm.close}
 				/>
 			)}
 		</div>
