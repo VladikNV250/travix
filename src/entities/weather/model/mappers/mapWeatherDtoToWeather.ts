@@ -1,0 +1,20 @@
+import { WeatherCurrentDto, WeatherForecastdayDto } from '../../api';
+import { Weather } from '..';
+
+type WeatherDto = WeatherCurrentDto | WeatherForecastdayDto;
+
+export const mapWeatherDtoToWeather = (weatherDto: WeatherDto): Weather => {
+	if ('date' in weatherDto) {
+		return {
+			condition: weatherDto.day.condition.text,
+			icon: weatherDto.day.condition.icon,
+			temperature: weatherDto.day.maxtemp_c,
+		};
+	} else {
+		return {
+			condition: weatherDto.condition.text,
+			icon: weatherDto.condition.icon,
+			temperature: weatherDto.temp_c,
+		};
+	}
+};

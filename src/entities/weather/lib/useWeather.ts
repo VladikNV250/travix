@@ -1,14 +1,14 @@
 import { useCallback, useEffect, useState } from 'react';
 
-import { latLng } from 'leaflet';
-
 import { Stop } from 'entities/stop';
+import { getCoords } from 'shared/lib/location';
 
+import { DAY_MS, FORECAST_MAX_DAYS, FUTURE_MAX_DAYS } from '../config';
 import {
 	getWeatherForecast,
 	getWeatherFuture,
 	getWeatherToday,
-} from '../api/weatherApi';
+} from '../model';
 import { Weather } from '../model/types';
 
 // TODO: maybe rewrite it using react-query
@@ -18,33 +18,35 @@ export const useWeather = (defaultStop: Stop | null = null) => {
 	const [error, setError] = useState<unknown | null>(null);
 
 	const refetch = useCallback(async (stop: Stop) => {
-		const day = 1 * 24 * 60 * 60 * 1000;
 		const today = new Date();
 		today.setHours(0, 0, 0, 0);
 
 		const date = new Date(stop.arrivalDate || Date.now());
-		const coords = latLng(stop.location);
-		const coordsStr = `${coords.lat},${coords.lng}`;
+		const coords = getCoords(stop.location);
 
 		try {
 			setLoading(true);
 			setError(null);
 
 			if (
+				// 0 < date < today
+				// TODO: Check the todays weather has this true condition.
 				date.getTime() - today.getTime() >= 0 &&
-				date.getTime() - today.getTime() <= day
+				date.getTime() - today.getTime() <= DAY_MS
 			) {
-				setWeather(await getWeatherToday(coordsStr));
+				setWeather(await getWeatherToday(coords));
 			} else if (
+				// 0 <= date <= 14
 				date.getTime() - today.getTime() >= 0 &&
-				date.getTime() - today.getTime() <= 14 * day
+				date.getTime() - today.getTime() <= FORECAST_MAX_DAYS
 			) {
-				setWeather(await getWeatherForecast(coordsStr, date));
+				setWeather(await getWeatherForecast(coords, date));
 			} else if (
-				date.getTime() - today.getTime() > 14 * day &&
-				date.getTime() - today.getTime() <= 300 * day
+				// 14 < date <= 300
+				date.getTime() - today.getTime() > FORECAST_MAX_DAYS &&
+				date.getTime() - today.getTime() <= FUTURE_MAX_DAYS
 			) {
-				setWeather(await getWeatherFuture(coordsStr, date));
+				setWeather(await getWeatherFuture(coords, date));
 			} else {
 				setWeather(null);
 			}

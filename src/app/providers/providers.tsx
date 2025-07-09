@@ -9,11 +9,11 @@ import { MapProvider } from 'features/map';
 import { TripAnimatorProvider } from 'features/trip-animation';
 import { DropdownProvider } from 'shared/lib';
 
-interface IProviders {
+interface ProvidersProps {
 	children: ReactNode;
 }
 
-export const Providers: FC<IProviders> = ({ children }) => {
+export const Providers: FC<ProvidersProps> = ({ children }) => {
 	return (
 		<Provider store={store}>
 			<PersistGate persistor={persistor}>
