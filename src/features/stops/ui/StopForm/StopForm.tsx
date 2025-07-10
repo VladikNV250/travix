@@ -56,11 +56,11 @@ export const StopForm: FC<StopFormProps> = ({
 				<div className={styles.predictions}>
 					{predictions.map(prediction => (
 						<button
-							key={prediction.place_id}
+							key={prediction.id}
 							className={styles.prediction}
-							onClick={() => onPredictionSelect(prediction.description)}
+							onClick={() => onPredictionSelect(prediction.text)}
 						>
-							{prediction.description}
+							{prediction.text}
 						</button>
 					))}
 				</div>

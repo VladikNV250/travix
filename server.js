@@ -45,12 +45,15 @@ app.get('/api/autocomplete-place', async (req, res) => {
 	}
 
 	try {
-		const response = await axios.get(
-			'https://maps.googleapis.com/maps/api/place/autocomplete/json',
+		const response = await axios.post(
+			'https://places.googleapis.com/v1/places:autocomplete',
 			{
-				params: {
-					input,
-					key: process.env.TRAVIX_GEO_API_KEY,
+				input,
+			},
+			{
+				headers: {
+					'Content-Type': 'application/json',
+					'X-Goog-Api-Key': process.env.TRAVIX_GEO_API_KEY,
 				},
 			},
 		);

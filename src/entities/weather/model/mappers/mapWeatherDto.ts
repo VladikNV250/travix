@@ -3,7 +3,7 @@ import { WeatherCurrentDto, WeatherForecastdayDto } from '../../api';
 
 type WeatherDto = WeatherCurrentDto | WeatherForecastdayDto;
 
-export const mapWeatherDtoToWeather = (weatherDto: WeatherDto): Weather => {
+export const mapWeatherDto = (weatherDto: WeatherDto): Weather => {
 	if ('date' in weatherDto) {
 		return {
 			condition: weatherDto.day.condition.text,

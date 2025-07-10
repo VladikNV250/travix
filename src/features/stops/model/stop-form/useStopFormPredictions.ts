@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 
 import { useDebounce } from 'use-debounce';
 
-import { Prediction, autocompletePlace } from 'features/geo';
+import { Prediction, getPredictions } from 'entities/geo';
 
 /**
  * Implements address autocomplete functionality.
@@ -16,7 +16,7 @@ export const useStopFormPredictions = (address: string) => {
 	useEffect(() => {
 		(async () => {
 			if (debouncedAddress !== '') {
-				const predictions = await autocompletePlace(debouncedAddress);
+				const predictions = await getPredictions(debouncedAddress);
 				setPredictions(predictions);
 			} else {
 				setPredictions([]);

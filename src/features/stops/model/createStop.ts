@@ -1,5 +1,5 @@
+import { getGeocode } from 'entities/geo';
 import { Stop, validateStop } from 'entities/stop';
-import { geocodePlace } from 'features/geo';
 
 export const createStop = async (data: Partial<Stop>): Promise<Stop | null> => {
 	const stop: Stop = {
@@ -18,10 +18,14 @@ export const createStop = async (data: Partial<Stop>): Promise<Stop | null> => {
 
 	if (!validateStop(stop)) return null;
 
-	const geocode = await geocodePlace(stop.address);
+	const geocode = await getGeocode(stop.address);
 
-	stop.location = geocode.location;
-	stop.countryCode = geocode.countryCode;
+	if (geocode) {
+		stop.location = geocode.location;
+		stop.countryCode = geocode.countryCode;
+	} else {
+		throw new Error('Cannot get geocode info of stop!');
+	}
 
 	return stop;
 };

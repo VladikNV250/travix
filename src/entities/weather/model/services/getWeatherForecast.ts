@@ -1,4 +1,4 @@
-import { mapWeatherDtoToWeather } from '../mappers/mapWeatherDtoToWeather';
+import { mapWeatherDto } from '../mappers';
 
 import { weatherApi } from '../../api';
 
@@ -9,7 +9,5 @@ export const getWeatherForecast = async (query: string, date: Date) => {
 	const days = Math.ceil((date.getTime() - today.getTime()) / dayMs) + 1; // +1 because the current day is also included in the forecast
 	const forecastdays = await weatherApi.fetchWeatherForecast(query, days);
 
-	return forecastdays.length > 0
-		? mapWeatherDtoToWeather(forecastdays[0])
-		: null;
+	return forecastdays.length > 0 ? mapWeatherDto(forecastdays[0]) : null;
 };

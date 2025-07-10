@@ -1,7 +1,7 @@
+import { mapWeatherDto } from '../mappers/mapWeatherDto';
 import { formatDate } from 'shared/lib';
 
 import { weatherApi } from '../../api';
-import { mapWeatherDtoToWeather } from '../mappers/mapWeatherDtoToWeather';
 
 export const getWeatherFuture = async (query: string, date: Date) => {
 	const formattedDate = formatDate(date, 'yyyy-mm-dd');
@@ -10,7 +10,5 @@ export const getWeatherFuture = async (query: string, date: Date) => {
 		formattedDate,
 	);
 
-	return forecastdays.length > 0
-		? mapWeatherDtoToWeather(forecastdays[0])
-		: null;
+	return forecastdays.length > 0 ? mapWeatherDto(forecastdays[0]) : null;
 };
