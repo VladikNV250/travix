@@ -1,5 +1,4 @@
 import { apiClient } from 'shared/api';
-import { formatDate } from 'shared/lib';
 
 import {
 	WeatherCurrentDto,

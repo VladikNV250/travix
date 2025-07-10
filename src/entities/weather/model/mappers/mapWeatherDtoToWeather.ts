@@ -1,5 +1,5 @@
-import { WeatherCurrentDto, WeatherForecastdayDto } from '../../api';
 import { Weather } from '..';
+import { WeatherCurrentDto, WeatherForecastdayDto } from '../../api';
 
 type WeatherDto = WeatherCurrentDto | WeatherForecastdayDto;
 

@@ -9,11 +9,11 @@ import { GripVertical } from 'shared/assets';
 import { Trip } from '../model/types';
 import styles from './style.module.scss';
 
-interface ITripItem {
+interface TripItemProps {
 	readonly trip: Trip;
 }
 
-export const TripItem: FC<ITripItem> = ({ trip }) => {
+export const TripItem: FC<TripItemProps> = ({ trip }) => {
 	const { setNodeRef, attributes, listeners, transform, transition } =
 		useSortable({ id: trip.id });
 

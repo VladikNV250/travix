@@ -1,5 +1,6 @@
-import { weatherApi } from '../../api';
 import { mapWeatherDtoToWeather } from '../mappers/mapWeatherDtoToWeather';
+
+import { weatherApi } from '../../api';
 
 export const getWeatherForecast = async (query: string, date: Date) => {
 	const dayMs = 1 * 24 * 60 * 60 * 1000;
