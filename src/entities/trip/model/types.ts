@@ -9,3 +9,7 @@ export interface Trip {
 	stops: Stop[];
 	route: LatLng[];
 }
+
+export interface TripsState {
+	trips: Trip[];
+}

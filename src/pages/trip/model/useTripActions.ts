@@ -1,8 +1,7 @@
 import { useNavigate } from 'react-router';
 
 import { Stop } from 'entities/stop';
-import { Trip } from 'entities/trip';
-import { removeTrip, setStops } from 'features/trip';
+import { removeTrip, setStops, Trip } from 'entities/trip';
 import { useAppDispatch } from 'shared/lib';
 
 export const useTripActions = (trip?: Trip) => {

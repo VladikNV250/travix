@@ -1,9 +1,9 @@
 import { useMemo } from 'react';
 
-import { selectTrips } from 'features/trip';
 import { useAppSelector } from 'shared/lib';
 
 import { MapRouteData } from './types';
+import { selectTrips } from 'entities/trip';
 
 export const useMapRoutes = (): MapRouteData[] => {
 	const trips = useAppSelector(selectTrips);

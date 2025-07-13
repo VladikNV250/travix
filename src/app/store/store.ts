@@ -11,8 +11,8 @@ import {
 } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 
+import { tripsReducer } from 'entities/trip';
 import { routesReducer } from 'features/routing';
-import { tripsReducer } from 'features/trip';
 
 const rootReducer = combineReducers({
 	trips: tripsReducer,
@@ -39,5 +39,5 @@ const store = configureStore({
 export const persistor = persistStore(store);
 export default store;
 
-export type RootState = ReturnType<typeof store.getState>;
+export type RootState = ReturnType<typeof rootReducer>;
 export type AppDispatch = typeof store.dispatch;

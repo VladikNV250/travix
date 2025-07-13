@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 
-import { selectTrips } from 'features/trip';
+import { selectTrips } from 'entities/trip';
 import { useAppSelector } from 'shared/lib';
 
 import { createMarkerIcon } from '../lib';
