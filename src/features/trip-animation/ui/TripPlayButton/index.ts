@@ -1,1 +1,1 @@
-export { TripPlayButtonProps as TripPlayButton } from './TripPlayButton';
+export { TripPlayButton } from './TripPlayButton';
