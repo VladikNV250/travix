@@ -7,6 +7,8 @@ import { Prediction, getPredictions } from 'entities/geo';
 /**
  * Implements address autocomplete functionality.
  * Handles debounced API calls and manages prediction results.
+ *
+ * TODO: Rewrite this logic to separate feature
  */
 export const useStopFormPredictions = (address: string) => {
 	const [debouncedAddress] = useDebounce(address, 400);

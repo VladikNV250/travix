@@ -3,11 +3,11 @@ import { FC, ReactNode, useState } from 'react';
 import { TripAnimator } from '../TripAnimator';
 import { TripAnimatorContext } from './contextTripAnimator';
 
-interface ITripAnimatorProvider {
+interface TripAnimatorProvider {
 	children: ReactNode;
 }
 
-export const TripAnimatorProvider: FC<ITripAnimatorProvider> = ({
+export const TripAnimatorProvider: FC<TripAnimatorProvider> = ({
 	children,
 }) => {
 	const [tripAnimator, setTripAnimator] = useState<TripAnimator | null>(null);

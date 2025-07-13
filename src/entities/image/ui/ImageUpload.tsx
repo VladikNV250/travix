@@ -1,8 +1,7 @@
 import { ChangeEvent, FC } from 'react';
 
-import { Image } from 'entities/image';
-
 import { useUploadImage } from '../lib/useUploadImage';
+import { Image } from '../model';
 import styles from './style.module.scss';
 
 interface ImageUploadProps {

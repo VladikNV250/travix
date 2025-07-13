@@ -2,9 +2,9 @@ import { FC } from 'react';
 
 import clsx from 'clsx';
 
+import { ImageUpload } from 'entities/image';
 import { Stop } from 'entities/stop';
 import { Trip } from 'entities/trip';
-import { ImageUpload } from 'features/image';
 import { useStopForm } from 'features/stops/model/stop-form/useStopForm';
 
 import { StopGallery } from '../StopGallery/StopGallery';

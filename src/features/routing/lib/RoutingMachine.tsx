@@ -10,11 +10,11 @@ import { useAppDispatch } from 'shared/lib';
 
 import { addRoute } from '../model/routesSlice';
 
-interface IRoutingMachine {
+interface RoutingMachineProps {
 	trip: Trip;
 }
 
-export const RoutingMachine = ({ trip }: IRoutingMachine) => {
+export const RoutingMachine = ({ trip }: RoutingMachineProps) => {
 	const dispatch = useAppDispatch();
 	const { map } = useMap();
 

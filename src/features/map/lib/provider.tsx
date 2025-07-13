@@ -4,11 +4,11 @@ import { Map } from 'leaflet';
 
 import { MapContext } from './contextMap';
 
-interface IMapProvider {
+interface MapProvider {
 	children: ReactNode;
 }
 
-export const MapProvider: FC<IMapProvider> = ({ children }) => {
+export const MapProvider: FC<MapProvider> = ({ children }) => {
 	const [map, setMap] = useState<Map | null>(null);
 
 	const value = {

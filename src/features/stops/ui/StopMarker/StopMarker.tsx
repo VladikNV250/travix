@@ -10,12 +10,12 @@ import { SimpleLoader } from 'shared/ui';
 
 import styles from './style.module.scss';
 
-interface IStopMarker {
+interface StopMarkerProps {
 	stop: Stop;
 	icon?: Icon<IconOptions> | DivIcon;
 }
 
-export const StopMarker: FC<IStopMarker> = ({ stop, icon }) => {
+export const StopMarker: FC<StopMarkerProps> = ({ stop, icon }) => {
 	const { weather, holiday, isLoading, updateStopInfo } = useStopMarker();
 
 	return (
