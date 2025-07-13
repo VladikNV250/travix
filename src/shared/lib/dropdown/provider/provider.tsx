@@ -2,11 +2,11 @@ import { FC, ReactNode, useState } from 'react';
 
 import { DropdownContext } from './context';
 
-interface IDropdownProvider {
+interface DropdownProvider {
 	children: ReactNode;
 }
 
-export const DropdownProvider: FC<IDropdownProvider> = ({ children }) => {
+export const DropdownProvider: FC<DropdownProvider> = ({ children }) => {
 	const [openId, setOpenId] = useState<string | null>(null);
 
 	const openMenu = (state: string | null) => {

@@ -1,8 +1,13 @@
 import { FC } from 'react';
 import { useNavigate } from 'react-router';
 
-import { TripItem } from 'entities/trip';
-import { addTrip, createTrip, selectTrips, setTrips } from 'features/trip';
+import {
+	TripItem,
+	addTrip,
+	createTrip,
+	selectTrips,
+	setTrips,
+} from 'entities/trip';
 import { DndWrapper, useAppDispatch, useAppSelector } from 'shared/lib';
 
 import styles from './style.module.scss';

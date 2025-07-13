@@ -1,9 +1,8 @@
 import { useNavigate } from 'react-router';
 
 import { Stop } from 'entities/stop';
-import { Trip } from 'entities/trip';
+import { Trip, removeStop } from 'entities/trip';
 import { useMap } from 'features/map';
-import { removeStop } from 'features/trip';
 import { useAppDispatch } from 'shared/lib';
 
 export const useStopItem = (tripId: Trip['id'], stop: Stop, day?: string) => {

@@ -2,9 +2,9 @@ import { createContext } from 'react';
 
 import { Map } from 'leaflet';
 
-interface IMapContext {
+interface MapContext {
 	map: Map | null;
 	setMap: (map: Map) => void;
 }
 
-export const MapContext = createContext<IMapContext>(null!);
+export const MapContext = createContext<MapContext>(null!);

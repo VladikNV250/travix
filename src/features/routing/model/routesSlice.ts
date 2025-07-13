@@ -11,6 +11,7 @@ const initialState: RoutesState = {
 	currentMarkerStop: null,
 };
 
+// TODO: make slice more simple
 export const routesSlice = createSlice({
 	name: 'routes',
 	initialState,

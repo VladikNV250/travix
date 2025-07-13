@@ -24,6 +24,7 @@ export default [
 			'**/.vscode',
 			'**/node_modules',
 			'!.storybook',
+			'server.js',
 		],
 	},
 	eslint.configs.recommended,

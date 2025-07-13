@@ -2,7 +2,7 @@ import { FC } from 'react';
 
 import clsx from 'clsx';
 
-import { useHoliday } from 'entities/holidays';
+import { useHoliday } from 'entities/holiday';
 import { StopSliderGallery } from 'entities/stop';
 import { useWeather } from 'entities/weather';
 import { selectCurrentStop } from 'features/routing';

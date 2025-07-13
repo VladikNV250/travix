@@ -1,4 +1,4 @@
-import { useHoliday } from 'entities/holidays';
+import { useHoliday } from 'entities/holiday';
 import { Stop } from 'entities/stop';
 import { useWeather } from 'entities/weather';
 

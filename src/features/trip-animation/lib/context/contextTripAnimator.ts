@@ -2,10 +2,9 @@ import { createContext } from 'react';
 
 import { TripAnimator } from '../TripAnimator';
 
-// export type TTripAnimatorContext = RefObject<TripAnimator | null>
-export interface ITripAnimatorContext {
+interface TripAnimatorContext {
 	tripAnimator: TripAnimator | null;
 	setTripAnimator: (animator: TripAnimator | null) => void;
 }
 
-export const TripAnimatorContext = createContext<ITripAnimatorContext>(null!);
+export const TripAnimatorContext = createContext<TripAnimatorContext>(null!);

@@ -2,9 +2,9 @@ import { FC } from 'react';
 
 import clsx from 'clsx';
 
+import { ImageUpload } from 'entities/image';
 import { Stop } from 'entities/stop';
 import { Trip } from 'entities/trip';
-import { ImageUpload } from 'features/image';
 import { useStopForm } from 'features/stops/model/stop-form/useStopForm';
 
 import { StopGallery } from '../StopGallery/StopGallery';
@@ -56,11 +56,11 @@ export const StopForm: FC<StopFormProps> = ({
 				<div className={styles.predictions}>
 					{predictions.map(prediction => (
 						<button
-							key={prediction.place_id}
+							key={prediction.id}
 							className={styles.prediction}
-							onClick={() => onPredictionSelect(prediction.description)}
+							onClick={() => onPredictionSelect(prediction.text)}
 						>
-							{prediction.description}
+							{prediction.text}
 						</button>
 					))}
 				</div>

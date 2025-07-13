@@ -7,8 +7,8 @@ import {
 } from 'react';
 
 import { Stop, validateStop } from 'entities/stop';
+import { addStop, editStop } from 'entities/trip';
 import { useMap } from 'features/map';
-import { addStop, editStop } from 'features/trip';
 import { useAppDispatch } from 'shared/lib';
 
 import { createStop } from '../createStop';

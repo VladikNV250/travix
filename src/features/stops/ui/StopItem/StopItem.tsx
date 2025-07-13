@@ -10,13 +10,13 @@ import { useItemDropdown } from 'shared/lib';
 
 import styles from './style.module.scss';
 
-interface IStopItem {
+interface StopItemProps {
 	tripId: Trip['id'];
 	stop: Stop;
 	day?: string;
 }
 
-export const StopItem: FC<IStopItem> = ({ tripId, stop, day }) => {
+export const StopItem: FC<StopItemProps> = ({ tripId, stop, day }) => {
 	const { setNodeRef, dragStyle, attributes, listeners } = useDragAndDrop(stop);
 	const { stopData, displayDay, onItemClick, onEditClick, onDeleteClick } =
 		useStopItem(tripId, stop, day);

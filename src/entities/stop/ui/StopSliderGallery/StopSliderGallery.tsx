@@ -4,11 +4,11 @@ import { Stop } from 'entities/stop/model/types';
 
 import styles from './style.module.scss';
 
-interface IStopSliderGallery {
+interface StopSliderGalleryProps {
 	gallery: Stop['images'];
 }
 
-export const StopSliderGallery: FC<IStopSliderGallery> = ({ gallery }) => {
+export const StopSliderGallery: FC<StopSliderGalleryProps> = ({ gallery }) => {
 	return (
 		<div
 			className={styles.carousel}

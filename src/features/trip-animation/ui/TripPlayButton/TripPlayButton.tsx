@@ -10,15 +10,13 @@ import { Pause, Play } from 'shared/assets';
 
 import styles from './style.module.scss';
 
-interface ITripPlayButton {
+interface TripPlayButtonProps {
 	stops: LatLngExpression[];
 }
 
-export const TripPlayButton: FC<ITripPlayButton> = ({ stops }) => {
+export const TripPlayButton: FC<TripPlayButtonProps> = ({ stops }) => {
 	const { tripAnimator } = useTripAnimator();
 	const [playState, handlePlayClick] = useTripAnimatorPlayer(tripAnimator);
-
-	console.log('rerender');
 
 	return (
 		<button

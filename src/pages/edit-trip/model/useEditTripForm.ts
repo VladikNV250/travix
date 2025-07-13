@@ -1,8 +1,7 @@
 import { FormEvent, useState } from 'react';
 import { useNavigate } from 'react-router';
 
-import { Trip, validateTrip } from 'entities/trip';
-import { editTrip, selectTrip } from 'features/trip';
+import { Trip, editTrip, selectTrip, validateTrip } from 'entities/trip';
 import { useAppDispatch, useAppSelector } from 'shared/lib';
 
 export const useEditTripForm = (tripId?: string) => {

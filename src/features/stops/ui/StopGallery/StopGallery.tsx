@@ -5,12 +5,12 @@ import { Trash } from 'shared/assets';
 
 import styles from './style.module.scss';
 
-interface IStopGallery {
+interface StopGalleryProps {
 	images: Image[];
 	onDelete: (id: string) => void;
 }
 
-export const StopGallery: FC<IStopGallery> = ({ images, onDelete }) => {
+export const StopGallery: FC<StopGalleryProps> = ({ images, onDelete }) => {
 	return (
 		images.length > 0 && (
 			<div className={styles.gallery}>
@@ -24,6 +24,7 @@ export const StopGallery: FC<IStopGallery> = ({ images, onDelete }) => {
 							<img
 								className={styles.image}
 								src={image.url}
+								alt=""
 							/>
 							<button
 								type="button"

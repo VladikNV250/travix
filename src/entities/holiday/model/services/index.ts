@@ -1,0 +1,1 @@
+export { getHoliday } from './getHoliday';
