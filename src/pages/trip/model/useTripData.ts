@@ -3,11 +3,11 @@ import { useParams } from 'react-router';
 
 import { latLng } from 'leaflet';
 
+import { selectTrip } from 'entities/trip';
 import { calculateTripDays } from 'features/stops';
 import { useAppSelector } from 'shared/lib';
 
 import { TripInfo } from './types';
-import { selectTrip } from 'entities/trip';
 
 export const useTripData = () => {
 	const { tripId } = useParams<{ tripId: string }>();

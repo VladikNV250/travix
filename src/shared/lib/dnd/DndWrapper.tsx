@@ -16,7 +16,7 @@ import {
 	verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
 
-interface IDndWrapper<T extends { id: UniqueIdentifier }> {
+interface DndWrapperProps<T extends { id: UniqueIdentifier }> {
 	readonly children: ReactNode;
 	readonly items: T[];
 	readonly setItems: (items: T[]) => void;
@@ -26,7 +26,7 @@ export const DndWrapper = <T extends { id: UniqueIdentifier }>({
 	items,
 	setItems,
 	children,
-}: IDndWrapper<T>) => {
+}: DndWrapperProps<T>) => {
 	const sensors = useSensors(
 		useSensor(PointerSensor),
 		useSensor(KeyboardSensor),

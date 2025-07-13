@@ -1,5 +1,6 @@
 import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
 
+//Q: Maybe rewrite it to more simple structure?
 class APIClient {
 	private axios: AxiosInstance;
 
@@ -25,13 +26,17 @@ class APIClient {
 		return data;
 	}
 
-	public async post<T>(url: string, body: any, config?: AxiosRequestConfig) {
+	public async post<T>(
+		url: string,
+		body: unknown,
+		config?: AxiosRequestConfig,
+	) {
 		const { data } = await this.axios.post<T>(url, body, config);
 
 		return data;
 	}
 
-	public async put<T>(url: string, body: any, config?: AxiosRequestConfig) {
+	public async put<T>(url: string, body: unknown, config?: AxiosRequestConfig) {
 		const { data } = await this.axios.put<T>(url, body, config);
 
 		return data;

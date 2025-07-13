@@ -4,14 +4,14 @@ import clsx from 'clsx';
 
 import styles from './style.module.scss';
 
-interface IButton extends ButtonHTMLAttributes<HTMLButtonElement> {
+interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 	isLoading?: boolean;
 	fullWidth?: boolean;
 	leftIcon?: ReactNode;
 	rightIcon?: ReactNode;
 }
 
-export const Button: FC = forwardRef<HTMLButtonElement, IButton>(
+export const Button: FC = forwardRef<HTMLButtonElement, ButtonProps>(
 	(
 		{
 			type = 'button',

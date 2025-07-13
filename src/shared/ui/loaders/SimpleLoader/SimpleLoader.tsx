@@ -4,12 +4,12 @@ import clsx from 'clsx';
 
 import styles from './style.module.scss';
 
-interface ISimpleLoader {
+interface SimpleLoaderProps {
 	readonly loading?: boolean;
 	readonly className?: string;
 }
 
-export const SimpleLoader: FC<ISimpleLoader> = ({
+export const SimpleLoader: FC<SimpleLoaderProps> = ({
 	loading = true,
 	className,
 }) => {
