@@ -2,14 +2,14 @@ import { renderToString } from 'react-dom/server';
 
 import { DivIcon } from 'leaflet';
 
-import { Point } from 'shared/assets';
+import { PointIcon } from 'shared/assets';
 
 import styles from './style.module.scss';
 
 export const createMarkerIcon = (color: string): DivIcon => {
 	return new DivIcon({
 		html: renderToString(
-			<Point
+			<PointIcon
 				width={20}
 				height={20}
 				style={{ color, zIndex: -1 }}

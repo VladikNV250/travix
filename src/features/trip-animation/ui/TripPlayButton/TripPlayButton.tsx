@@ -6,7 +6,7 @@ import {
 	useTripAnimator,
 	useTripAnimatorPlayer,
 } from 'features/trip-animation/lib';
-import { Pause, Play } from 'shared/assets';
+import { PauseIcon, PlayIcon } from 'shared/assets';
 
 import styles from './style.module.scss';
 
@@ -24,12 +24,12 @@ export const TripPlayButton: FC<TripPlayButtonProps> = ({ stops }) => {
 			className={styles.animationButton}
 		>
 			{playState === 'playing' ? (
-				<Pause
+				<PauseIcon
 					width={20}
 					height={20}
 				/>
 			) : (
-				<Play
+				<PlayIcon
 					width={20}
 					height={20}
 				/>

@@ -12,7 +12,7 @@ import {
 import simplify from 'simplify-js';
 
 import { Route, RouteSegment } from 'entities/route';
-import { DirectionMarker } from 'shared/assets';
+import { DirectionMarkerIcon } from 'shared/assets';
 
 export class TripAnimator {
 	private readonly ANIMATION_SPEED: number = 12.5 * 4;
@@ -28,7 +28,7 @@ export class TripAnimator {
 	private marker: Marker | null;
 	private currentProgress: number;
 	private totalDuration: number;
-	private lastAngle: number;
+	private lastBearing: number;
 
 	public isCameraMounted: boolean;
 	public autocontinue: boolean;
@@ -54,13 +54,13 @@ export class TripAnimator {
 		this.autocontinue = true;
 		this.isCameraMounted = true;
 		this.isPaused = false;
-		this.lastAngle = 0;
+		this.lastBearing = 0;
 	}
 
 	public startAnimation(stops: LatLngExpression[]): void {
 		if (!this.isAnimating && this.map) {
 			const icon = new DivIcon({
-				html: `<img src="${DirectionMarker}" alt="Direction Marker" width="25" height="28" />`,
+				html: `<img src="${DirectionMarkerIcon}" alt="Direction Marker" width="25" height="28" />`,
 				className: '',
 				iconSize: [25, 28],
 			});
@@ -133,17 +133,18 @@ export class TripAnimator {
 		return simplified.map(({ x, y }) => new LatLng(x, y));
 	}
 
-	private getAngle(from: LatLng, to: LatLng): number {
-		const φ1 = (from.lat * Math.PI) / 180;
-		const φ2 = (to.lat * Math.PI) / 180;
-		const Δλ = ((to.lng - from.lng) * Math.PI) / 180;
+	private getBearing(from: LatLng, to: LatLng): number {
+		const lat1Rad = (from.lat * Math.PI) / 180;
+		const lat2Rad = (to.lat * Math.PI) / 180;
+		const deltaLngRad = ((to.lng - from.lng) * Math.PI) / 180;
 
-		const y = Math.sin(Δλ) * Math.cos(φ2);
+		const y = Math.sin(deltaLngRad) * Math.cos(lat2Rad);
 		const x =
-			Math.cos(φ1) * Math.sin(φ2) - Math.sin(φ1) * Math.cos(φ2) * Math.cos(Δλ);
-		const θ = Math.atan2(y, x);
+			Math.cos(lat1Rad) * Math.sin(lat2Rad) -
+			Math.sin(lat1Rad) * Math.cos(lat2Rad) * Math.cos(deltaLngRad);
+		const angleRad = Math.atan2(y, x);
 
-		return ((θ * 180) / Math.PI + 360) % 360;
+		return ((angleRad * 180) / Math.PI + 360) % 360;
 	}
 
 	private rotateMarker(angle: number): void {
@@ -237,17 +238,20 @@ export class TripAnimator {
 			segmentProgress,
 		);
 
-		const newAngle = this.getAngle(currentSegment.start, currentSegment.end);
+		const newBearing = this.getBearing(
+			currentSegment.start,
+			currentSegment.end,
+		);
 
 		const angle = this.interpolateAngle(
-			this.lastAngle,
-			newAngle,
+			this.lastBearing,
+			newBearing,
 			segmentProgress,
 		);
 		this.rotateMarker(angle);
 		this.marker?.setLatLng(newPosition);
 		this.currentProgress = totalProgress;
-		this.lastAngle = angle;
+		this.lastBearing = angle;
 
 		if (
 			totalProgress < 1 &&

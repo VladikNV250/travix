@@ -1,4 +1,5 @@
 import { useCallback, useState } from 'react';
+
 import { uploadImage } from '../model';
 
 // TODO: Maybe rewrite it to useMutation?

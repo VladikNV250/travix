@@ -25,6 +25,7 @@ export default [
 			'**/node_modules',
 			'!.storybook',
 			'server.js',
+			'api',
 		],
 	},
 	eslint.configs.recommended,

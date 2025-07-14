@@ -4,7 +4,7 @@ import { Link } from 'react-router';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 
-import { GripVertical } from 'shared/assets';
+import { GripVerticalIcon } from 'shared/assets';
 
 import { Trip } from '../model/types';
 import styles from './style.module.scss';
@@ -39,7 +39,7 @@ export const TripItem: FC<TripItemProps> = ({ trip }) => {
 				{...attributes}
 				{...listeners}
 			>
-				<GripVertical
+				<GripVerticalIcon
 					width={20}
 					height={20}
 				/>

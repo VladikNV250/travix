@@ -1,7 +1,7 @@
 import { FC } from 'react';
 
 import { Image } from 'entities/image';
-import { Trash } from 'shared/assets';
+import { TrashIcon } from 'shared/assets';
 
 import styles from './style.module.scss';
 
@@ -31,7 +31,7 @@ export const StopGallery: FC<StopGalleryProps> = ({ images, onDelete }) => {
 								className={styles.button}
 								onClick={() => onDelete(image.id)}
 							>
-								<Trash
+								<TrashIcon
 									width={20}
 									height={20}
 								/>

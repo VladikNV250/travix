@@ -5,7 +5,7 @@ import clsx from 'clsx';
 import { Stop, StopAddress } from 'entities/stop';
 import { Trip } from 'entities/trip';
 import { useDragAndDrop, useStopItem } from 'features/stops/model';
-import { GripVertical, ThreeDots } from 'shared/assets';
+import { GripVerticalIcon, ThreeDotsIcon } from 'shared/assets';
 import { useItemDropdown } from 'shared/lib';
 
 import styles from './style.module.scss';
@@ -43,7 +43,7 @@ export const StopItem: FC<StopItemProps> = ({ tripId, stop, day }) => {
 				onClick={onToggleMenu}
 				className={styles.button}
 			>
-				<ThreeDots
+				<ThreeDotsIcon
 					width={20}
 					height={20}
 				/>
@@ -53,7 +53,7 @@ export const StopItem: FC<StopItemProps> = ({ tripId, stop, day }) => {
 				{...attributes}
 				{...listeners}
 			>
-				<GripVertical
+				<GripVerticalIcon
 					width={20}
 					height={20}
 				/>
