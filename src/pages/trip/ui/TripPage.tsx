@@ -5,7 +5,11 @@ import clsx from 'clsx';
 
 import { StopForm, StopItem } from 'features/stops';
 import { TripPlayButton, TripStopButton } from 'features/trip-animation';
-import { CalendarDate, ChevronLeft, ThreeDots } from 'shared/assets';
+import {
+	CalendarDateIcon,
+	ChevronLeftIcon,
+	ThreeDotsIcon,
+} from 'shared/assets';
 import { DndWrapper } from 'shared/lib';
 
 import { useTripPage } from '../model';
@@ -24,7 +28,7 @@ const TripPage: FC = () => {
 							to="/"
 							className={styles.headerButton}
 						>
-							<ChevronLeft
+							<ChevronLeftIcon
 								width={20}
 								height={20}
 							/>
@@ -37,7 +41,7 @@ const TripPage: FC = () => {
 							onClick={stopDisplay.toggleDayView}
 							className={clsx(stopDisplay.dayView && styles.dayView)}
 						>
-							<CalendarDate
+							<CalendarDateIcon
 								width={20}
 								height={20}
 							/>
@@ -49,7 +53,7 @@ const TripPage: FC = () => {
 							onClick={tripMenu.toggle}
 							onKeyDown={tripMenu.toggle}
 						>
-							<ThreeDots
+							<ThreeDotsIcon
 								width={20}
 								height={20}
 							/>

@@ -12,7 +12,7 @@ import {
 import simplify from 'simplify-js';
 
 import { Route, RouteSegment } from 'entities/route';
-import { DirectionMarker } from 'shared/assets';
+import { DirectionMarkerIcon } from 'shared/assets';
 
 export class TripAnimator {
 	private readonly ANIMATION_SPEED: number = 12.5 * 4;
@@ -60,7 +60,7 @@ export class TripAnimator {
 	public startAnimation(stops: LatLngExpression[]): void {
 		if (!this.isAnimating && this.map) {
 			const icon = new DivIcon({
-				html: `<img src="${DirectionMarker}" alt="Direction Marker" width="25" height="28" />`,
+				html: `<img src="${DirectionMarkerIcon}" alt="Direction Marker" width="25" height="28" />`,
 				className: '',
 				iconSize: [25, 28],
 			});
