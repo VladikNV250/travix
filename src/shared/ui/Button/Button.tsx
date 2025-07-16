@@ -1,4 +1,4 @@
-import { ButtonHTMLAttributes, FC, ReactNode, forwardRef } from 'react';
+import { ButtonHTMLAttributes, ReactNode, forwardRef } from 'react';
 
 import clsx from 'clsx';
 
@@ -11,7 +11,7 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 	rightIcon?: ReactNode;
 }
 
-export const Button: FC = forwardRef<HTMLButtonElement, ButtonProps>(
+export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
 	(
 		{
 			type = 'button',
