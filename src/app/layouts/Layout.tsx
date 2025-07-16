@@ -5,16 +5,29 @@ import { Header } from 'widgets/header';
 import { MapWidget } from 'widgets/map-widget';
 import { StopInfoPanel } from 'widgets/stop-info-panel';
 
-import styles from './style.module.scss';
-
 export const Layout: FC = () => {
 	return (
-		<main className={styles.layout}>
+		<main
+			style={{
+				gridTemplateAreas: `
+					'header header'
+					'sidebar map'
+					'sidebar map'
+				`,
+			}}
+			className="grid h-screen w-screen grid-cols-[auto_1fr] grid-rows-[auto_1fr]"
+		>
 			<Header />
-			<nav className={styles.sidebar}>
+			<nav
+				style={{ gridArea: 'sidebar' }}
+				className="relative z-10 h-full w-full p-8"
+			>
 				<Outlet />
 			</nav>
-			<div className={styles.map}>
+			<div
+				style={{ gridArea: 'map' }}
+				className="relative z-0 h-full w-full"
+			>
 				<StopInfoPanel />
 				<MapWidget />
 			</div>
