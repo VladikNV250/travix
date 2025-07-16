@@ -11,16 +11,52 @@ import {
 	ThreeDotsIcon,
 } from 'shared/assets';
 import { DndWrapper } from 'shared/lib';
+import { Button } from 'shared/ui';
 
 import { useTripPage } from '../model';
+import { useTripShare } from '../model/useTripShare';
 import styles from './style.module.scss';
 
 const TripPage: FC = () => {
 	const { tripData, tripMenu, stopDisplay, stopForm, animation } =
 		useTripPage();
 
+	const share = useTripShare();
+
 	return (
 		<div className={styles.trip}>
+			{share.popupIsOpen && (
+				<div className={styles.popupWrapper}>
+					<div className={styles.popup}>
+						<header className={styles.popupHeader}>
+							<h3 className={styles.popupTitle}>Share trip</h3>
+							<h4 className={styles.popupSubtitle}>
+								Copy link below and send your friend to share this trip
+							</h4>
+						</header>
+						<textarea
+							className={styles.popupTextarea}
+							rows={8}
+							value="I3USAJDKLSADHJAKSSJKH@SHADSJK3&y#t&*#!*y$#ieh!hoe#dugb#!yistgd#u#@gkd@ghDGY1783TEG2YUTR46EGFBYU23GED72QG"
+							readOnly
+						/>
+						<div className={styles.popupButtonContainer}>
+							<Button
+								className={styles.popupButtonCopy}
+								onClick={share.closePopup}
+							>
+								Copy
+							</Button>
+							<Button
+								className={styles.popupButtonClose}
+								onClick={share.closePopup}
+							>
+								Close
+							</Button>
+						</div>
+					</div>
+				</div>
+			)}
 			{!stopForm.isOpen ? (
 				<>
 					<header className={styles.tripHeader}>
@@ -75,6 +111,12 @@ const TripPage: FC = () => {
 									className={styles.menuButton}
 								>
 									Delete
+								</button>
+								<button
+									onClick={share.openPopup}
+									className={styles.menuButton}
+								>
+									Share this trip
 								</button>
 							</div>
 						</div>
