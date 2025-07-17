@@ -1,4 +1,4 @@
-export { StopForm } from './StopForm/StopForm';
-export { StopItem } from './StopItem/StopItem';
-export { StopGallery } from './StopGallery/StopGallery';
-export { StopMarker } from './StopMarker/StopMarker';
+export { StopForm } from './StopForm';
+export { StopItem } from './StopItem';
+export { StopGallery } from './StopGallery';
+export { StopMarker } from './StopMarker';

@@ -8,8 +8,6 @@ import {
 } from 'features/trip-animation/lib';
 import { PauseIcon, PlayIcon } from 'shared/assets';
 
-import styles from './style.module.scss';
-
 interface TripPlayButtonProps {
 	stops: LatLngExpression[];
 }
@@ -19,10 +17,7 @@ export const TripPlayButton: FC<TripPlayButtonProps> = ({ stops }) => {
 	const [playState, handlePlayClick] = useTripAnimatorPlayer(tripAnimator);
 
 	return (
-		<button
-			onClick={() => handlePlayClick(stops)}
-			className={styles.animationButton}
-		>
+		<button onClick={() => handlePlayClick(stops)}>
 			{playState === 'playing' ? (
 				<PauseIcon
 					width={20}
