@@ -2,8 +2,6 @@ import { ButtonHTMLAttributes, ReactNode, forwardRef } from 'react';
 
 import clsx from 'clsx';
 
-import styles from './style.module.scss';
-
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 	isLoading?: boolean;
 	fullWidth?: boolean;
@@ -21,7 +19,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
 			children,
 			rightIcon,
 			isLoading = false,
-			fullWidth = false,
+			// fullWidth = false,
 			...props
 		},
 		ref,
@@ -34,9 +32,9 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
 				type={type}
 				disabled={isDisabled}
 				className={clsx(
-					styles.button,
-					isDisabled && styles.disabled,
-					fullWidth && styles.fullWidth,
+					// styles.button,
+					// isDisabled && styles.disabled,
+					// fullWidth && styles.fullWidth,
 					className,
 				)}
 				{...props}
@@ -45,9 +43,9 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
 					<span>Loading..</span>
 				) : (
 					<>
-						{leftIcon && <span className={styles.leftIcon}>{leftIcon}</span>}
+						{leftIcon && <span>{leftIcon}</span>}
 						{children}
-						{rightIcon && <span className={styles.rightIcon}>{rightIcon}</span>}
+						{rightIcon && <span>{rightIcon}</span>}
 					</>
 				)}
 			</button>

@@ -4,8 +4,6 @@ import { DivIcon } from 'leaflet';
 
 import { PointIcon } from 'shared/assets';
 
-import styles from './style.module.scss';
-
 export const createMarkerIcon = (color: string): DivIcon => {
 	return new DivIcon({
 		html: renderToString(
@@ -16,6 +14,6 @@ export const createMarkerIcon = (color: string): DivIcon => {
 			/>,
 		),
 		iconSize: [20, 20],
-		className: styles.marker,
+		className: 'bg-transparent border-none',
 	});
 };

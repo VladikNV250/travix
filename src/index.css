@@ -4,6 +4,9 @@
 	--animate-slide-fade-out: slideFadeOut 0.4s ease-out forwards;
 	--animate-slide-fade-in: slideFadeIn 0.4s ease-out forwards;
 	--animate-scrolling: scrolling 20s linear infinite;
+	/* TODO: Rewrite anim duration to tailwind utility */
+	--animate-spin-2s: spin 2s linear infinite;
+	--animate-spin-4s: spin 4s linear infinite;
 
 	@keyframes slideFadeIn {
 		from {
