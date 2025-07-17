@@ -15,7 +15,6 @@ import { Button } from 'shared/ui';
 
 import { useTripPage } from '../model';
 import { useTripShare } from '../model/useTripShare';
-import styles from './style.module.scss';
 
 const TripPage: FC = () => {
 	const { tripData, tripMenu, stopDisplay, stopForm, animation } =
@@ -24,31 +23,31 @@ const TripPage: FC = () => {
 	const share = useTripShare();
 
 	return (
-		<div className={styles.trip}>
+		<div>
 			{share.popupIsOpen && (
-				<div className={styles.popupWrapper}>
-					<div className={styles.popup}>
-						<header className={styles.popupHeader}>
-							<h3 className={styles.popupTitle}>Share trip</h3>
-							<h4 className={styles.popupSubtitle}>
+				<div className="fixed top-0 left-0 z-20 flex size-full items-center justify-center bg-black/35">
+					<div className="flex flex-col gap-x-4 rounded-xl bg-white p-2 pb-1">
+						<header className="flex flex-col">
+							<h3 className="text-2xl font-medium">Share trip</h3>
+							<h4 className="text-base text-zinc-800 italic">
 								Copy link below and send your friend to share this trip
 							</h4>
 						</header>
 						<textarea
-							className={styles.popupTextarea}
+							className="w-100 min-w-80 resize-none rounded-2xl bg-zinc-300 p-4"
 							rows={8}
 							value="I3USAJDKLSADHJAKSSJKH@SHADSJK3&y#t&*#!*y$#ieh!hoe#dugb#!yistgd#u#@gkd@ghDGY1783TEG2YUTR46EGFBYU23GED72QG"
 							readOnly
 						/>
-						<div className={styles.popupButtonContainer}>
+						<div className="flex items-center justify-end gap-y-2">
 							<Button
-								className={styles.popupButtonCopy}
+								className="rounded bg-blue-700 px-4 py-2 text-base text-white"
 								onClick={share.closePopup}
 							>
 								Copy
 							</Button>
 							<Button
-								className={styles.popupButtonClose}
+								className="rounded bg-rose-700 px-4 py-2 text-base text-white"
 								onClick={share.closePopup}
 							>
 								Close
@@ -59,23 +58,25 @@ const TripPage: FC = () => {
 			)}
 			{!stopForm.isOpen ? (
 				<>
-					<header className={styles.tripHeader}>
+					<header className="grid-[auto_1fr] grid grid-flow-col items-center gap-4">
 						<Link
 							to="/"
-							className={styles.headerButton}
+							className="relative flex cursor-pointer items-center justify-center"
 						>
 							<ChevronLeftIcon
 								width={20}
 								height={20}
 							/>
 						</Link>
-						<h3 className={styles.tripTitle}>{tripData?.name ?? ''}</h3>
+						<h3 className="line-clamp-1 max-w-60 min-w-40 text-2xl text-ellipsis">
+							{tripData?.name ?? ''}
+						</h3>
 						<TripPlayButton stops={animation.stops} />
 						<TripStopButton />
 						<button
 							title="Day View"
 							onClick={stopDisplay.toggleDayView}
-							className={clsx(stopDisplay.dayView && styles.dayView)}
+							className={clsx(stopDisplay.dayView && 'text-sky-600')}
 						>
 							<CalendarDateIcon
 								width={20}
@@ -85,7 +86,7 @@ const TripPage: FC = () => {
 						<div
 							role="button"
 							tabIndex={0}
-							className={styles.headerButton}
+							className="relative flex cursor-pointer items-center justify-center"
 							onClick={tripMenu.toggle}
 							onKeyDown={tripMenu.toggle}
 						>
@@ -96,25 +97,28 @@ const TripPage: FC = () => {
 							<div
 								role="menu"
 								tabIndex={0}
-								className={clsx(styles.menu, tripMenu.isOpen && styles.opened)}
+								className={clsx(
+									'absolute top-0 left-[calc(100%+0.625rem)] hidden w-max flex-col bg-zinc-200',
+									tripMenu.isOpen && 'flex',
+								)}
 								onClick={tripMenu.close}
 								onKeyDown={tripMenu.close}
 							>
 								<button
 									onClick={tripMenu.edit}
-									className={styles.menuButton}
+									className="flex w-full p-2 text-start text-sm text-black hover:bg-zinc-300"
 								>
 									Edit
 								</button>
 								<button
 									onClick={tripMenu.delete}
-									className={styles.menuButton}
+									className="flex w-full p-2 text-start text-sm text-black hover:bg-zinc-300"
 								>
 									Delete
 								</button>
 								<button
 									onClick={share.openPopup}
-									className={styles.menuButton}
+									className="flex w-full p-2 text-start text-sm text-black hover:bg-zinc-300"
 								>
 									Share this trip
 								</button>
@@ -128,7 +132,7 @@ const TripPage: FC = () => {
 					</p>
 					<button
 						onClick={stopForm.open}
-						className={styles.button}
+						className="mt-5 flex bg-green-800 px-4 py-2 text-white"
 					>
 						Add New Stop
 					</button>
@@ -136,7 +140,7 @@ const TripPage: FC = () => {
 						items={stopDisplay.stops}
 						setItems={stopDisplay.setStopsOrder}
 					>
-						<div className={styles.stopList}>
+						<div className="mt-6`">
 							{stopDisplay.stops.map((stop, index) => (
 								<StopItem
 									key={stop.id}
@@ -147,36 +151,22 @@ const TripPage: FC = () => {
 							))}
 						</div>
 					</DndWrapper>
-					<div
-						style={{
-							display: 'flex',
-							justifyContent: 'space-between',
-							padding: '10px',
-						}}
-					>
+					{/* TODO: REMOVE CODE BELOW \/ \/ \/ */}
+					<div className="flex justify-between p-2.5">
 						<button
 							onClick={animation.toggleAutocontinue}
-							style={{
-								background: '#00a',
-								padding: '10px',
-								color: '#fff',
-								borderRadius: '5px',
-							}}
+							className="rounded bg-blue-500 p-2.5 text-white"
 						>
 							Autoplay Trip? {animation.autocontinue ? 'Yes' : 'No'}
 						</button>
 						<button
 							onClick={animation.toggleCameraMounted}
-							style={{
-								background: '#00a',
-								padding: '10px',
-								color: '#fff',
-								borderRadius: '5px',
-							}}
+							className="rounded bg-blue-500 p-2.5 text-white"
 						>
 							Mount camera? {animation.isCameraMounted ? 'Yes' : 'No'}
 						</button>
 					</div>
+					{/* /\ /\ /\ */}
 				</>
 			) : (
 				<StopForm

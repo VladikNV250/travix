@@ -5,7 +5,6 @@ import { Link, useParams } from 'react-router';
 import clsx from 'clsx';
 
 import { useEditTripForm } from '../model';
-import styles from './style.module.scss';
 
 const EditTripPage = () => {
 	const { tripId } = useParams<{ tripId: string }>();
@@ -14,30 +13,30 @@ const EditTripPage = () => {
 		useEditTripForm(tripId);
 
 	return (
-		<form
-			className={styles.trip}
-			onSubmit={onSubmit}
-		>
-			<div className={styles.formContainer}>
+		<form onSubmit={onSubmit}>
+			<div className="flex items-end justify-between gap-6">
 				<div>
 					<label htmlFor="tripName">Trip Name</label>
 					<input
 						id="tripName"
 						name="name"
-						className={styles.input}
+						className="w-full resize-none rounded bg-zinc-200 px-2 py-1.5 text-lg"
 						defaultValue={formData.name}
 					/>
 				</div>
 				<button
 					onClick={() => setPickerIsOpen(p => !p)}
-					className={styles.colorButton}
+					className="relative size-8 rounded-full"
 					style={{ background: formData.color }}
 					type="button"
 				>
 					<div
 						role="button"
 						tabIndex={0}
-						className={clsx(styles.colorPicker, pickerIsOpen && styles.opened)}
+						className={clsx(
+							'absolute top-0 left-[calc(100%+1rem)] hidden',
+							pickerIsOpen && 'block',
+						)}
 						onKeyDown={e => e.stopPropagation()}
 						onClick={e => e.stopPropagation()}
 					>
@@ -48,9 +47,9 @@ const EditTripPage = () => {
 					</div>
 				</button>
 			</div>
-			<div className={styles.buttonContainer}>
+			<div className="mt-3 flex items-center justify-between gap-4">
 				<button
-					className={styles.button}
+					className="w-full rounded-lg bg-green-800 p-2 text-white"
 					type="submit"
 					disabled={isSubmitting}
 				>
@@ -58,7 +57,7 @@ const EditTripPage = () => {
 				</button>
 				<Link
 					to={`/trip/${tripId}`}
-					className={clsx(styles.button, styles.grey)}
+					className="w-full rounded-lg bg-gray-600 p-2 text-white"
 				>
 					Back
 				</Link>
