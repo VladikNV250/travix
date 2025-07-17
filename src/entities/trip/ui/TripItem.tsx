@@ -7,7 +7,6 @@ import { CSS } from '@dnd-kit/utilities';
 import { GripVerticalIcon } from 'shared/assets';
 
 import { Trip } from '../model/types';
-import styles from './style.module.scss';
 
 interface TripItemProps {
 	readonly trip: Trip;
@@ -26,16 +25,16 @@ export const TripItem: FC<TripItemProps> = ({ trip }) => {
 		<div
 			ref={setNodeRef}
 			style={style}
-			className={styles.trip}
+			className="flex min-w-50 items-center justify-between gap-7.5 bg-blue-800 px-4 py-2 font-medium tracking-wide"
 		>
 			<Link
-				className={styles.link}
+				className="text-white"
 				to={`/trip/${trip.id}`}
 			>
 				{trip.name}
 			</Link>
 			<button
-				className={styles.dragButton}
+				className="cursor-grab text-zinc-200"
 				{...attributes}
 				{...listeners}
 			>

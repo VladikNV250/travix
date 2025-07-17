@@ -1,2 +1,2 @@
-export { StopAddress } from './StopAddress/StopAddress';
-export { StopSliderGallery } from './StopSliderGallery/StopSliderGallery';
+export { StopAddress } from './StopAddress';
+export { StopSliderGallery } from './StopSliderGallery';

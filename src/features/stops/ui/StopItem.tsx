@@ -8,8 +8,6 @@ import { useDragAndDrop, useStopItem } from 'features/stops/model';
 import { GripVerticalIcon, ThreeDotsIcon } from 'shared/assets';
 import { useItemDropdown } from 'shared/lib';
 
-import styles from './style.module.scss';
-
 interface StopItemProps {
 	tripId: Trip['id'];
 	stop: Stop;
@@ -30,18 +28,18 @@ export const StopItem: FC<StopItemProps> = ({ tripId, stop, day }) => {
 	return (
 		<div
 			ref={setNodeRef}
-			className={styles.stopItem}
+			className="relative grid cursor-pointer grid-cols-[auto_1fr_auto_auto] items-center gap-2 bg-neutral-300 px-2.5 py-1.5"
 			onClick={onItemClick}
 			style={dragStyle}
 			role="button"
 			tabIndex={0}
 			onKeyDown={onItemClick}
 		>
-			<p className={styles.text}>{displayDay}</p>
+			<p>{displayDay}</p>
 			<StopAddress stop={stopData} />
 			<button
 				onClick={onToggleMenu}
-				className={styles.button}
+				className="relative flex"
 			>
 				<ThreeDotsIcon
 					width={20}
@@ -49,7 +47,7 @@ export const StopItem: FC<StopItemProps> = ({ tripId, stop, day }) => {
 				/>
 			</button>
 			<button
-				className={styles.dragButton}
+				className="cursor-grab text-black"
 				{...attributes}
 				{...listeners}
 			>
@@ -59,20 +57,23 @@ export const StopItem: FC<StopItemProps> = ({ tripId, stop, day }) => {
 				/>
 			</button>
 			<div
-				className={clsx(styles.menu, isMenuOpened && styles.opened)}
+				className={clsx(
+					'absolute top-0 left-full hidden w-25 bg-neutral-200',
+					isMenuOpened && 'flex flex-col',
+				)}
 				onClick={onCloseMenu}
 				onKeyDown={onCloseMenu}
 				role="button"
 				tabIndex={0}
 			>
 				<button
-					className={styles.menuButton}
+					className="flex w-full p-2 text-sm text-black hover:bg-zinc-300"
 					onClick={onEditClick}
 				>
 					Edit
 				</button>
 				<button
-					className={styles.menuButton}
+					className="flex w-full p-2 text-sm text-black hover:bg-zinc-300"
 					onClick={onDeleteClick}
 				>
 					Delete

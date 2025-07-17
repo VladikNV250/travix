@@ -10,8 +10,6 @@ import {
 } from 'entities/trip';
 import { DndWrapper, useAppDispatch, useAppSelector } from 'shared/lib';
 
-import styles from './style.module.scss';
-
 const HomePage: FC = () => {
 	const dispatch = useAppDispatch();
 	const navigate = useNavigate();
@@ -27,10 +25,10 @@ const HomePage: FC = () => {
 	};
 
 	return (
-		<div className={styles.home}>
+		<div>
 			<button
 				onClick={handleCreate}
-				className={styles.button}
+				className="w-full bg-green-800 px-4 py-2 text-white"
 			>
 				Add New Trip
 			</button>
@@ -38,7 +36,7 @@ const HomePage: FC = () => {
 				items={trips}
 				setItems={newTrips => dispatch(setTrips(newTrips))}
 			>
-				<div className={styles.tripList}>
+				<div className="mt-5 flex flex-col gap-1">
 					{trips.map(trip => (
 						<TripItem
 							key={trip.id}

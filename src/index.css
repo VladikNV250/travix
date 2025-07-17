@@ -1,3 +1,49 @@
+@import 'tailwindcss';
+
+@theme {
+	--animate-slide-fade-out: slideFadeOut 0.4s ease-out forwards;
+	--animate-slide-fade-in: slideFadeIn 0.4s ease-out forwards;
+	--animate-scrolling: scrolling 20s linear infinite;
+	/* TODO: Rewrite anim duration to tailwind utility */
+	--animate-spin-2s: spin 2s linear infinite;
+	--animate-spin-4s: spin 4s linear infinite;
+
+	@keyframes slideFadeIn {
+		from {
+			opacity: 0;
+			transform: translateY(-100%);
+		}
+		to {
+			opacity: 1;
+			transform: translateY(0);
+		}
+	}
+
+	@keyframes slideFadeOut {
+		from {
+			opacity: 1;
+			transform: translateY(0);
+		}
+		to {
+			opacity: 0;
+			transform: translateY(-100%);
+		}
+	}
+
+	@keyframes scrolling {
+	0% {
+		transform: translateX(0);
+	}
+	100% {
+		transform: translateX(-100%);
+	}
+}
+}
+
+@utility no-scrollbar {
+  @apply [scrollbar-width:none] [&::-webkit-scrollbar]:hidden;
+}
+
 body {
 	font-family: 'Helvetica Neue', system-ui, Avenir, Arial, sans-serif;
 	line-height: 1.5;
@@ -9,82 +55,6 @@ body {
 	text-rendering: optimizeSpeed;
 
 	overflow-x: hidden;
-}
-
-body,
-html,
-#root {
-	height: 100%;
-}
-
-._container {
-	max-width: 1230px;
-	margin-right: auto;
-	margin-left: auto;
-	padding-left: 15px;
-	padding-right: 15px;
-}
-
-*,
-*::before,
-*::after {
-	box-sizing: border-box;
-}
-
-ol,
-ul {
-	list-style: none;
-	padding: 0;
-}
-
-body,
-h1,
-h2,
-h3,
-h4,
-h5,
-p,
-ul,
-ol,
-li,
-figure,
-figcaption,
-blockquote,
-dl,
-input,
-dd {
-	margin: 0;
-}
-
-h1,
-h2,
-h3,
-h4,
-h5 {
-	font-weight: 400;
-}
-
-input,
-textarea,
-button {
-	outline: none;
-	border: none;
-	appearance: none;
-	font-family: 'Helvetica Neue', system-ui, Avenir, Arial, sans-serif;
-}
-
-button {
-	cursor: pointer;
-	background: transparent;
-	padding: 0;
-}
-
-a {
-	text-decoration: none;
-}
-
-a:visited {
-	color: unset;
 }
 
 /** Leaflet style settings */

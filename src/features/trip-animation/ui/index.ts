@@ -1,3 +1,3 @@
-export * from './TripPlayButton';
-export * from './TripContinueButton';
-export * from './TripStopButton';
+export { TripPlayButton } from './TripPlayButton';
+export { TripContinueButton } from './TripContinueButton';
+export { TripStopButton } from './TripStopButton';
