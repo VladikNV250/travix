@@ -31,37 +31,45 @@
 	}
 
 	@keyframes scrolling {
-	0% {
-		transform: translateX(0);
-	}
-	100% {
-		transform: translateX(-100%);
+		0% {
+			transform: translateX(0);
+		}
+		100% {
+			transform: translateX(-100%);
+		}
 	}
 }
+
+@layer base {
+	body {
+		font-family: 'Helvetica Neue', system-ui, Avenir, Arial, sans-serif;
+		line-height: 1.5;
+		font-weight: 400;
+		margin: 0;
+
+		min-height: 100vh;
+		scroll-behavior: smooth;
+		text-rendering: optimizeSpeed;
+
+		overflow-x: hidden;
+	}
+
+	button {
+		cursor: pointer;
+	}
+
+	/** Leaflet style settings */
+	.leaflet-control-container .leaflet-routing-container-hide {
+		display: none;
+	}
+
+	.leaflet-popup-content-wrapper {
+		overflow: hidden;
+	}
 }
 
 @utility no-scrollbar {
   @apply [scrollbar-width:none] [&::-webkit-scrollbar]:hidden;
 }
 
-body {
-	font-family: 'Helvetica Neue', system-ui, Avenir, Arial, sans-serif;
-	line-height: 1.5;
-	font-weight: 400;
-	margin: 0;
 
-	min-height: 100vh;
-	scroll-behavior: smooth;
-	text-rendering: optimizeSpeed;
-
-	overflow-x: hidden;
-}
-
-/** Leaflet style settings */
-.leaflet-control-container .leaflet-routing-container-hide {
-	display: none;
-}
-
-.leaflet-popup-content-wrapper {
-	overflow: hidden;
-}

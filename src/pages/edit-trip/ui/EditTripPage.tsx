@@ -34,8 +34,8 @@ const EditTripPage = () => {
 						role="button"
 						tabIndex={0}
 						className={clsx(
-							'absolute top-0 left-[calc(100%+1rem)] hidden',
-							pickerIsOpen && 'block',
+							'absolute top-0 left-[calc(100%+1rem)]',
+							pickerIsOpen ? 'block' : 'hidden',
 						)}
 						onKeyDown={e => e.stopPropagation()}
 						onClick={e => e.stopPropagation()}
