@@ -7,7 +7,7 @@ export interface Trip {
 	name: string;
 	color: string;
 	stops: Stop[];
-	route: LatLng[];
+	route: LatLng[]; //Q: Does we need this? It doesn't have coords
 }
 
 export interface TripsState {

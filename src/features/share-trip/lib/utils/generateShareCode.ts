@@ -3,7 +3,7 @@ import * as LZString from 'lz-string';
 
 import { Trip } from 'entities/trip';
 
-import { StopRaw, TripRaw } from './types';
+import { StopRaw, TripRaw } from '../types';
 
 export const generateShareCode = (trip: Trip | null) => {
 	if (!trip) return null;
