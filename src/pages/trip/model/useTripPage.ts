@@ -23,6 +23,7 @@ export const useTripPage = () => {
 	} = useItemDropdown(tripId ?? null);
 
 	return {
+		trip: trip ?? null,
 		tripData: tripInfo,
 		stopDisplay: {
 			stops: displayStops,

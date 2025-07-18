@@ -3,6 +3,7 @@ import { Link } from 'react-router';
 
 import clsx from 'clsx';
 
+import { SharePopup, useSharePopup } from 'features/share-trip';
 import { StopForm, StopItem } from 'features/stops';
 import { TripPlayButton, TripStopButton } from 'features/trip-animation';
 import {
@@ -11,51 +12,22 @@ import {
 	ThreeDotsIcon,
 } from 'shared/assets';
 import { DndWrapper } from 'shared/lib';
-import { Button } from 'shared/ui';
 
 import { useTripPage } from '../model';
-import { useTripShare } from '../model/useTripShare';
 
 const TripPage: FC = () => {
-	const { tripData, tripMenu, stopDisplay, stopForm, animation } =
+	const { trip, tripData, tripMenu, stopDisplay, stopForm, animation } =
 		useTripPage();
 
-	const share = useTripShare();
+	const popup = useSharePopup();
 
 	return (
 		<div>
-			{share.popupIsOpen && (
-				<div className="fixed top-0 left-0 z-20 flex size-full items-center justify-center bg-black/35">
-					<div className="flex flex-col gap-x-4 rounded-xl bg-white p-2 pb-1">
-						<header className="flex flex-col">
-							<h3 className="text-2xl font-medium">Share trip</h3>
-							<h4 className="text-base text-zinc-800 italic">
-								Copy link below and send your friend to share this trip
-							</h4>
-						</header>
-						<textarea
-							className="w-100 min-w-80 resize-none rounded-2xl bg-zinc-300 p-4"
-							rows={8}
-							value="I3USAJDKLSADHJAKSSJKH@SHADSJK3&y#t&*#!*y$#ieh!hoe#dugb#!yistgd#u#@gkd@ghDGY1783TEG2YUTR46EGFBYU23GED72QG"
-							readOnly
-						/>
-						<div className="flex items-center justify-end gap-y-2">
-							<Button
-								className="rounded bg-blue-700 px-4 py-2 text-base text-white"
-								onClick={share.closePopup}
-							>
-								Copy
-							</Button>
-							<Button
-								className="rounded bg-rose-700 px-4 py-2 text-base text-white"
-								onClick={share.closePopup}
-							>
-								Close
-							</Button>
-						</div>
-					</div>
-				</div>
-			)}
+			<SharePopup
+				trip={trip}
+				isOpen={popup.isOpen}
+				closePopup={popup.close}
+			/>
 			{!stopForm.isOpen ? (
 				<>
 					<header className="grid-[auto_1fr] grid grid-flow-col items-center gap-4">
@@ -115,7 +87,7 @@ const TripPage: FC = () => {
 									Delete
 								</button>
 								<button
-									onClick={share.openPopup}
+									onClick={popup.open}
 									className="flex w-full p-2 text-start text-sm text-black hover:bg-zinc-300"
 								>
 									Share this trip
