@@ -58,8 +58,8 @@ export const StopItem: FC<StopItemProps> = ({ tripId, stop, day }) => {
 			</button>
 			<div
 				className={clsx(
-					'absolute top-0 left-full hidden w-25 bg-neutral-200',
-					isMenuOpened && 'flex flex-col',
+					'absolute top-0 left-full w-25 bg-neutral-200',
+					isMenuOpened ? 'flex flex-col' : 'hidden',
 				)}
 				onClick={onCloseMenu}
 				onKeyDown={onCloseMenu}

@@ -25,8 +25,8 @@ export const StopInfoPanel: FC = () => {
 	return (
 		<div
 			className={clsx(
-				'animate-slide-fade-out absolute top-0 left-0 z-10 w-full bg-linear-to-l from-sky-300 to-blue-900 opacity-0',
-				hasStop && 'animate-slide-fade-in',
+				'absolute top-0 left-0 z-10 w-full bg-linear-to-l from-sky-300 to-blue-900 opacity-0',
+				hasStop ? 'animate-slide-fade-in' : 'animate-slide-fade-out',
 			)}
 		>
 			{hasStop && (

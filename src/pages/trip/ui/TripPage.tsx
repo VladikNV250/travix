@@ -55,9 +55,7 @@ const TripPage: FC = () => {
 								height={20}
 							/>
 						</button>
-						<div
-							role="button"
-							tabIndex={0}
+						<button
 							className="relative flex cursor-pointer items-center justify-center"
 							onClick={tripMenu.toggle}
 							onKeyDown={tripMenu.toggle}
@@ -70,8 +68,8 @@ const TripPage: FC = () => {
 								role="menu"
 								tabIndex={0}
 								className={clsx(
-									'absolute top-0 left-[calc(100%+0.625rem)] hidden w-max flex-col bg-zinc-200',
-									tripMenu.isOpen && 'flex',
+									'absolute top-0 left-[calc(100%+0.625rem)] w-max flex-col bg-zinc-200',
+									tripMenu.isOpen ? 'flex' : 'hidden',
 								)}
 								onClick={tripMenu.close}
 								onKeyDown={tripMenu.close}
@@ -95,7 +93,7 @@ const TripPage: FC = () => {
 									Share this trip
 								</button>
 							</div>
-						</div>
+						</button>
 					</header>
 					<p>
 						{tripData?.totalDistance
