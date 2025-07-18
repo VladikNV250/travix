@@ -1,8 +1,6 @@
 import { FC } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router';
 
-import clsx from 'clsx';
-
 import { Layout } from 'app/layouts';
 import { EditTripPage } from 'pages/edit-trip';
 import { HomePage } from 'pages/home';
@@ -12,7 +10,7 @@ import { withSuspense } from 'shared/lib';
 
 export const AppRouter: FC = () => {
 	return (
-		<div className={clsx('app')}>
+		<div>
 			<BrowserRouter>
 				<Routes>
 					<Route
