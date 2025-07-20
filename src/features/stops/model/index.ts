@@ -1,6 +1,5 @@
 export { calculateTripDays } from './calculateTripDays';
 export { createStop } from './createStop';
-export { generateStopId } from '../../../entities/stop/model/generateStopId';
 
 export { useStopForm } from './stop-form/useStopForm';
 export { useStopItem } from './stop-item/useStopItem';
