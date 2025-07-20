@@ -1,7 +1,10 @@
 import { FC, useState } from 'react';
 
+import { addTrip } from 'entities/trip';
+import { useAppDispatch } from 'shared/lib';
 import { Button } from 'shared/ui';
 
+import { PARSING_ERROR_MESSAGE } from '../config';
 import { parseShareCode } from '../lib/utils/parseShareCode';
 
 interface ImportPopupProps {
@@ -11,9 +14,20 @@ interface ImportPopupProps {
 
 export const ImportPopup: FC<ImportPopupProps> = ({ isOpen, closePopup }) => {
 	const [code, setCode] = useState('');
+	const [error, setError] = useState<string | null>(null);
+	const dispatch = useAppDispatch();
 
-	const addTrip = () => {
-		parseShareCode(code);
+	const importTrip = () => {
+		const trip = parseShareCode(code);
+
+		if (trip) {
+			dispatch(addTrip(trip));
+			setError(null);
+			setCode('');
+			closePopup();
+		} else {
+			setError(PARSING_ERROR_MESSAGE);
+		}
 	};
 
 	if (!isOpen) return null;
@@ -26,6 +40,7 @@ export const ImportPopup: FC<ImportPopupProps> = ({ isOpen, closePopup }) => {
 					<h4 className="text-base text-zinc-800 italic">
 						Paste code below to add trip
 					</h4>
+					{error && <h4 className="mt-2 text-base text-rose-700">{error}</h4>}
 				</header>
 				<div className="w-100 min-w-80 rounded-2xl bg-zinc-300 p-4">
 					<input
@@ -37,9 +52,9 @@ export const ImportPopup: FC<ImportPopupProps> = ({ isOpen, closePopup }) => {
 				<div className="flex items-center justify-end gap-x-2">
 					<Button
 						className="rounded bg-blue-700 px-4 py-2 text-base text-white"
-						onClick={addTrip}
+						onClick={importTrip}
 					>
-						Add Trip
+						Import
 					</Button>
 					<Button
 						className="rounded bg-rose-700 px-4 py-2 text-base text-white"

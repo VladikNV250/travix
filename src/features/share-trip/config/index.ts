@@ -1,1 +1,1 @@
-export { SHARE_MESSAGE } from './consts';
+export { SHARE_MESSAGE, PARSING_ERROR_MESSAGE } from './consts';
