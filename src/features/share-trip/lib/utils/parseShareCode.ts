@@ -3,14 +3,10 @@ import { decodeData } from 'shared/lib';
 
 export const parseShareCode = (shareMessageWithCode: string) => {
 	try {
-		/**
-		 * Split by double space between share message and code, and get only code
-		 * If undefined shareMessageWithCode is a code
-		 */
-		const onlyCode =
-			shareMessageWithCode.split(`  `)?.[1] ?? shareMessageWithCode;
+		const parts = shareMessageWithCode.trim().split(/\s+/);
+		const code = parts.at(-1) ?? shareMessageWithCode;
 
-		const tripRaw = decodeData<TripRaw>(onlyCode);
+		const tripRaw = decodeData<TripRaw>(code);
 
 		return decompressTrip(tripRaw);
 	} catch (e) {
