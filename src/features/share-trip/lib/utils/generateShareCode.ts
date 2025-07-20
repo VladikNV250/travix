@@ -17,7 +17,7 @@ export const generateShareCode = (trip: Trip | null) => {
 			stop.arrivalDate,
 			stop.departureDate,
 			stop.notes ?? '',
-			stop.images.map(i => i.url),
+			stop.images.map(i => [i.id, i.url]),
 		] as StopRaw;
 	});
 

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-export const useSharePopup = () => {
+export const usePopup = () => {
 	const [isOpen, setIsOpen] = useState(false);
 
 	return {

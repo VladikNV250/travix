@@ -1,5 +1,12 @@
 import { LatLngTuple } from 'leaflet';
 
+export type ImageRaw = [
+	/** image id */
+	string,
+	/** image url */
+	string,
+];
+
 export type StopRaw = [
 	/** address */
 	string,
@@ -14,7 +21,7 @@ export type StopRaw = [
 	/** notes */
 	string,
 	/** images urls */
-	string[],
+	ImageRaw[],
 ];
 
 export interface TripRaw {

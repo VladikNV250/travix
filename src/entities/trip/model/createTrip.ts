@@ -1,5 +1,6 @@
-import { Trip, validateTrip } from 'entities/trip';
+import { Trip } from 'entities/trip';
 
+// TODO: We need to think about validation of trips
 export const createTrip = () => {
 	const trip: Trip = {
 		id: new Date().getTime().toString(),
@@ -9,7 +10,5 @@ export const createTrip = () => {
 		route: [],
 	};
 
-	if (validateTrip(trip)) {
-		return trip;
-	}
+	return trip;
 };

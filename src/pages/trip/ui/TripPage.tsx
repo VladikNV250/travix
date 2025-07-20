@@ -3,7 +3,7 @@ import { Link } from 'react-router';
 
 import clsx from 'clsx';
 
-import { SharePopup, useSharePopup } from 'features/share-trip';
+import { SharePopup, usePopup } from 'features/share-trip';
 import { StopForm, StopItem } from 'features/stops';
 import { TripPlayButton, TripStopButton } from 'features/trip-animation';
 import {
@@ -19,7 +19,7 @@ const TripPage: FC = () => {
 	const { trip, tripData, tripMenu, stopDisplay, stopForm, animation } =
 		useTripPage();
 
-	const popup = useSharePopup();
+	const popup = usePopup();
 
 	return (
 		<div>
