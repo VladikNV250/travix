@@ -4,7 +4,6 @@ import { Link } from 'react-router';
 import clsx from 'clsx';
 
 import { SharePopup, usePopup } from 'features/share-trip';
-import { StopForm, StopItem } from 'features/stops';
 import { TripPlayButton, TripStopButton } from 'features/trip-animation';
 import {
 	CalendarDateIcon,
@@ -12,6 +11,8 @@ import {
 	ThreeDotsIcon,
 } from 'shared/assets';
 import { DndWrapper } from 'shared/lib';
+import { StopForm } from 'widgets/stop-form';
+import { StopItem } from 'widgets/stop-item';
 
 import { useTripPage } from '../model';
 

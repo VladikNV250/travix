@@ -6,12 +6,11 @@ import {
 	useState,
 } from 'react';
 
-import { Stop, validateStop } from 'entities/stop';
+import { Stop, createStop, validateStop } from 'entities/stop';
 import { addStop, editStop } from 'entities/trip';
 import { useMap } from 'features/map';
 import { useAppDispatch } from 'shared/lib';
 
-import { createStop } from '../createStop';
 import { StopFormData } from './types';
 
 /**

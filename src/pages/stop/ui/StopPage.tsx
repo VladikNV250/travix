@@ -2,8 +2,8 @@ import { FC, useMemo } from 'react';
 import { useNavigate, useParams } from 'react-router';
 
 import { selectTrips } from 'entities/trip';
-import { StopForm } from 'features/stops';
 import { useAppSelector } from 'shared/lib';
+import { StopForm } from 'widgets/stop-form';
 
 const StopPage: FC = () => {
 	const navigate = useNavigate();

@@ -3,8 +3,8 @@ import { useParams } from 'react-router';
 
 import { latLng } from 'leaflet';
 
+import { calculateTripDays } from 'entities/stop';
 import { selectTrip } from 'entities/trip';
-import { calculateTripDays } from 'features/stops';
 import { useAppSelector } from 'shared/lib';
 
 import { TripInfo } from './types';

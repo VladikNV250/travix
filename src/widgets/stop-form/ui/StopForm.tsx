@@ -1,11 +1,10 @@
 import { FC } from 'react';
 
 import { ImageUpload } from 'entities/image';
-import { Stop } from 'entities/stop';
+import { Stop, StopGallery } from 'entities/stop';
 import { Trip } from 'entities/trip';
-import { useStopForm } from 'features/stops/model/stop-form/useStopForm';
 
-import { StopGallery } from './StopGallery';
+import { useStopForm } from '../model';
 
 interface StopFormProps {
 	tripId: Trip['id'];
