@@ -1,7 +1,7 @@
 import { LatLngTuple, latLng } from 'leaflet';
-import * as LZString from 'lz-string';
 
 import { Trip } from 'entities/trip';
+import { compressData } from 'shared/lib';
 
 import { StopRaw, TripRaw } from '../types';
 
@@ -35,9 +35,7 @@ export const generateShareCode = (trip: Trip | null) => {
 	};
 	/* eslint-enable id-length */
 
-	const tripCode = LZString.compressToEncodedURIComponent(
-		JSON.stringify(tripRaw),
-	);
+	const tripCode = compressData(tripRaw);
 
 	return tripCode;
 };

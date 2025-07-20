@@ -1,11 +1,8 @@
 import { FC, useState } from 'react';
 
-import { addTrip } from 'entities/trip';
-import { useAppDispatch } from 'shared/lib';
 import { Button } from 'shared/ui';
 
-import { PARSING_ERROR_MESSAGE } from '../config';
-import { parseShareCode } from '../lib/utils/parseShareCode';
+import { ImportStatus, useImportTrip } from '../lib';
 
 interface ImportPopupProps {
 	isOpen: boolean;
@@ -14,19 +11,13 @@ interface ImportPopupProps {
 
 export const ImportPopup: FC<ImportPopupProps> = ({ isOpen, closePopup }) => {
 	const [code, setCode] = useState('');
-	const [error, setError] = useState<string | null>(null);
-	const dispatch = useAppDispatch();
+	const { importTrip, error } = useImportTrip();
 
-	const importTrip = () => {
-		const trip = parseShareCode(code);
-
-		if (trip) {
-			dispatch(addTrip(trip));
-			setError(null);
+	const importTripHandle = () => {
+		const status = importTrip(code);
+		if (status === ImportStatus.SUCCESS) {
 			setCode('');
 			closePopup();
-		} else {
-			setError(PARSING_ERROR_MESSAGE);
 		}
 	};
 
@@ -52,7 +43,7 @@ export const ImportPopup: FC<ImportPopupProps> = ({ isOpen, closePopup }) => {
 				<div className="flex items-center justify-end gap-x-2">
 					<Button
 						className="rounded bg-blue-700 px-4 py-2 text-base text-white"
-						onClick={importTrip}
+						onClick={importTripHandle}
 					>
 						Import
 					</Button>

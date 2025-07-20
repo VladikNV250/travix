@@ -36,3 +36,8 @@ export interface TripRaw {
 	/** route list */
 	readonly r: LatLngTuple[];
 }
+
+export enum ImportStatus {
+	SUCCESS = 'success',
+	ERROR = 'error',
+}

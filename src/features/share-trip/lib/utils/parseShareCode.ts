@@ -1,10 +1,10 @@
 import { latLng } from 'leaflet';
-import * as LZString from 'lz-string';
 
 import { Image } from 'entities/image';
 import { Stop } from 'entities/stop';
 import { Trip, createTrip } from 'entities/trip';
 import { generateStopId } from 'features/stops/model';
+import { decompressData } from 'shared/lib';
 
 import { TripRaw } from '../types';
 
@@ -17,9 +17,7 @@ export const parseShareCode = (shareMessageWithCode: string) => {
 		const onlyCode =
 			shareMessageWithCode.split(`  `)?.[1] ?? shareMessageWithCode;
 
-		const tripRaw: TripRaw = JSON.parse(
-			LZString.decompressFromEncodedURIComponent(onlyCode),
-		);
+		const tripRaw = decompressData<TripRaw>(onlyCode);
 
 		const routes = tripRaw.r.map(route => latLng(route));
 		const stops: Stop[] = tripRaw.s.map(stopRaw => {
