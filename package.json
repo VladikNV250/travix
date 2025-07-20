@@ -34,7 +34,8 @@
 		"redux-persist": "^6.0.0",
 		"simplify-js": "^1.2.4",
 		"tailwindcss": "^4.1.11",
-		"use-debounce": "^10.0.4"
+		"use-debounce": "^10.0.4",
+		"uuid": "^11.1.0"
 	},
 	"devDependencies": {
 		"@eslint/js": "^9.30.1",

@@ -1,10 +1,12 @@
+import { v4 as uuidv4 } from 'uuid';
+
 import { getGeocode } from 'entities/geo';
-import { Stop, generateStopId, validateStop } from 'entities/stop';
+import { Stop, validateStop } from 'entities/stop';
 
 // TODO: We need to review this creating stops
 export const createStop = async (data: Partial<Stop>): Promise<Stop | null> => {
 	const stop: Stop = {
-		id: generateStopId(),
+		id: uuidv4(),
 		address: data.address ?? '',
 		location: data.location ?? {
 			lat: 0,

@@ -1,10 +1,12 @@
+import { v4 as uuidv4 } from 'uuid';
+
 import { decompressImage } from 'entities/image';
 
-import { Stop, StopRaw, generateStopId } from '../model';
+import { Stop, StopRaw } from '../model';
 
 export const decompressStop = (stopRaw: StopRaw): Stop => {
 	return {
-		id: generateStopId(),
+		id: uuidv4(),
 		address: stopRaw[0],
 		location: stopRaw[1],
 		countryCode: stopRaw[2],
