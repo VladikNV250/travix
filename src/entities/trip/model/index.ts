@@ -1,4 +1,4 @@
-export type { Trip } from './types';
+export type { Trip, TripRaw } from './types';
 export { validateTrip } from './validation';
 
 export {

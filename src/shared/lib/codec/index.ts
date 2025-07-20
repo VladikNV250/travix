@@ -1,1 +1,1 @@
-export { compressData, decompressData } from './codec';
+export { encodeData, decodeData } from './codec';

@@ -1,7 +1,5 @@
 import { getGeocode } from 'entities/geo';
-import { Stop, validateStop } from 'entities/stop';
-
-import { generateStopId } from './generateStopId';
+import { Stop, generateStopId, validateStop } from 'entities/stop';
 
 // TODO: We need to review this creating stops
 export const createStop = async (data: Partial<Stop>): Promise<Stop | null> => {
