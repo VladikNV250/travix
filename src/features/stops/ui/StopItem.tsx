@@ -23,7 +23,7 @@ export const StopItem: FC<StopItemProps> = ({ tripId, stop, day }) => {
 		isOpened: isMenuOpened,
 		onClose: onCloseMenu,
 		onToggle: onToggleMenu,
-	} = useItemDropdown(stop.id);
+	} = useItemDropdown(`${stop.id}-${stop.address}`);
 
 	return (
 		<div

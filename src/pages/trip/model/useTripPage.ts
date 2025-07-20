@@ -20,7 +20,7 @@ export const useTripPage = () => {
 		isOpened: isTripMenuOpened,
 		onToggle: toggleTripMenu,
 		onClose: onCloseTripMenu,
-	} = useItemDropdown(tripId ?? null);
+	} = useItemDropdown(`${tripId ?? ''}-trip`);
 
 	return {
 		trip: trip ?? null,
