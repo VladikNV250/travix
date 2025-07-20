@@ -6,4 +6,3 @@ export { generateShareCode } from './utils/generateShareCode';
 export { parseShareCode } from './utils/parseShareCode';
 
 export { ImportStatus } from './types';
-export type { ImageRaw, StopRaw, TripRaw } from './types';
