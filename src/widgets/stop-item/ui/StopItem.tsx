@@ -4,9 +4,10 @@ import clsx from 'clsx';
 
 import { Stop, StopAddress } from 'entities/stop';
 import { Trip } from 'entities/trip';
-import { useDragAndDrop, useStopItem } from 'features/stops/model';
 import { GripVerticalIcon, ThreeDotsIcon } from 'shared/assets';
-import { useItemDropdown } from 'shared/lib';
+import { useDragAndDrop, useItemDropdown } from 'shared/lib';
+
+import { useStopItem } from '../model';
 
 interface StopItemProps {
 	tripId: Trip['id'];
@@ -15,7 +16,9 @@ interface StopItemProps {
 }
 
 export const StopItem: FC<StopItemProps> = ({ tripId, stop, day }) => {
-	const { setNodeRef, dragStyle, attributes, listeners } = useDragAndDrop(stop);
+	const { setNodeRef, dragStyle, attributes, listeners } = useDragAndDrop(
+		stop.id,
+	);
 	const { stopData, displayDay, onItemClick, onEditClick, onDeleteClick } =
 		useStopItem(tripId, stop, day);
 

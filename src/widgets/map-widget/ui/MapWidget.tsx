@@ -5,7 +5,7 @@ import 'leaflet-routing-machine/dist/leaflet-routing-machine.css';
 import 'leaflet/dist/leaflet.css';
 
 import { RoutingMachine } from 'features/routing';
-import { StopMarker } from 'features/stops';
+import { StopMarker } from 'features/stop-details';
 
 import { MAP_INITIAL_CENTER, MAP_INITIAL_ZOOM } from '../config';
 import { useMapWidget } from '../model';

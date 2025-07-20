@@ -4,9 +4,10 @@ import { Marker, Popup } from 'react-leaflet';
 import { DivIcon, Icon, IconOptions } from 'leaflet';
 
 import { Stop } from 'entities/stop';
-import { useStopMarker } from 'features/stops/model';
 import { formatDate } from 'shared/lib';
 import { SimpleLoader } from 'shared/ui';
+
+import { useStopMarker } from '../model';
 
 interface StopMarkerProps {
 	stop: Stop;
