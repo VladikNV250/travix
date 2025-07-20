@@ -1,6 +1,7 @@
 import { useCallback, useMemo, useRef } from 'react';
 
 import { Trip } from 'entities/trip';
+import { SHARE_MESSAGE } from 'features/share-trip/config';
 
 import { generateShareCode } from '../utils/generateShareCode';
 
@@ -14,8 +15,8 @@ export const useShareCode = (trip: Trip | null) => {
 		textareaRef.current.select();
 		textareaRef.current.setSelectionRange(0, 99999);
 
-		const shareMessage = `This is my trip! Copy code below and paste in Travix:\n\n${code}`;
-		navigator.clipboard.writeText(shareMessage);
+		const shareMessageWithCode = `${SHARE_MESSAGE}\n\n${code}`;
+		navigator.clipboard.writeText(shareMessageWithCode);
 	}, [code]);
 
 	return {

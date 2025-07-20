@@ -1,15 +1,14 @@
-import { Trip, validateTrip } from 'entities/trip';
+import { Trip } from 'entities/trip';
 
-export const createTrip = () => {
+// TODO: We need to think about validation of trips
+export const createTrip = (initialData?: Partial<Trip>) => {
 	const trip: Trip = {
 		id: new Date().getTime().toString(),
-		name: 'New Trip',
-		color: '#ff0000',
-		stops: [],
-		route: [],
+		name: initialData?.name ?? 'New Trip',
+		color: initialData?.color ?? '#ff0000',
+		stops: initialData?.stops ?? [],
+		route: initialData?.route ?? [],
 	};
 
-	if (validateTrip(trip)) {
-		return trip;
-	}
+	return trip;
 };
