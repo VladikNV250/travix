@@ -30,10 +30,10 @@ export const useStopForm = (
 
 	const { predictions } = useStopFormPredictions(formData.address);
 
-	const onPredictionSelect = (description: string) => {
+	const onPredictionSelect = (text: string) => {
 		setFormData(prevState => ({
 			...prevState,
-			address: description,
+			address: text,
 		}));
 	};
 

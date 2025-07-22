@@ -45,7 +45,7 @@ export const StopForm: FC<StopFormProps> = ({
 					type="text"
 					name="address"
 					placeholder="Enter address"
-					className="peer w-full resize-none rounded bg-neutral-200 px-2 py-1.5 text-sm focus:rounded-b-none"
+					className="peer w-full resize-none rounded bg-neutral-200 px-2 py-1.5 text-sm outline-0 focus:rounded-b-none"
 					value={formData.address}
 					onChange={onDataChange}
 				/>
@@ -54,7 +54,7 @@ export const StopForm: FC<StopFormProps> = ({
 						<button
 							key={prediction.id}
 							className="line-clamp-1 cursor-pointer px-2.5 py-1.5 text-ellipsis hover:bg-neutral-400"
-							onClick={() => onPredictionSelect(prediction.text)}
+							onMouseDown={() => onPredictionSelect(prediction.text)}
 						>
 							{prediction.text}
 						</button>
