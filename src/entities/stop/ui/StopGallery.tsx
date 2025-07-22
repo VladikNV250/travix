@@ -17,7 +17,7 @@ export const StopGallery: FC<StopGalleryProps> = ({ images, onDelete }) => {
 					{images.map(image => (
 						<div
 							key={image.id}
-							className="peer relative max-h-25 max-w-25 justify-self-start even:justify-self-end"
+							className="group relative max-h-25 max-w-25 justify-self-start even:justify-self-end"
 						>
 							<img
 								className="aspect-square h-25 max-w-25 object-contain"
@@ -26,7 +26,7 @@ export const StopGallery: FC<StopGalleryProps> = ({ images, onDelete }) => {
 							/>
 							<button
 								type="button"
-								className="absolute top-1 right-1 hidden items-center justify-center rounded-full bg-neutral-200 p-1 peer-hover:flex"
+								className="absolute top-1 right-1 hidden items-center justify-center rounded-full bg-neutral-200 p-1 group-hover:flex"
 								onClick={() => onDelete(image.id)}
 							>
 								<TrashIcon
