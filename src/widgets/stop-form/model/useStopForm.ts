@@ -12,27 +12,21 @@ import { useStopFormSubmitting } from './useStopFormSubmitting';
  */
 export const useStopForm = (
 	tripId: Trip['id'],
-	initialData: Partial<Stop>,
+	initialData: Partial<Stop> | null,
 	onClose?: () => void,
 ) => {
-	const {
-		formData,
-		setFormData,
-		onDataChange,
-		hasUnsavedChanges,
-		isEditMode,
-		isFormValid,
-	} = useStopFormState(initialData);
+	const { formData, setFormData, onDataChange, hasUnsavedChanges, isEditMode } =
+		useStopFormState(initialData);
 
-	const { isSubmitting, onSaveStop, submitError } = useStopFormSubmitting(
-		tripId,
-		initialData,
-		formData,
-		setFormData,
-		isEditMode,
-		isFormValid,
-		onClose,
-	);
+	const { isSubmitting, onSaveStop, submitError, isFormValid } =
+		useStopFormSubmitting(
+			tripId,
+			initialData,
+			formData,
+			setFormData,
+			isEditMode,
+			onClose,
+		);
 
 	const { predictions } = useStopFormPredictions(formData.address);
 

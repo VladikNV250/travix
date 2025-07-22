@@ -19,10 +19,9 @@ import { StopFormData } from './types';
  */
 export const useStopFormSubmitting = (
 	tripId: string,
-	initialData: Partial<Stop>,
+	initialData: Partial<Stop> | null,
 	formData: StopFormData,
 	setFormData: Dispatch<SetStateAction<StopFormData>>,
-	isFormValid: boolean,
 	isEditMode: boolean,
 	onClose?: () => void,
 ) => {
@@ -30,6 +29,8 @@ export const useStopFormSubmitting = (
 	const { map } = useMap();
 	const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 	const [submitError, setSubmitError] = useState<string | null>(null);
+
+	const isFormValid = formData.address.trim().length > 0;
 
 	const onSaveStop = useCallback(
 		async (e: FormEvent<HTMLFormElement>) => {
@@ -97,5 +98,6 @@ export const useStopFormSubmitting = (
 		isSubmitting,
 		submitError,
 		onSaveStop,
+		isFormValid,
 	};
 };
