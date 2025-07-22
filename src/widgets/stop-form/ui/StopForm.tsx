@@ -14,7 +14,7 @@ interface StopFormProps {
 
 export const StopForm: FC<StopFormProps> = ({
 	tripId,
-	initialData = {},
+	initialData = null,
 	onClose,
 }) => {
 	const {

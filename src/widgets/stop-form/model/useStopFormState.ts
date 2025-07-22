@@ -8,7 +8,7 @@ import { StopFormData } from './types';
  * Manages the internal state of the stop form.
  * Handles form data, updates, and computes form validity/changes.
  */
-export const useStopFormState = (initialData: Partial<Stop>) => {
+export const useStopFormState = (initialData: Partial<Stop> | null) => {
 	const [formData, setFormData] = useState<StopFormData>({
 		address: initialData?.address || '',
 		arrivalDate: initialData?.arrivalDate || '',
@@ -41,12 +41,7 @@ export const useStopFormState = (initialData: Partial<Stop>) => {
 		[setFormData],
 	);
 
-	const isEditMode = useMemo(() => Boolean(initialData), [initialData]);
-
-	const isFormValid = useMemo(
-		() => formData.address.trim().length > 0,
-		[formData.address],
-	);
+	const isEditMode = Boolean(initialData);
 
 	return {
 		formData,
@@ -54,6 +49,5 @@ export const useStopFormState = (initialData: Partial<Stop>) => {
 		onDataChange,
 		hasUnsavedChanges,
 		isEditMode,
-		isFormValid,
 	};
 };
