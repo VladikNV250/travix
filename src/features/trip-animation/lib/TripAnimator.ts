@@ -60,7 +60,7 @@ export class TripAnimator {
 	public startAnimation(stops: LatLngExpression[]): void {
 		if (!this.isAnimating && this.map) {
 			const icon = new DivIcon({
-				html: `<img src="${DirectionMarkerIcon}" alt="Direction Marker" width="25" height="28" />`,
+				html: `<img src="${DirectionMarkerIcon}" alt="Direction Marker" class="size-full aspect-[25/28]" />`,
 				className: '',
 				iconSize: [25, 28],
 			});
