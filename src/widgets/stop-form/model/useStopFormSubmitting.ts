@@ -6,6 +6,7 @@ import {
 	useState,
 } from 'react';
 
+import { getGeocode } from 'entities/geo';
 import { Stop, createStop, validateStop } from 'entities/stop';
 import { addStop, editStop } from 'entities/trip';
 import { useMap } from 'features/map';
@@ -45,11 +46,15 @@ export const useStopFormSubmitting = (
 					return;
 				}
 
-				if (isEditMode) {
-					const updatedStop: Stop = {
+				if (isEditMode && initialData?.location) {
+					const updatedStop = {
 						...initialData,
 						...formData,
 					} as Stop;
+
+					updatedStop.location =
+						(await getGeocode(updatedStop.address))?.location ??
+						initialData.location;
 
 					if (validateStop(updatedStop)) {
 						dispatch(editStop({ tripId, updatedStop }));
