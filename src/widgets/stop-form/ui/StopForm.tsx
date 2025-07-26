@@ -91,7 +91,7 @@ export const StopForm: FC<StopFormProps> = ({
 			<button
 				type="submit"
 				className="mt-1.5 rounded-lg bg-green-700 p-2 text-white"
-				disabled={!error || isSubmitting}
+				disabled={isSubmitting}
 			>
 				{isEditMode
 					? hasUnsavedChanges

@@ -41,17 +41,15 @@ export const useStopFormSubmitting = (
 				setError(null);
 
 				const error = validateStopForm(formData);
-
 				if (error) return setError(error);
 
-				if (isEditMode && initialData?.location) {
+				if (isEditMode) {
 					const updatedStop = {
 						...initialData,
 						...formData,
 					} as Stop;
 
 					const newGeocode = await getGeocode(updatedStop.address);
-
 					if (!newGeocode) return setError(ErrorType.NOT_EXIST_ADDRESS);
 
 					updatedStop.location = newGeocode.location;
@@ -73,6 +71,8 @@ export const useStopFormSubmitting = (
 						});
 						onClose?.();
 					}
+
+					setError(ErrorType.NOT_EXIST_ADDRESS);
 				}
 			} catch (e: unknown) {
 				setError(ErrorType.UNKNOWN);
