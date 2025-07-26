@@ -7,11 +7,12 @@ import {
 } from 'react';
 
 import { getGeocode } from 'entities/geo';
-import { Stop, createStop, validateStop } from 'entities/stop';
+import { Stop, createStop } from 'entities/stop';
 import { addStop, editStop } from 'entities/trip';
 import { useMap } from 'features/map';
 import { useAppDispatch } from 'shared/lib';
 
+import { ErrorType, validateStopForm } from '../lib';
 import { StopFormData } from './types';
 
 /**
@@ -29,9 +30,7 @@ export const useStopFormSubmitting = (
 	const dispatch = useAppDispatch();
 	const { map } = useMap();
 	const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
-	const [submitError, setSubmitError] = useState<string | null>(null);
-
-	const isFormValid = formData.address.trim().length > 0;
+	const [error, setError] = useState<ErrorType | null>(null);
 
 	const onSaveStop = useCallback(
 		async (e: FormEvent<HTMLFormElement>) => {
@@ -39,12 +38,11 @@ export const useStopFormSubmitting = (
 
 			try {
 				setIsSubmitting(true);
-				setSubmitError(null);
+				setError(null);
 
-				if (!isFormValid) {
-					setSubmitError('Please fill in all required fields.');
-					return;
-				}
+				const error = validateStopForm(formData);
+
+				if (error) return setError(error);
 
 				if (isEditMode && initialData?.location) {
 					const updatedStop = {
@@ -52,16 +50,13 @@ export const useStopFormSubmitting = (
 						...formData,
 					} as Stop;
 
-					updatedStop.location =
-						(await getGeocode(updatedStop.address))?.location ??
-						initialData.location;
+					const newGeocode = await getGeocode(updatedStop.address);
 
-					if (validateStop(updatedStop)) {
-						dispatch(editStop({ tripId, updatedStop }));
-						onClose?.();
-					} else {
-						setSubmitError('Validation failed for updated stop.');
-					}
+					if (!newGeocode) return setError(ErrorType.NOT_EXIST_ADDRESS);
+
+					updatedStop.location = newGeocode.location;
+					dispatch(editStop({ tripId, updatedStop }));
+					onClose?.();
 				} else {
 					const stop = await createStop(formData);
 
@@ -80,8 +75,8 @@ export const useStopFormSubmitting = (
 					}
 				}
 			} catch (e: unknown) {
-				const knownErorr = e as Error;
-				setSubmitError(knownErorr.message || 'Unknown error.');
+				setError(ErrorType.UNKNOWN);
+				console.error((e as Error).message);
 			} finally {
 				setIsSubmitting(false);
 			}
@@ -94,15 +89,13 @@ export const useStopFormSubmitting = (
 			map,
 			onClose,
 			tripId,
-			isFormValid,
 			setFormData,
 		],
 	);
 
 	return {
 		isSubmitting,
-		submitError,
+		error,
 		onSaveStop,
-		isFormValid,
 	};
 };
