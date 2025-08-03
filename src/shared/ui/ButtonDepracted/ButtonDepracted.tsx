@@ -9,7 +9,7 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 	rightIcon?: ReactNode;
 }
 
-export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
+export const ButtonDepracted = forwardRef<HTMLButtonElement, ButtonProps>(
 	(
 		{
 			type = 'button',
@@ -53,4 +53,4 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
 	},
 );
 
-Button.displayName = 'Button';
+ButtonDepracted.displayName = 'ButtonDepracted';

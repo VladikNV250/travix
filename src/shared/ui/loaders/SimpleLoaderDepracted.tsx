@@ -7,7 +7,7 @@ interface SimpleLoaderProps {
 	readonly className?: string;
 }
 
-export const SimpleLoader: FC<SimpleLoaderProps> = ({
+export const SimpleLoaderDepracted: FC<SimpleLoaderProps> = ({
 	loading = true,
 	className,
 }) => {

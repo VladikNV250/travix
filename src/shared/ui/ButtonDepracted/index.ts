@@ -1,0 +1,1 @@
+export { ButtonDepracted } from './ButtonDepracted';

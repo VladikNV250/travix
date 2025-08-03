@@ -1,7 +1,7 @@
 import { FC } from 'react';
 
 import { Trip } from 'entities/trip';
-import { Button } from 'shared/ui';
+import { ButtonDepracted } from 'shared/ui';
 
 import { useShareCode } from '../lib';
 
@@ -39,18 +39,18 @@ export const SharePopup: FC<SharePopupProps> = ({
 					/>
 				</div>
 				<div className="flex items-center justify-end gap-x-2">
-					<Button
+					<ButtonDepracted
 						className="rounded bg-blue-700 px-4 py-2 text-base text-white"
 						onClick={copyCode}
 					>
 						Copy
-					</Button>
-					<Button
+					</ButtonDepracted>
+					<ButtonDepracted
 						className="rounded bg-rose-700 px-4 py-2 text-base text-white"
 						onClick={closePopup}
 					>
 						Close
-					</Button>
+					</ButtonDepracted>
 				</div>
 			</div>
 		</div>

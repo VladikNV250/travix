@@ -8,7 +8,7 @@ import { useWeather } from 'entities/weather';
 import { selectCurrentStop } from 'features/routing';
 import { TripContinueButton } from 'features/trip-animation';
 import { formatDate, useAppSelector } from 'shared/lib';
-import { SimpleLoader } from 'shared/ui';
+import { SimpleLoaderDepracted } from 'shared/ui';
 import { extractCityAndRegion } from 'widgets/stop-info-panel/lib';
 
 export const StopInfoPanel: FC = () => {
@@ -47,7 +47,7 @@ export const StopInfoPanel: FC = () => {
 								</h4>
 							</header>
 							{weatherLoading ? (
-								<SimpleLoader loading={true} />
+								<SimpleLoaderDepracted loading={true} />
 							) : weather ? (
 								<div className="flex items-center justify-between">
 									<div>
@@ -73,7 +73,7 @@ export const StopInfoPanel: FC = () => {
 						<div className="max-h-27.5 min-h-15 w-full overflow-y-hidden rounded-xl bg-white/40 p-3">
 							<h4 className="text-xl font-medium text-neutral-50">Holidays</h4>
 							{holidayLoading ? (
-								<SimpleLoader />
+								<SimpleLoaderDepracted />
 							) : holiday ? (
 								<p className="text-base text-neutral-50 italic">
 									{holiday.name}

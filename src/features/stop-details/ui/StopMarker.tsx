@@ -5,7 +5,7 @@ import { DivIcon, Icon, IconOptions } from 'leaflet';
 
 import { Stop } from 'entities/stop';
 import { formatDate } from 'shared/lib';
-import { SimpleLoader } from 'shared/ui';
+import { SimpleLoaderDepracted } from 'shared/ui';
 
 import { useStopMarker } from '../model';
 
@@ -38,7 +38,7 @@ export const StopMarker: FC<StopMarkerProps> = ({ stop, icon }) => {
 						{stop.address}
 					</h4>
 					{isLoading ? (
-						<SimpleLoader loading={isLoading} />
+						<SimpleLoaderDepracted loading={isLoading} />
 					) : (
 						<>
 							<div className="relative my-4 h-0.25 w-full rounded-xs bg-zinc-400" />

@@ -1,2 +1,2 @@
 export * from './loaders';
-export * from './Button';
+export * from './ButtonDepracted';

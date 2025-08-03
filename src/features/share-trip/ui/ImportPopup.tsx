@@ -1,6 +1,6 @@
 import { FC, useState } from 'react';
 
-import { Button } from 'shared/ui';
+import { ButtonDepracted } from 'shared/ui';
 
 import { ImportStatus, useImportTrip } from '../lib';
 
@@ -41,18 +41,18 @@ export const ImportPopup: FC<ImportPopupProps> = ({ isOpen, closePopup }) => {
 					/>
 				</div>
 				<div className="flex items-center justify-end gap-x-2">
-					<Button
+					<ButtonDepracted
 						className="rounded bg-blue-700 px-4 py-2 text-base text-white"
 						onClick={importTripHandle}
 					>
 						Import
-					</Button>
-					<Button
+					</ButtonDepracted>
+					<ButtonDepracted
 						className="rounded bg-rose-700 px-4 py-2 text-base text-white"
 						onClick={closePopup}
 					>
 						Close
-					</Button>
+					</ButtonDepracted>
 				</div>
 			</div>
 		</div>

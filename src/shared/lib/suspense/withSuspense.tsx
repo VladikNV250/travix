@@ -1,7 +1,9 @@
 import { ReactNode, Suspense } from 'react';
 
-import { FallbackLoader } from 'shared/ui';
+import { FallbackLoaderDepracted } from 'shared/ui';
 
 export const withSuspense = (Component: ReactNode) => {
-	return <Suspense fallback={<FallbackLoader />}>{Component}</Suspense>;
+	return (
+		<Suspense fallback={<FallbackLoaderDepracted />}>{Component}</Suspense>
+	);
 };
