@@ -1,6 +1,7 @@
 import { FC, ReactNode } from 'react';
 import { Provider } from 'react-redux';
 
+import { Theme } from '@radix-ui/themes';
 import { PersistGate } from 'redux-persist/integration/react';
 
 import { store } from 'app/store';
@@ -17,11 +18,13 @@ export const Providers: FC<ProvidersProps> = ({ children }) => {
 	return (
 		<Provider store={store}>
 			<PersistGate persistor={persistor}>
-				<MapProvider>
-					<TripAnimatorProvider>
-						<DropdownProvider>{children}</DropdownProvider>
-					</TripAnimatorProvider>
-				</MapProvider>
+				<Theme>
+					<MapProvider>
+						<TripAnimatorProvider>
+							<DropdownProvider>{children}</DropdownProvider>
+						</TripAnimatorProvider>
+					</MapProvider>
+				</Theme>
 			</PersistGate>
 		</Provider>
 	);
