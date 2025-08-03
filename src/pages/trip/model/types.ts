@@ -12,5 +12,5 @@ export interface TripAnimationControls {
 	isCameraMounted: boolean;
 	stops: LatLngExpression[];
 	toggleAutocontinue: () => void;
-	toggleCameraMounted: () => void;
+	toggleCameraMountion: () => void;
 }

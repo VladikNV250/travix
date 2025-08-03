@@ -138,7 +138,7 @@ const TripPage: FC = () => {
 								Autoplay Trip? {animation.autocontinue ? 'Yes' : 'No'}
 							</button>
 							<button
-								onClick={animation.toggleCameraMounted}
+								onClick={animation.toggleCameraMountion}
 								className="rounded bg-blue-500 p-2.5 text-white"
 							>
 								Mount camera? {animation.isCameraMounted ? 'Yes' : 'No'}

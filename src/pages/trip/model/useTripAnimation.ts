@@ -11,7 +11,7 @@ import { useAppSelector } from 'shared/lib';
 
 import { TripAnimationControls } from './types';
 
-export const useTripAnimation = (trip?: Trip) => {
+export const useTripAnimation = (trip: Trip | null) => {
 	const { map } = useMap();
 	const route = useAppSelector(selectRoute(trip?.id ?? ''));
 	const tripAnimator = useInitTripAnimator(map, route, trip?.stops);
@@ -27,6 +27,14 @@ export const useTripAnimation = (trip?: Trip) => {
 		true,
 	);
 
+	const toggleAutocontinue = () => {
+		setAutocontinue(p => !p);
+	};
+
+	const toggleCameraMountion = () => {
+		setIsCameraMounted(p => !p);
+	};
+
 	const routeStops = useMemo(
 		() => trip?.stops.map(stop => stop.location) ?? [],
 		[trip],
@@ -36,7 +44,7 @@ export const useTripAnimation = (trip?: Trip) => {
 		autocontinue,
 		isCameraMounted,
 		stops: routeStops,
-		toggleAutocontinue: setAutocontinue,
-		toggleCameraMounted: setIsCameraMounted,
+		toggleAutocontinue,
+		toggleCameraMountion,
 	} as TripAnimationControls;
 };

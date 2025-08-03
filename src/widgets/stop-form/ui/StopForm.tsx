@@ -20,7 +20,7 @@ export const StopForm: FC<StopFormProps> = ({
 	const {
 		formData,
 		predictions,
-		submitError,
+		error,
 
 		onDataChange,
 		onPredictionSelect,
@@ -31,7 +31,6 @@ export const StopForm: FC<StopFormProps> = ({
 
 		hasUnsavedChanges,
 		isEditMode,
-		isFormValid,
 		isSubmitting,
 	} = useStopForm(tripId, initialData, onClose);
 
@@ -84,15 +83,15 @@ export const StopForm: FC<StopFormProps> = ({
 				rows={4}
 			/>
 			<ImageUpload onUpload={onAddImage} />
-			{submitError && (
+			{error && (
 				<p className="rounded border border-rose-400 bg-rose-300 p-4">
-					{submitError}
+					{error}
 				</p>
 			)}
 			<button
 				type="submit"
 				className="mt-1.5 rounded-lg bg-green-700 p-2 text-white"
-				disabled={!isFormValid || isSubmitting}
+				disabled={isSubmitting}
 			>
 				{isEditMode
 					? hasUnsavedChanges

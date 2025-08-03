@@ -1,7 +1,7 @@
 import { v4 as uuidv4 } from 'uuid';
 
 import { getGeocode } from 'entities/geo';
-import { Stop, validateStop } from 'entities/stop';
+import { Stop } from 'entities/stop';
 
 // TODO: We need to review this creating stops
 export const createStop = async (data: Partial<Stop>): Promise<Stop | null> => {
@@ -19,15 +19,14 @@ export const createStop = async (data: Partial<Stop>): Promise<Stop | null> => {
 		images: data.images ?? [],
 	};
 
-	if (!validateStop(stop)) return null;
-
 	const geocode = await getGeocode(stop.address);
 
 	if (geocode) {
 		stop.location = geocode.location;
 		stop.countryCode = geocode.countryCode;
 	} else {
-		throw new Error('Cannot get geocode info of stop!');
+		console.error('Cannot get geocode info of stop!');
+		return null;
 	}
 
 	return stop;

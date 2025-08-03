@@ -18,15 +18,14 @@ export const useStopForm = (
 	const { formData, setFormData, onDataChange, hasUnsavedChanges, isEditMode } =
 		useStopFormState(initialData);
 
-	const { isSubmitting, onSaveStop, submitError, isFormValid } =
-		useStopFormSubmitting(
-			tripId,
-			initialData,
-			formData,
-			setFormData,
-			isEditMode,
-			onClose,
-		);
+	const { isSubmitting, onSaveStop, error } = useStopFormSubmitting(
+		tripId,
+		initialData,
+		formData,
+		setFormData,
+		isEditMode,
+		onClose,
+	);
 
 	const { predictions } = useStopFormPredictions(formData.address);
 
@@ -42,7 +41,7 @@ export const useStopForm = (
 	return {
 		formData,
 		predictions,
-		submitError,
+		error,
 
 		onAddImage,
 		onPredictionSelect,
@@ -53,7 +52,6 @@ export const useStopForm = (
 
 		hasUnsavedChanges,
 		isEditMode,
-		isFormValid,
 		isSubmitting,
 	};
 };
