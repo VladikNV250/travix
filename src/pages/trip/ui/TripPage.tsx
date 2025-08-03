@@ -44,18 +44,24 @@ const TripPage: FC = () => {
 						<h3 className="line-clamp-1 max-w-60 min-w-40 text-2xl text-ellipsis">
 							{tripData?.name ?? ''}
 						</h3>
-						<TripPlayButton stops={animation.stops} />
-						<TripStopButton />
-						<button
-							title="Day View"
-							onClick={stopDisplay.toggleDayView}
-							className={clsx(stopDisplay.dayView && 'text-sky-600')}
-						>
-							<CalendarDateIcon
-								width={20}
-								height={20}
-							/>
-						</button>
+						{animation.stops.length > 0 && (
+							<>
+								<TripPlayButton stops={animation.stops} />
+								<TripStopButton />
+							</>
+						)}
+						{stopDisplay.stops.length > 0 && (
+							<button
+								title="Day View"
+								onClick={stopDisplay.toggleDayView}
+								className={clsx(stopDisplay.dayView && 'text-sky-600')}
+							>
+								<CalendarDateIcon
+									width={20}
+									height={20}
+								/>
+							</button>
+						)}
 						<button
 							className="relative flex cursor-pointer items-center justify-center"
 							onClick={tripMenu.toggle}
@@ -99,7 +105,7 @@ const TripPage: FC = () => {
 					<p>
 						{tripData?.totalDistance
 							? `Distance is: ${tripData.totalDistance}km`
-							: 'Distance is unavailable.'}
+							: ''}
 					</p>
 					<button
 						onClick={stopForm.open}
@@ -123,20 +129,22 @@ const TripPage: FC = () => {
 						</div>
 					</DndWrapper>
 					{/* TODO: REMOVE CODE BELOW \/ \/ \/ */}
-					<div className="flex justify-between p-2.5">
-						<button
-							onClick={animation.toggleAutocontinue}
-							className="rounded bg-blue-500 p-2.5 text-white"
-						>
-							Autoplay Trip? {animation.autocontinue ? 'Yes' : 'No'}
-						</button>
-						<button
-							onClick={animation.toggleCameraMountion}
-							className="rounded bg-blue-500 p-2.5 text-white"
-						>
-							Mount camera? {animation.isCameraMounted ? 'Yes' : 'No'}
-						</button>
-					</div>
+					{stopDisplay.stops.length > 0 && (
+						<div className="flex justify-between p-2.5">
+							<button
+								onClick={animation.toggleAutocontinue}
+								className="rounded bg-blue-500 p-2.5 text-white"
+							>
+								Autoplay Trip? {animation.autocontinue ? 'Yes' : 'No'}
+							</button>
+							<button
+								onClick={animation.toggleCameraMountion}
+								className="rounded bg-blue-500 p-2.5 text-white"
+							>
+								Mount camera? {animation.isCameraMounted ? 'Yes' : 'No'}
+							</button>
+						</div>
+					)}
 					{/* /\ /\ /\ */}
 				</>
 			) : (
