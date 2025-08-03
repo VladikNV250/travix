@@ -1,8 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 
+import { TrashIcon } from 'shared/assets';
+
 import { Button } from './Button';
 import { ButtonSize, SIZES, VARIANTS } from './button.config';
-import { TrashIcon } from 'shared/assets';
 
 const meta: Meta<typeof Button> = {
 	title: 'UI/Button',
@@ -67,7 +68,7 @@ export const PrimaryGradient: Story = {
 
 export const Sizes: Story = {
 	render: args => (
-		<div className="flex flex-wrap gap-2 items-center">
+		<div className="flex flex-wrap items-center gap-2">
 			{Object.keys(SIZES).map(size => (
 				<Button
 					key={size}
@@ -94,44 +95,48 @@ export const Sizes: Story = {
 };
 
 export const AsChildLink: Story = {
-    args: {
-        asChild: true,
-        children: (
-            <a href='https://example.com' target='_blank' rel='noopener noreferrer'>
-                Link as button
-            </a>
-        )
-    },
-    argTypes: {
-        children: {
-            table: {
-                disable: true
-            }
-        }
-    }
-} 
+	args: {
+		asChild: true,
+		children: (
+			<a
+				href="https://example.com"
+				target="_blank"
+				rel="noopener noreferrer"
+			>
+				Link as button
+			</a>
+		),
+	},
+	argTypes: {
+		children: {
+			table: {
+				disable: true,
+			},
+		},
+	},
+};
 
 export const Disabled: Story = {
-    args: {
-        disabled: true,
-        children: "Disabled Button"
-    },
-}
+	args: {
+		disabled: true,
+		children: 'Disabled Button',
+	},
+};
 
 export const WithIcon: Story = {
-    args: {
-        children: (
-            <>
-                <TrashIcon className='size-5' />
-                Remove
-            </>
-        )
-    },
-    argTypes: {
-        children: {
-            table: {
-                disable: true
-            }
-        }
-    }
-}
+	args: {
+		children: (
+			<>
+				<TrashIcon className="size-5" />
+				Remove
+			</>
+		),
+	},
+	argTypes: {
+		children: {
+			table: {
+				disable: true,
+			},
+		},
+	},
+};
