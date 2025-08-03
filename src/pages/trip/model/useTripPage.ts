@@ -14,7 +14,7 @@ export const useTripPage = () => {
 
 	const { trip, tripInfo } = useTripData();
 	const { onDeleteClick, onEditClick, setStopsOrder } = useTripActions(trip);
-	const animationControls = useTripAnimation(trip);
+	const animationControls = useTripAnimation(trip ?? null);
 	const { displayStops, dayView, toggleDayView } = useTripStop(trip);
 	const {
 		isOpened: isTripMenuOpened,
