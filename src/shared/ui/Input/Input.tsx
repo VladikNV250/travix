@@ -1,5 +1,6 @@
 import { InputHTMLAttributes, forwardRef } from 'react';
 
+import { Label } from 'radix-ui';
 import { twMerge } from 'tailwind-merge';
 
 export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
@@ -12,12 +13,12 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
 	({ label, error, className = '', ...props }, ref) => (
 		<div className={twMerge('flex flex-col', className)}>
 			{label && (
-				<label
+				<Label.Root
 					htmlFor={props.id}
 					className="mb-2 text-sm font-medium text-gray-700"
 				>
 					{label}
-				</label>
+				</Label.Root>
 			)}
 			<input
 				ref={ref}
