@@ -1,6 +1,7 @@
 import { FC } from 'react';
-import { Link } from 'react-router';
+import { Link, useParams } from 'react-router';
 
+import clsx from 'clsx';
 import { MapPin, MoreHorizontal, Route } from 'lucide-react';
 
 import { calculateDistance } from '../lib';
@@ -11,8 +12,17 @@ interface TripItemProps {
 }
 
 export const TripItem: FC<TripItemProps> = ({ trip }) => {
+	const { tripId: selectedTripId } = useParams();
+
 	return (
-		<div className="group flex w-full flex-col rounded-xl border-2 border-transparent bg-gray-50 p-4 text-left hover:border-gray-200 hover:bg-gray-100 hover:shadow-md">
+		<div
+			className={clsx(
+				'group flex w-full flex-col rounded-xl border-2 p-4 text-left',
+				selectedTripId === trip.id
+					? 'border-blue-200 bg-blue-50 shadow-md'
+					: 'border-transparent bg-gray-50 hover:border-gray-200 hover:bg-gray-100 hover:shadow-md',
+			)}
+		>
 			<div className="grid grid-cols-[auto_1fr_auto] items-center gap-3">
 				<div
 					className="size-4 rounded-full"

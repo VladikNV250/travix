@@ -1,4 +1,5 @@
 import { FC } from 'react';
+import { Link } from 'react-router';
 
 import { Import, Plus } from 'lucide-react';
 
@@ -7,10 +8,13 @@ import { Button, Logo } from 'shared/ui';
 export const Header: FC = () => {
 	return (
 		<header className="z-10 w-full border-b border-gray-100 p-6">
-			<div className="mb-6 flex items-center gap-3">
+			<Link
+				to={'/'}
+				className="mb-6 flex items-center gap-3"
+			>
 				<Logo />
 				<h1 className="text-xl font-bold text-gray-900">Travix</h1>
-			</div>
+			</Link>
 			<div className="space-y-3">
 				<Button
 					variant="primary-gradient"
