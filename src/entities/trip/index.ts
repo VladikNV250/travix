@@ -1,3 +1,3 @@
 export * from './model';
 export * from './ui';
-export { compressTrip, decompressTrip } from './lib';
+export { compressTrip, decompressTrip, calculateDistance } from './lib';

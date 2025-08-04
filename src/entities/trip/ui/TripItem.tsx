@@ -1,11 +1,11 @@
 import { FC } from 'react';
 import { Link } from 'react-router';
 
-import { useSortable } from '@dnd-kit/sortable';
-import { CSS } from '@dnd-kit/utilities';
+import { MapPin, MoreHorizontal, Route } from 'lucide-react';
 
-import { GripVerticalIcon } from 'shared/assets';
+import { useDragAndDrop } from 'shared/lib';
 
+import { calculateDistance } from '../lib';
 import { Trip } from '../model/types';
 
 interface TripItemProps {
@@ -13,36 +13,51 @@ interface TripItemProps {
 }
 
 export const TripItem: FC<TripItemProps> = ({ trip }) => {
-	const { setNodeRef, attributes, listeners, transform, transition } =
-		useSortable({ id: trip.id });
-
-	const style = {
-		transform: CSS.Transform.toString(transform),
-		transition,
-	};
+	const { attributes, dragStyle, listeners, setNodeRef } = useDragAndDrop(
+		trip.id,
+	);
 
 	return (
 		<div
 			ref={setNodeRef}
-			style={style}
-			className="flex min-w-50 items-center justify-between gap-7.5 bg-blue-800 px-4 py-2 font-medium tracking-wide"
+			className="group flex w-full flex-col gap-3 rounded-xl border-2 border-transparent bg-gray-50 p-4 text-left transition-all duration-200 hover:border-gray-200 hover:bg-gray-100 hover:shadow-md"
+			style={dragStyle}
 		>
-			<Link
-				className="text-white"
-				to={`/trip/${trip.id}`}
-			>
-				{trip.name}
-			</Link>
-			<button
-				className="cursor-grab text-zinc-200"
-				{...attributes}
-				{...listeners}
-			>
-				<GripVerticalIcon
-					width={20}
-					height={20}
+			<div className="grid grid-cols-[auto_1fr_auto] items-center gap-3">
+				<div
+					className="size-4 rounded-full"
+					style={{ backgroundColor: trip.color }}
 				/>
-			</button>
+				<Link
+					className="line-clamp-1 font-medium text-gray-700 group-hover:text-gray-900"
+					to={`/trip/${trip.id}`}
+					{...attributes}
+					{...listeners}
+				>
+					{trip.name}
+				</Link>
+				<button className="text-gray-400 opacity-0 transition-opacity group-hover:opacity-100">
+					<MoreHorizontal className="size-5" />
+				</button>
+			</div>
+			<div className="flex max-h-0 gap-x-4 overflow-hidden text-xs text-gray-500 opacity-0 transition-all duration-200 group-hover:max-h-20 group-hover:opacity-100">
+				{trip.stops.length > 1 ? (
+					<>
+						<span className="flex items-center gap-1">
+							<MapPin className="size-3" />
+							{trip.stops.length} stops
+						</span>
+						<span className="flex items-center gap-1">
+							<Route className="size-3" />
+							{calculateDistance(trip.stops)}
+						</span>
+					</>
+				) : (
+					<span className="text-gray-400 italic">
+						Empty trip - click to add stops
+					</span>
+				)}
+			</div>
 		</div>
 	);
 };
