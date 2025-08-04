@@ -55,7 +55,6 @@ const meta: Meta<typeof TripItem> = {
 		Story => (
 			<BrowserRouter>
 				<div style={{ width: '300px' }}>
-					{' '}
 					{/* Обмежуємо ширину для візуалізації в Storybook */}
 					<Story />
 				</div>
