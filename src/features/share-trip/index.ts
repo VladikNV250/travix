@@ -1,6 +1,3 @@
-export { usePopup } from './lib/hooks/usePopup';
+export { usePopup, ImportStatus } from './lib';
 
-export { SharePopup } from './ui/SharePopup';
-export { ImportPopup } from './ui/ImportPopup';
-
-export { ImportStatus } from './lib/types';
+export { OpenShareButton, ImportPopup, SharePopup } from './ui';

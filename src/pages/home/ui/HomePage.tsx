@@ -27,6 +27,8 @@ const HomePage: FC = () => {
 		}
 	};
 
+	return null;
+
 	return (
 		<div className="space-y-5">
 			<ImportPopup

@@ -2,6 +2,7 @@ import { ButtonHTMLAttributes, FC, ReactNode } from 'react';
 
 import { Slot } from '@radix-ui/themes';
 import { twMerge } from 'tailwind-merge';
+
 import { ButtonSize, ButtonVariant, SIZES, VARIANTS } from './button.config';
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {

@@ -22,6 +22,8 @@ const TripPage: FC = () => {
 
 	const popup = usePopup();
 
+	return null
+
 	return (
 		<div>
 			<SharePopup
