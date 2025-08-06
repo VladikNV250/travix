@@ -1,4 +1,4 @@
-export { StopAddress, StopGallery, StopSliderGallery } from './ui';
+export { StopAddress, StopGallery, StopSliderGallery, StopItem } from './ui';
 
 export { compressStop, decompressStop, calculateTripDays } from './lib';
 
