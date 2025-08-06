@@ -15,7 +15,7 @@ const TripPage: FC = () => {
 
 	return (
 		<motion.div
-			className="flex h-full flex-col border-r border-gray-200 bg-white"
+			className="flex h-full flex-col border-r border-gray-200 bg-white pt-21"
 			variants={ANIMATION_VARIANTS}
 			initial="initial"
 			animate="animate"

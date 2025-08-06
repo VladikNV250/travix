@@ -1,16 +1,24 @@
 import { FC } from 'react';
+import { Link } from 'react-router';
 
 import { Edit3 } from 'lucide-react';
 
 import { Button } from 'shared/ui';
 
-export const EditTripButton: FC = () => {
+interface EditTripButtonProps {
+	tripId: string | undefined;
+}
+
+export const EditTripButton: FC<EditTripButtonProps> = ({ tripId }) => {
 	return (
 		<Button
 			variant="icon"
 			size="icon-md"
+			asChild
 		>
-			<Edit3 className="size-5" />
+			<Link to={tripId ? `/trip/${tripId}/edit` : '/'}>
+				<Edit3 className="size-5" />
+			</Link>
 		</Button>
 	);
 };

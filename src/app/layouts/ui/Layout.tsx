@@ -17,7 +17,7 @@ export const Layout: FC = () => {
 			</div>
 			<div className="relative z-10">
 				<TripHeader />
-				<div className="absolute top-0 left-0 z-90 h-full w-80 pt-21">
+				<div className="absolute top-0 left-0 z-90 h-full w-80">
 					<AnimatePresence>
 						<Outlet />
 					</AnimatePresence>

@@ -14,7 +14,7 @@ export const selectTrips = createSelector(
 	(state: TripsState) => state.trips,
 );
 
-export const selectTrip = (tripId: string) =>
+export const selectTrip = (tripId: string | undefined) =>
 	createSelector([selectTrips], trips =>
 		trips.find(trip => trip.id === tripId),
 	);

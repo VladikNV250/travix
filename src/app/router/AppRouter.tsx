@@ -2,10 +2,10 @@ import { FC } from 'react';
 import { Route, Routes } from 'react-router';
 
 import { Layout } from 'app/layouts';
-import { EditTripPage } from 'pages/edit-trip';
 import { HomePage } from 'pages/home';
 import { StopPage } from 'pages/stop';
 import { TripPage } from 'pages/trip';
+import { TripFormPage } from 'pages/trip-form';
 import { withSuspense } from 'shared/lib';
 
 export const AppRouter: FC = () => {
@@ -21,12 +21,16 @@ export const AppRouter: FC = () => {
 						element={withSuspense(<HomePage />)}
 					/>
 					<Route
+						path="trip/new"
+						element={withSuspense(<TripFormPage />)}
+					/>
+					<Route
 						path="trip/:tripId"
 						element={withSuspense(<TripPage />)}
 					/>
 					<Route
 						path="trip/:tripId/edit"
-						element={withSuspense(<EditTripPage />)}
+						element={withSuspense(<TripFormPage />)}
 					/>
 					<Route
 						path="trip/:tripId/stop/:stopId"

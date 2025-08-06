@@ -20,9 +20,12 @@ export const Header: FC = () => {
 					variant="primary-gradient"
 					size="lg"
 					className="w-full"
+					asChild
 				>
-					<Plus className="size-5" />
-					Add New Trip
+					<Link to="trip/new">
+						<Plus className="size-5" />
+						Add New Trip
+					</Link>
 				</Button>
 				<Button
 					variant="base"
